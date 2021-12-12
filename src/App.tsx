@@ -34,7 +34,7 @@ function App() {
               handleWordChange();
             }}
           >
-            {word}
+            {word.charAt(0).toUpperCase() + word.slice(1)}
           </button>
         </h1>
       </header>
