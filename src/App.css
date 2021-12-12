@@ -3,6 +3,7 @@ body {
   user-select: none;
   overflow: hidden;
   max-height: 100vh;
+  background-color: #041C32;
 }
 
 button {
@@ -11,15 +12,24 @@ button {
 	border: none;
 	font: inherit;
 	cursor: pointer;
+  
 }
 
-.App {
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 65rem;
+  margin: 0 auto;
+}
+
+.app {
   text-align: center;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #041C32;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,6 +38,7 @@ button {
   font-size: calc(10px + 2vmin);
   color: #ECB365;
   height: 40vmin;
+  position: relative;
 }
 
 .word {
@@ -35,11 +46,7 @@ button {
   padding: 20px;
   position: relative;
   cursor: pointer;
-}
-
-.word:hover {
-  opacity: 0.75;
-  transition: 500ms opacity ease-in-out;
+  text-shadow: 8px 6px 8px #000000;
 }
 
 .language-button {

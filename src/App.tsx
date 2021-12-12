@@ -7,7 +7,7 @@ export type Language = "EN" | "NO";
 
 function App() {
   const initialWord = randomEnglishWord();
-  const [word, setWord] = useState(initialWord);
+  const [word, setWord] = useState<string>(initialWord);
   const [language, setLanguage] = useState<Language>("EN");
   const isEnglish = language === "EN";
 
@@ -24,21 +24,21 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>
-          <button
-            tabIndex={0}
-            className="word"
-            onClick={() => {
-              handleWordChange();
-            }}
-          >
-            {word.charAt(0).toUpperCase() + word.slice(1)}
-          </button>
-        </h1>
-      </header>
+    <div className="app">
       <main>
+        <header className="word-container">
+          <h1>
+            <button
+              tabIndex={0}
+              className="word"
+              onClick={() => {
+                handleWordChange();
+              }}
+            >
+              {word.charAt(0).toUpperCase() + word.slice(1)}
+            </button>
+          </h1>
+        </header>
         <button
           className="language-button"
           onClick={() => {
