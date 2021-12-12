@@ -31,7 +31,7 @@ function App() {
   );
 
   function getIcon() {
-    if (isEnglish) {
+    if (!isEnglish) {
       return <svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-us" viewBox="0 0 640 480">
       <g fill-rule="evenodd">
         <g stroke-width="1pt">
