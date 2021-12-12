@@ -48,6 +48,7 @@ function App() {
           {getIcon()}
         </button>
       </main>
+      <footer>Copyright @ Thayanan Tharmapalan</footer>
     </div>
   );
 

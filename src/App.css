@@ -1,3 +1,6 @@
+html {
+  overflow: hidden;
+}
 body {
   touch-action: manipulation;
   user-select: none;
@@ -58,4 +61,14 @@ main {
 svg {
   width: 20px;
   height: 20px;
+}
+
+footer {
+  background-color: #064663;
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  font-size: 12px;
+  width: 100%;
+  padding: 10px;
 }
