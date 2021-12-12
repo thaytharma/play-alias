@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import randomEnglishWord from "random-words";
 import randomNorwegianWord from "tilfeldigeord";
 
@@ -10,6 +10,26 @@ function App() {
   const [word, setWord] = useState(initialWord);
   const [language, setLanguage] = useState<Language>("EN");
   const isEnglish = language === "EN";
+
+  // If the URL contains a language parameter, use it.
+  /*   if (url.searchParams.has("language")) {
+    const language = url.searchParams.get("language") as Language;
+    setLanguage(language);
+  }
+ */
+  //set the language in url params
+  /*   function setLanguageInUrl(language: Language) {
+    url.searchParams.set("language", language);
+    window.history.replaceState({}, "", url.href);
+  }
+ */
+  const url = new URL(window.location.href);
+
+  useEffect(() => {
+    url.searchParams.set("language", language);
+    /*     window.location.href = url.href;
+     */
+  }, []);
 
   const handleWordChange = () => {
     setWord(
@@ -22,28 +42,35 @@ function App() {
   const handleChangeLanguage = () => {
     setLanguage(isEnglish ? "NO" : "EN");
     handleWordChange();
+    /*     setLanguageInUrl(language);
+     */
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1
-          className="word"
-          onClick={() => {
-            handleWordChange();
-          }}
-        >
-          {word}
+        <h1>
+          <button
+            tabIndex={0}
+            className="word"
+            onClick={() => {
+              handleWordChange();
+            }}
+          >
+            {word}
+          </button>
         </h1>
-        <div
+      </header>
+      <main>
+        <button
           className="language-button"
           onClick={() => {
             handleChangeLanguage();
           }}
         >
           {getIcon()}
-        </div>
-      </header>
+        </button>
+      </main>
     </div>
   );
 

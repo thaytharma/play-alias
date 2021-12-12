@@ -5,6 +5,14 @@ body {
   max-height: 100vh;
 }
 
+button {
+  background: none;
+	color: inherit;
+	border: none;
+	font: inherit;
+	cursor: pointer;
+}
+
 .App {
   text-align: center;
   height: 100vh;
@@ -26,11 +34,21 @@ body {
   text-transform: uppercase;
   padding: 20px;
   position: relative;
-  bottom: 50px;
   cursor: pointer;
 }
 
 .word:hover {
   opacity: 0.75;
   transition: 500ms opacity ease-in-out;
+}
+
+.language-button {
+  position: absolute;
+    left: 20px;
+    top: 20px;
+}
+
+svg {
+  width: 20px;
+  height: 20px;
 }
