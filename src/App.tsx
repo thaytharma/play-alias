@@ -41,7 +41,6 @@ function App() {
 
   const handleChangeLanguage = () => {
     setLanguage(isEnglish ? "NO" : "EN");
-    handleWordChange();
     /*     setLanguageInUrl(language);
      */
   };
