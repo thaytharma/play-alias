@@ -11,26 +11,6 @@ function App() {
   const [language, setLanguage] = useState<Language>("EN");
   const isEnglish = language === "EN";
 
-  // If the URL contains a language parameter, use it.
-  /*   if (url.searchParams.has("language")) {
-    const language = url.searchParams.get("language") as Language;
-    setLanguage(language);
-  }
- */
-  //set the language in url params
-  /*   function setLanguageInUrl(language: Language) {
-    url.searchParams.set("language", language);
-    window.history.replaceState({}, "", url.href);
-  }
- */
-  const url = new URL(window.location.href);
-
-  useEffect(() => {
-    url.searchParams.set("language", language);
-    /*     window.location.href = url.href;
-     */
-  }, []);
-
   const handleWordChange = () => {
     setWord(
       isEnglish
@@ -41,8 +21,6 @@ function App() {
 
   const handleChangeLanguage = () => {
     setLanguage(isEnglish ? "NO" : "EN");
-    /*     setLanguageInUrl(language);
-     */
   };
 
   return (
