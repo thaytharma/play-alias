@@ -1,8 +1,8 @@
 ## Play Alias
 Play alias (https://play-alias.herokuapp.com/) generates random words in Norwegian & English to be used in Alias word game.
 
-* Frontend uses [React](https://reactjs.org/) / [TypeScript](https://www.typescriptlang.org/) / [SCSS](https://sass-lang.com/) 
-* Uses Heroku to host and deploy server & static files from Github (CI/CD) (https://heroku.com/)
+* Built with [React](https://reactjs.org/) / [TypeScript](https://www.typescriptlang.org/) / [SCSS](https://sass-lang.com/) 
+* Deployed to Heroku (https://heroku.com/)
 
 ### Available Scripts
 
