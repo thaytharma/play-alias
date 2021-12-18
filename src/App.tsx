@@ -1,23 +1,12 @@
 import "./App.css";
 import React, { useState } from "react";
-import randomEnglishWord from "random-words";
-import randomNorwegianWord from "tilfeldigeord";
+import Word from "./components/Word/Word";
 
 export type Language = "EN" | "NO";
 
 const App = () => {
-  const initialWord = randomEnglishWord();
-  const [word, setWord] = useState<string>(initialWord);
   const [language, setLanguage] = useState<Language>("EN");
   const isEnglish = language === "EN";
-
-  const handleWordChange = () => {
-    setWord(
-      isEnglish
-        ? randomEnglishWord()
-        : randomNorwegianWord.getTilfeldigOrd().split(" ")[0]
-    );
-  };
 
   const handleChangeLanguage = () => {
     setLanguage(isEnglish ? "NO" : "EN");
@@ -27,17 +16,7 @@ const App = () => {
     <div className="app">
       <main>
         <header className="word-container">
-          <h1>
-            <button
-              tabIndex={0}
-              className="word"
-              onClick={() => {
-                handleWordChange();
-              }}
-            >
-              {word.charAt(0).toUpperCase() + word.slice(1)}
-            </button>
-          </h1>
+          <Word language={language} />
         </header>
         <button
           className="language-button"
