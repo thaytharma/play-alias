@@ -1,11 +1,11 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import randomEnglishWord from "random-words";
 import randomNorwegianWord from "tilfeldigeord";
 
 export type Language = "EN" | "NO";
 
-function App() {
+const App = () => {
   const initialWord = randomEnglishWord();
   const [word, setWord] = useState<string>(initialWord);
   const [language, setLanguage] = useState<Language>("EN");
@@ -101,6 +101,6 @@ function App() {
       </svg>
     );
   }
-}
+};
 
 export default App;
