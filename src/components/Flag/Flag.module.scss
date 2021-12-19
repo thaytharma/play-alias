@@ -1,0 +1,7 @@
+.flag {
+  width: 20px;
+  height: 20px;
+  &.current {
+    opacity: 0.65;
+  }
+}

@@ -42,15 +42,10 @@ main {
   font-size: calc(1rem + 2vmin);
 }
 
-.language-button {
+.language-button-wrapper {
   position: absolute;
   left: 20px;
   top: 20px;
-}
-
-svg {
-  width: 20px;
-  height: 20px;
 }
 
 footer {
