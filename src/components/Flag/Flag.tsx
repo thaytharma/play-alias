@@ -40,8 +40,8 @@ const Flag = ({ language, isCurrent }: Props) => {
         viewBox="0 0 640 480"
         className={classNames}
       >
-        <g fill-rule="evenodd">
-          <g stroke-width="1pt">
+        <g fillRule="evenodd">
+          <g strokeWidth="1pt">
             <path
               fill="#bd3d44"
               d="M0 0h972.8v39.4H0zm0 78.8h972.8v39.4H0zm0 78.7h972.8V197H0zm0 78.8h972.8v39.4H0zm0 78.8h972.8v39.4H0zm0 78.7h972.8v39.4H0zm0 78.8h972.8V512H0z"
