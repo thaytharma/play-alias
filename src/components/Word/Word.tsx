@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import randomEnglishWord from "random-words";
 import randomNorwegianWord from "tilfeldigeord";
+import styles from "./Word.module.scss";
 
 const Word = ({ language }) => {
   const initialWord = randomEnglishWord();
@@ -17,7 +18,7 @@ const Word = ({ language }) => {
     <h1>
       <button
         tabIndex={0}
-        className="word"
+        className={styles.word}
         onClick={() => {
           handleWordChange();
         }}

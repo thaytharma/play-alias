@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   overflow: hidden;
   height: -webkit-fill-available;
 }
@@ -8,18 +9,17 @@ body {
   user-select: none;
   overflow: hidden;
   max-height: 100vh;
-  background-color: #041C32;
+  background-color: #041c32;
   height: 100vh;
   height: -webkit-fill-available;
 }
 
 button {
   background: none;
-	color: inherit;
-	border: none;
-	font: inherit;
-	cursor: pointer;
-  
+  color: inherit;
+  border: none;
+  font: inherit;
+  cursor: pointer;
 }
 
 main {
@@ -42,23 +42,15 @@ main {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #ECB365;
+  color: #ecb365;
   height: 40vmin;
   position: relative;
 }
 
-.word {
-  text-transform: uppercase;
-  padding: 20px;
-  position: relative;
-  cursor: pointer;
-  text-shadow: 8px 6px 8px #000000;
-}
-
 .language-button {
   position: absolute;
-    left: 20px;
-    top: 20px;
+  left: 20px;
+  top: 20px;
 }
 
 svg {
