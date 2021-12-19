@@ -3,16 +3,12 @@ import React, { useState } from "react";
 import Word from "./components/Word/Word";
 import LanguageButtons from "./components/LanguageButtons/LanguageButtons";
 import Footer from "./components/Footer/Footer";
-
-export enum LanguageType {
-  ENGLISH = "EN",
-  NORWEGIAN = "NO",
-}
+import { Language } from "./types/Language";
 
 const App = () => {
-  const [language, setLanguage] = useState<LanguageType>(LanguageType.ENGLISH);
+  const [language, setLanguage] = useState<Language>(Language.EN);
 
-  const handleChangeLanguage = (language: LanguageType) => {
+  const handleChangeLanguage = (language: Language) => {
     setLanguage(language);
   };
 

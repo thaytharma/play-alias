@@ -1,9 +1,9 @@
-import { LanguageType } from "../App";
+import { Language } from "../types/Language";
 
-export function isEnglish(language: LanguageType): boolean {
-  return language === LanguageType.ENGLISH;
+export function isEnglish(language: Language): boolean {
+  return language === Language.EN;
 }
 
-export function isNorwegian(language: LanguageType): boolean {
-  return language === LanguageType.NORWEGIAN;
+export function isNorwegian(language: Language): boolean {
+  return language === Language.NO;
 }

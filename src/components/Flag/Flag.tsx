@@ -1,15 +1,15 @@
 import classnames from "classnames";
 import React from "react";
-import { LanguageType } from "../../App";
+import { isEnglish } from "../../helpers/language";
+import { Language } from "../../types/Language";
 import styles from "./Flag.module.scss";
 
 interface Props {
-  language: LanguageType;
+  language: Language;
   isCurrent: boolean;
 }
 
 const Flag = ({ language, isCurrent }: Props) => {
-  const isEnglish = language === "EN";
   const classNames = classnames(styles.flag, {
     [styles.current]: isCurrent,
   });
@@ -17,7 +17,7 @@ const Flag = ({ language, isCurrent }: Props) => {
   return <>{getIcon()}</>;
 
   function getIcon() {
-    if (isEnglish) {
+    if (isEnglish(language)) {
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"

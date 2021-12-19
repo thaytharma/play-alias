@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import randomEnglishWord from "random-words";
 import randomNorwegianWord from "tilfeldigeord";
 import styles from "./Word.module.scss";
-import { LanguageType } from "../../App";
 import firstWord, { capitalizeFirstLetter } from "../../helpers/strings";
 import { isEnglish } from "../../helpers/language";
+import { Language } from "../../types/Language";
 
 interface Props {
-  language: LanguageType;
+  language: Language;
 }
 
 const Word = ({ language }: Props) => {
