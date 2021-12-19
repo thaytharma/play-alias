@@ -15,9 +15,7 @@ const App = () => {
   return (
     <div className="app">
       <main>
-        <header className="word-container">
-          <Word language={language} />
-        </header>
+        <Word language={language} />
         <button
           className="language-button"
           onClick={() => {
