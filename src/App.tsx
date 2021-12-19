@@ -2,6 +2,7 @@ import "./App.scss";
 import React, { useState } from "react";
 import Word from "./components/Word/Word";
 import LanguageButtons from "./components/LanguageButtons/LanguageButtons";
+import Footer from "./components/Footer/Footer";
 
 export enum LanguageType {
   ENGLISH = "EN",
@@ -26,7 +27,7 @@ const App = () => {
           />
         </div>
       </main>
-      <footer>Copyright @ Thayanan Tharmapalan</footer>
+      <Footer />
     </div>
   );
 };
