@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { generateSlug } from "random-word-slugs";
 import randomEnglishWord from "random-words";
 import randomNorwegianWord from "tilfeldigeord";
 import styles from "./Word.module.scss";
@@ -14,7 +15,49 @@ const Word = ({ language }: Props) => {
   const [word, setWord] = useState<string>("");
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
-  console.log(usedWords);
+  const randomEnglishSlug = () => {
+    const slug = generateSlug(1, {
+      format: "title",
+      categories: {
+        adjective: [
+          "color",
+          "appearance",
+          "condition",
+          "personality",
+          "taste",
+          "sounds",
+          "time",
+          "touch",
+          "shapes",
+        ],
+        noun: [
+          "animals",
+          "business",
+          "education",
+          "family",
+          "food",
+          "health",
+          "media",
+          "people",
+          "profession",
+          "religion",
+          "science",
+          "sports",
+          "technology",
+          "thing",
+          "time",
+          "transportation",
+        ],
+      },
+    });
+
+    return slug;
+  };
+
+  const generateRandomWordFunctions = [
+    randomEnglishWord(),
+    randomEnglishSlug(),
+  ];
 
   useEffect(() => {
     const newWord = generateWord();
@@ -24,7 +67,9 @@ const Word = ({ language }: Props) => {
 
   const generateWord = (): string => {
     const word = isEnglish(language)
-      ? randomEnglishWord()
+      ? generateRandomWordFunctions[
+          Math.floor(Math.random() * generateRandomWordFunctions.length)
+        ]
       : firstWord(randomNorwegianWord.getTilfeldigOrd());
 
     return word;
