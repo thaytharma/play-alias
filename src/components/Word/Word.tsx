@@ -12,9 +12,14 @@ interface Props {
 
 const Word = ({ language }: Props) => {
   const [word, setWord] = useState<string>("");
+  const [usedWords, setUsedWords] = useState<string[]>([]);
+
+  console.log(usedWords);
 
   useEffect(() => {
-    setWord(generateWord());
+    const newWord = generateWord();
+    setWord(newWord);
+    setUsedWords([newWord]);
   }, [language]);
 
   const generateWord = (): string => {
@@ -26,7 +31,16 @@ const Word = ({ language }: Props) => {
   };
 
   const handleWordChange = () => {
-    setWord(generateWord());
+    const newWord = generateWord();
+
+    if (!usedWords.includes(newWord)) {
+      setWord(newWord);
+      setUsedWords([...usedWords, newWord]);
+    } else {
+      const nextWord = generateWord();
+      setWord(nextWord);
+      setUsedWords([...usedWords, nextWord]);
+    }
   };
 
   return (
