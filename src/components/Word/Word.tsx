@@ -9,9 +9,10 @@ import { Language } from "../../types/Language";
 
 interface Props {
   language: Language;
+  resetCounter: () => void;
 }
 
-const Word = ({ language }: Props) => {
+const Word = ({ language, resetCounter }: Props) => {
   const [word, setWord] = useState<string>("");
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
@@ -86,6 +87,7 @@ const Word = ({ language }: Props) => {
       setWord(nextWord);
       setUsedWords([...usedWords, nextWord]);
     }
+    resetCounter();
   };
 
   return (
