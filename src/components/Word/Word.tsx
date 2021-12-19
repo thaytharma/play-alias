@@ -15,7 +15,7 @@ const Word = ({ language }) => {
     );
   };
   return (
-    <h1 className={`${styles.word}`}>
+    <h1 className={styles.word}>
       <button
         key={word}
         tabIndex={0}

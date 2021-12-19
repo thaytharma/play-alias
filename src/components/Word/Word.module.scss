@@ -3,7 +3,6 @@
   position: relative;
   cursor: pointer;
   text-shadow: 8px 6px 8px #000000;
-  padding: 30px 30px;
   color: #ecb365;
   transition: 350ms ease-in-out;
 
@@ -13,7 +12,7 @@
   }
   .wordButton {
     text-transform: uppercase;
-    animation: bop 1.025s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards
+    animation: bop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards
       alternate;
   }
 }
