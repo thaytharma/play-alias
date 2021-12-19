@@ -3,7 +3,7 @@ import randomEnglishWord from "random-words";
 import randomNorwegianWord from "tilfeldigeord";
 import styles from "./Word.module.scss";
 import { LanguageType } from "../../App";
-import getFirstWord from "../../helpers/strings";
+import firstWord, { capitalizeFirstLetter } from "../../helpers/strings";
 import { isEnglish } from "../../helpers/language";
 
 interface Props {
@@ -20,7 +20,7 @@ const Word = ({ language }: Props) => {
   const generateWord = (): string => {
     const word = isEnglish(language)
       ? randomEnglishWord()
-      : getFirstWord(randomNorwegianWord.getTilfeldigOrd());
+      : firstWord(randomNorwegianWord.getTilfeldigOrd());
 
     return word;
   };
@@ -39,7 +39,7 @@ const Word = ({ language }: Props) => {
           handleWordChange();
         }}
       >
-        {word.charAt(0).toUpperCase() + word.slice(1)}
+        {capitalizeFirstLetter(word)}
       </button>
     </h1>
   );

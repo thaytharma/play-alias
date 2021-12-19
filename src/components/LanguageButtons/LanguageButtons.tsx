@@ -1,5 +1,6 @@
 import React from "react";
 import { LanguageType } from "../../App";
+import { isEnglish, isNorwegian } from "../../helpers/language";
 import Flag from "../Flag/Flag";
 import styles from "./LanguageButtons.module.scss";
 
@@ -17,7 +18,7 @@ const LanguageButtons = ({ language, handleChangeLanguage }: Props) => {
           handleChangeLanguage(LanguageType.NORWEGIAN);
         }}
       >
-        <Flag language={LanguageType.ENGLISH} isCurrent={language === "EN"} />
+        <Flag language={LanguageType.ENGLISH} isCurrent={isEnglish(language)} />
       </button>
       <button
         className="language-button"
@@ -25,7 +26,10 @@ const LanguageButtons = ({ language, handleChangeLanguage }: Props) => {
           handleChangeLanguage(LanguageType.ENGLISH);
         }}
       >
-        <Flag language={LanguageType.NORWEGIAN} isCurrent={language === "NO"} />
+        <Flag
+          language={LanguageType.NORWEGIAN}
+          isCurrent={isNorwegian(language)}
+        />
       </button>
     </div>
   );
