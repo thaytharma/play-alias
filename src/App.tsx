@@ -12,6 +12,7 @@ const App = () => {
 
   const handleChangeLanguage = (language: Language) => {
     setLanguage(language);
+    resetCounter();
   };
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const App = () => {
             handleChangeLanguage={handleChangeLanguage}
           />
         </div>
-        <Counter counter={counter} />
+        <Counter counter={counter} resetCounter={resetCounter} />
       </main>
       <Footer />
     </div>
