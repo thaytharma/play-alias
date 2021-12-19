@@ -15,10 +15,11 @@ const Word = ({ language }) => {
     );
   };
   return (
-    <h1>
+    <h1 className={`${styles.word}`}>
       <button
+        key={word}
         tabIndex={0}
-        className={styles.word}
+        className={styles.wordButton}
         onClick={() => {
           handleWordChange();
         }}

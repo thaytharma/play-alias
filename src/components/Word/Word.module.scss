@@ -1,7 +1,31 @@
 .word {
   text-transform: uppercase;
-  padding: 20px;
   position: relative;
   cursor: pointer;
   text-shadow: 8px 6px 8px #000000;
+  padding: 30px 30px;
+  color: #ecb365;
+  transition: 350ms ease-in-out;
+
+  &:hover {
+    text-shadow: none;
+    color: #ffc678;
+  }
+  .wordButton {
+    text-transform: uppercase;
+    animation: bop 1.025s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards
+      alternate;
+  }
+}
+
+@keyframes bop {
+  0% {
+    transform: scale(0.85);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
