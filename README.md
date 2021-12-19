@@ -1,5 +1,5 @@
 ## Play Alias
-[Play alias] (https://play-alias.herokuapp.com/) generates random words in Norwegian & English to be used in Alias word game.
+[Play alias](https://play-alias.herokuapp.com/) generates random words in Norwegian & English to be used in Alias word game.
 Created this quick app to be able to use it with friends on the go!
 
 * Built with [React](https://reactjs.org/) / [TypeScript](https://www.typescriptlang.org/) / [SCSS](https://sass-lang.com/) 
