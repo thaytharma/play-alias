@@ -1,10 +1,10 @@
-import './App.scss';
-import React, { useState } from 'react';
-import Word from './components/Word/Word';
-import LanguageButtons from './components/LanguageButtons/LanguageButtons';
-import Footer from './components/Footer/Footer';
-import { Language } from './types/Language';
-import Counter from './components/Counter/Counter';
+import "./App.scss";
+import React, { useEffect, useState } from "react";
+import Word from "./components/Word/Word";
+import LanguageButtons from "./components/LanguageButtons/LanguageButtons";
+import Footer from "./components/Footer/Footer";
+import { Language } from "./types/Language";
+import Counter from "./components/Counter/Counter";
 
 const App = () => {
   const [language, setLanguage] = useState<Language>(Language.EN);
@@ -15,8 +15,15 @@ const App = () => {
     restartCounter();
   };
 
+  useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
+
   const startCounter = () => {
-    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
     return () => clearInterval(timer);
   };
 
@@ -29,9 +36,16 @@ const App = () => {
       <main>
         <Word language={language} />
         <div className="language-button-wrapper">
-          <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
+          <LanguageButtons
+            language={language}
+            handleChangeLanguage={handleChangeLanguage}
+          />
         </div>
-        <Counter counter={counter} startCounter={startCounter} restartCounter={restartCounter} />
+        <Counter
+          counter={counter}
+          startCounter={startCounter}
+          restartCounter={restartCounter}
+        />
       </main>
       <Footer />
     </div>
