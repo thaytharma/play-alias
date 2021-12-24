@@ -1,53 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { generateSlug } from "random-word-slugs";
-import randomEnglishWord from "random-words";
-import randomNorwegianWord from "tilfeldigeord";
-import styles from "./Word.module.scss";
-import firstWord, { capitalizeFirstLetter } from "../../helpers/strings";
-import { isEnglish } from "../../helpers/language";
-import { Language } from "../../types/Language";
+import React, { useEffect, useState } from 'react';
+import { generateSlug } from 'random-word-slugs';
+import randomEnglishWord from 'random-words';
+import randomNorwegianWord from 'tilfeldigeord';
+import styles from './Word.module.scss';
+import firstWord, { capitalizeFirstLetter } from '../../helpers/strings';
+import { isEnglish } from '../../helpers/language';
+import { Language } from '../../types/Language';
 
 interface Props {
   language: Language;
-  resetCounter: () => void;
 }
 
-const Word = ({ language, resetCounter }: Props) => {
-  const [word, setWord] = useState<string>("");
+const Word = ({ language }: Props) => {
+  const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
   const randomEnglishSlug = () => {
     const slug = generateSlug(1, {
-      format: "title",
+      format: 'title',
       categories: {
-        adjective: [
-          "color",
-          "appearance",
-          "condition",
-          "personality",
-          "taste",
-          "sounds",
-          "time",
-          "touch",
-          "shapes",
-        ],
+        adjective: ['color', 'appearance', 'condition', 'personality', 'taste', 'sounds', 'time', 'touch', 'shapes'],
         noun: [
-          "animals",
-          "business",
-          "education",
-          "family",
-          "food",
-          "health",
-          "media",
-          "people",
-          "profession",
-          "religion",
-          "science",
-          "sports",
-          "technology",
-          "thing",
-          "time",
-          "transportation",
+          'animals',
+          'business',
+          'education',
+          'family',
+          'food',
+          'health',
+          'media',
+          'people',
+          'profession',
+          'religion',
+          'science',
+          'sports',
+          'technology',
+          'thing',
+          'time',
+          'transportation',
         ],
       },
     });
@@ -55,10 +44,7 @@ const Word = ({ language, resetCounter }: Props) => {
     return slug;
   };
 
-  const generateRandomWordFunctions = [
-    randomEnglishWord(),
-    randomEnglishSlug(),
-  ];
+  const generateRandomWordFunctions = [randomEnglishWord(), randomEnglishSlug()];
 
   useEffect(() => {
     const newWord = generateWord();
@@ -68,9 +54,7 @@ const Word = ({ language, resetCounter }: Props) => {
 
   const generateWord = (): string => {
     const word = isEnglish(language)
-      ? generateRandomWordFunctions[
-          Math.floor(Math.random() * generateRandomWordFunctions.length)
-        ]
+      ? generateRandomWordFunctions[Math.floor(Math.random() * generateRandomWordFunctions.length)]
       : firstWord(randomNorwegianWord.getTilfeldigOrd());
 
     return word;
@@ -87,7 +71,6 @@ const Word = ({ language, resetCounter }: Props) => {
       setWord(nextWord);
       setUsedWords([...usedWords, nextWord]);
     }
-    resetCounter();
   };
 
   return (

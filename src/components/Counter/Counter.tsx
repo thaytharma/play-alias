@@ -1,13 +1,14 @@
-import classNames from "classnames";
-import React from "react";
-import styles from "./Counter.module.scss";
+import classNames from 'classnames';
+import React from 'react';
+import styles from './Counter.module.scss';
 
 interface Props {
   counter: number;
-  resetCounter: () => void;
+  startCounter: () => void;
+  restartCounter: () => void;
 }
 
-const Counter = ({ counter, resetCounter }: Props) => {
+const Counter = ({ counter, restartCounter }: Props) => {
   const className = classNames(styles.counter, {
     [styles.urgent]: counter <= 10,
   });
@@ -19,7 +20,7 @@ const Counter = ({ counter, resetCounter }: Props) => {
 
   function getContent() {
     if (counter === 0) {
-      return <button onClick={resetCounter}>Reset</button>;
+      return <button onClick={restartCounter}>Reset</button>;
     }
     return counter;
   }
