@@ -6,9 +6,9 @@ import Footer from "./components/Footer/Footer";
 import { Language } from "./types/Language";
 import Counter from "./components/Counter/Counter";
 
-const App = () => {
+const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>(Language.EN);
-  const [counter, setCounter] = React.useState(60);
+  const [counter, setCounter] = React.useState<number>(60);
 
   const handleChangeLanguage = (language: Language) => {
     setLanguage(language);

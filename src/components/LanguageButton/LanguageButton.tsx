@@ -7,7 +7,11 @@ interface Props {
   title: string;
 }
 
-const LanguageButton = ({ children, title, onClick }: Props) => {
+const LanguageButton: React.FC<Props> = ({
+  children,
+  title,
+  onClick,
+}: Props) => {
   return (
     <button title={title} className={styles.languageButton} onClick={onClick}>
       <span className={styles.languageButtonText}>{title}</span>

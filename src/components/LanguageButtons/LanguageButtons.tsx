@@ -10,7 +10,10 @@ interface Props {
   handleChangeLanguage: (language: Language) => void;
 }
 
-const LanguageButtons = ({ language, handleChangeLanguage }: Props) => {
+const LanguageButtons: React.FC<Props> = ({
+  language,
+  handleChangeLanguage,
+}: Props) => {
   return (
     <div className={styles.languageButtons}>
       <LanguageButton

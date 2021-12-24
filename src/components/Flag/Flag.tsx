@@ -9,7 +9,7 @@ interface Props {
   isCurrent: boolean;
 }
 
-const Flag = ({ language, isCurrent }: Props) => {
+const Flag: React.FC<Props> = ({ language, isCurrent }: Props) => {
   const classNames = classnames(styles.flag, {
     [styles.current]: isCurrent,
   });

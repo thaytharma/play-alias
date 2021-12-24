@@ -1,6 +1,6 @@
-import classNames from 'classnames';
-import React from 'react';
-import styles from './Counter.module.scss';
+import classNames from "classnames";
+import React from "react";
+import styles from "./Counter.module.scss";
 
 interface Props {
   counter: number;
@@ -8,7 +8,7 @@ interface Props {
   restartCounter: () => void;
 }
 
-const Counter = ({ counter, restartCounter }: Props) => {
+const Counter: React.FC<Props> = ({ counter, restartCounter }: Props) => {
   const className = classNames(styles.counter, {
     [styles.urgent]: counter <= 10,
   });
