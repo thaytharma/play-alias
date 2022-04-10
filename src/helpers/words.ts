@@ -39,5 +39,5 @@ export const generateEnglishWord = () => {
 };
 
 export const generateNorwegianWord = () => {
-  return firstWord(randomNorwegianWord.getTilfeldigOrd());
+  return capitalizeFirstLetter(firstWord(randomNorwegianWord.getTilfeldigOrd()));
 };
