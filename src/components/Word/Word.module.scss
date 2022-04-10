@@ -2,7 +2,6 @@
   text-transform: uppercase;
   position: relative;
   cursor: pointer;
-  text-shadow: 8px 6px 8px #000000;
   color: #ecb365;
   transition: 350ms ease-in-out;
 
@@ -10,10 +9,12 @@
     text-shadow: none;
     color: #ffc678;
   }
+
   .wordButton {
     text-transform: uppercase;
-    animation: bop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards alternate;
     letter-spacing: 2.5px;
+    text-shadow: 0px 5px #000000;
+    animation: bop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards alternate;
   }
 }
 
