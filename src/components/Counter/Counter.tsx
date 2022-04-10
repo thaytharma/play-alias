@@ -1,6 +1,6 @@
-import classNames from "classnames";
-import React from "react";
-import styles from "./Counter.module.scss";
+import classNames from 'classnames';
+import React from 'react';
+import styles from './Counter.module.scss';
 
 interface Props {
   counter: number;
@@ -20,7 +20,7 @@ const Counter: React.FC<Props> = ({ counter, restartCounter }: Props) => {
 
   function getContent() {
     if (counter === 0) {
-      return <button onClick={restartCounter}>Reset</button>;
+      return <button onClick={restartCounter}>Restart</button>;
     }
     return counter;
   }
