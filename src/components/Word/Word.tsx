@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { generateSlug } from 'random-word-slugs';
-import randomEnglishWord from 'random-words';
-import randomNorwegianWord from 'tilfeldigeord';
 import styles from './Word.module.scss';
-import firstWord, { capitalizeFirstLetter } from '../../helpers/strings';
 import { isEnglish } from '../../helpers/language';
 import { Language } from '../../types/Language';
+import { generateEnglishWord, generateNorwegianWord } from '../../helpers/words';
 
 interface Props {
   language: Language;
@@ -15,37 +12,6 @@ const Word: React.FC<Props> = ({ language }: Props) => {
   const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
-  const randomEnglishSlug = () => {
-    const slug = generateSlug(1, {
-      format: 'title',
-      categories: {
-        adjective: ['color', 'appearance', 'condition', 'personality', 'taste', 'sounds', 'time', 'touch', 'shapes'],
-        noun: [
-          'animals',
-          'business',
-          'education',
-          'family',
-          'food',
-          'health',
-          'media',
-          'people',
-          'profession',
-          'religion',
-          'science',
-          'sports',
-          'technology',
-          'thing',
-          'time',
-          'transportation',
-        ],
-      },
-    });
-
-    return slug;
-  };
-
-  const generateRandomWordFunctions = [randomEnglishWord(), randomEnglishSlug()];
-
   useEffect(() => {
     const newWord = generateWord();
     setWord(newWord);
@@ -53,9 +19,7 @@ const Word: React.FC<Props> = ({ language }: Props) => {
   }, [language]);
 
   const generateWord = (): string => {
-    const word = isEnglish(language)
-      ? generateRandomWordFunctions[Math.floor(Math.random() * generateRandomWordFunctions.length)]
-      : firstWord(randomNorwegianWord.getTilfeldigOrd());
+    const word = isEnglish(language) ? generateEnglishWord() : generateNorwegianWord();
 
     return word;
   };
@@ -83,7 +47,7 @@ const Word: React.FC<Props> = ({ language }: Props) => {
           handleWordChange();
         }}
       >
-        {capitalizeFirstLetter(word)}
+        {word}
       </button>
     </h1>
   );
