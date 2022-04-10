@@ -3,7 +3,7 @@
 This app was primarily created to play Alias on the go!
 
 * Built with [React](https://reactjs.org/) / [TypeScript](https://www.typescriptlang.org/) / [SCSS](https://sass-lang.com/) 
-* Deployed to Heroku (https://heroku.com/)
+* Deployed to [Heroku](https://heroku.com/)
 
 ### Available Scripts
 
