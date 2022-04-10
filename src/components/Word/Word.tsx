@@ -13,25 +13,25 @@ const Word: React.FC<Props> = ({ language }: Props) => {
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
   useEffect(() => {
-    const newWord = generateWord();
+    const newWord = generateNewWord();
     setWord(newWord);
     setUsedWords([newWord]);
   }, [language]);
 
-  const generateWord = (): string => {
+  const generateNewWord = (): string => {
     const word = isEnglish(language) ? generateEnglishWord() : generateNorwegianWord();
 
     return word;
   };
 
   const handleWordChange = () => {
-    const newWord = generateWord();
+    const newWord = generateNewWord();
 
     if (!usedWords.includes(newWord)) {
       setWord(newWord);
       setUsedWords([...usedWords, newWord]);
     } else {
-      const nextWord = generateWord();
+      const nextWord = generateNewWord();
       setWord(nextWord);
       setUsedWords([...usedWords, nextWord]);
     }
