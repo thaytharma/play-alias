@@ -1,13 +1,13 @@
-import "./App.scss";
-import React, { useEffect, useState } from "react";
-import Word from "./components/Word/Word";
-import LanguageButtons from "./components/LanguageButtons/LanguageButtons";
-import Footer from "./components/Footer/Footer";
-import { Language } from "./types/Language";
-import Counter from "./components/Counter/Counter";
+import './App.scss';
+import React, { useEffect, useState } from 'react';
+import Word from './components/Word/Word';
+import LanguageButtons from './components/LanguageButtons/LanguageButtons';
+import Footer from './components/Footer/Footer';
+import { Language } from './types/Language';
+import Counter from './components/Counter/Counter';
 
 const App: React.FC = () => {
-  const [language, setLanguage] = useState<Language>(Language.EN);
+  const [language, setLanguage] = useState<Language>(Language.NO);
   const [counter, setCounter] = React.useState<number>(60);
 
   const handleChangeLanguage = (language: Language) => {
@@ -16,14 +16,12 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const timer =
-      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
     return () => clearInterval(timer);
   }, [counter]);
 
   const startCounter = () => {
-    const timer =
-      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
     return () => clearInterval(timer);
   };
 
@@ -36,16 +34,9 @@ const App: React.FC = () => {
       <main>
         <Word language={language} />
         <div className="language-button-wrapper">
-          <LanguageButtons
-            language={language}
-            handleChangeLanguage={handleChangeLanguage}
-          />
+          <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
         </div>
-        <Counter
-          counter={counter}
-          startCounter={startCounter}
-          restartCounter={restartCounter}
-        />
+        <Counter counter={counter} startCounter={startCounter} restartCounter={restartCounter} />
       </main>
       <Footer />
     </div>
