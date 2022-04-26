@@ -3,7 +3,7 @@ import { generateSlug } from 'random-word-slugs';
 import randomNorwegianWord from 'tilfeldigeord';
 import firstWord, { capitalizeFirstLetter } from './strings';
 
-export const generateEnglishWord = () => {
+export const generateEnglishWord = (): string => {
   const randomEnglishSlug = () => {
     const slug = generateSlug(1, {
       format: 'title',
@@ -38,6 +38,6 @@ export const generateEnglishWord = () => {
   return capitalizeFirstLetter(randomWord);
 };
 
-export const generateNorwegianWord = () => {
+export const generateNorwegianWord = (): string => {
   return capitalizeFirstLetter(firstWord(randomNorwegianWord.getTilfeldigOrd()));
 };
