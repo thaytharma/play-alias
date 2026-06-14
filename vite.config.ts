@@ -13,6 +13,14 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Opt into dart-sass's modern compiler API (the legacy JS API is deprecated).
+        api: 'modern-compiler',
+      },
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',
