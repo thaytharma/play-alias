@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Word.module.scss';
-import { isEnglish } from '../../helpers/language';
+import { isEnglish, isFrench } from '../../helpers/language';
 import { Language } from '../../types/Language';
-import { generateEnglishWord, generateNorwegianWord } from '../../helpers/words';
+import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '../../helpers/words';
 
 interface Props {
   language: Language;
@@ -19,9 +19,15 @@ const Word: React.FC<Props> = ({ language }: Props) => {
   }, [language]);
 
   const generateNewWord = (): string => {
-    const word = isEnglish(language) ? generateEnglishWord() : generateNorwegianWord();
+    if (isEnglish(language)) {
+      return generateEnglishWord();
+    }
 
-    return word;
+    if (isFrench(language)) {
+      return generateFrenchWord();
+    }
+
+    return generateNorwegianWord();
   };
 
   const handleWordChange = () => {

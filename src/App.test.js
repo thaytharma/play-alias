@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { Language } from './types/Language';
 
-test('renders learn react link', () => {
+test('renders a language button for every supported language', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+  expect(screen.getByTitle(Language.EN)).toBeInTheDocument();
+  expect(screen.getByTitle(Language.NO)).toBeInTheDocument();
+  expect(screen.getByTitle(Language.FR)).toBeInTheDocument();
 });

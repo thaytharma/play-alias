@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEnglish, isNorwegian } from '../../helpers/language';
+import { isEnglish, isFrench, isNorwegian } from '../../helpers/language';
 import { Language } from '../../types/Language';
 import Flag from '../Flag/Flag';
 import LanguageButton from '../LanguageButton/LanguageButton';
@@ -19,7 +19,7 @@ const LanguageButtons: React.FC<Props> = ({ language, handleChangeLanguage }: Pr
           handleChangeLanguage(Language.NO);
         }}
       >
-        <Flag language={Language.EN} isCurrent={isEnglish(language)} />
+        <Flag language={Language.NO} isCurrent={!isNorwegian(language)} />
       </LanguageButton>
       <LanguageButton
         title={Language.EN}
@@ -27,7 +27,15 @@ const LanguageButtons: React.FC<Props> = ({ language, handleChangeLanguage }: Pr
           handleChangeLanguage(Language.EN);
         }}
       >
-        <Flag language={Language.NO} isCurrent={isNorwegian(language)} />
+        <Flag language={Language.EN} isCurrent={!isEnglish(language)} />
+      </LanguageButton>
+      <LanguageButton
+        title={Language.FR}
+        onClick={() => {
+          handleChangeLanguage(Language.FR);
+        }}
+      >
+        <Flag language={Language.FR} isCurrent={!isFrench(language)} />
       </LanguageButton>
     </div>
   );
