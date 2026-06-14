@@ -8,9 +8,10 @@ import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '
 interface Props {
   language: Language;
   isTimeLow: boolean;
+  onWordChange: () => void;
 }
 
-const Word: React.FC<Props> = ({ language, isTimeLow }: Props) => {
+const Word: React.FC<Props> = ({ language, isTimeLow, onWordChange }: Props) => {
   const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
@@ -48,6 +49,7 @@ const Word: React.FC<Props> = ({ language, isTimeLow }: Props) => {
     const nextWord = generateUnusedWord();
     setWord(nextWord);
     setUsedWords([...usedWords, nextWord]);
+    onWordChange();
   };
 
   return (

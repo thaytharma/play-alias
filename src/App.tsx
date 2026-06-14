@@ -51,7 +51,7 @@ const App: React.FC = () => {
     <TranslationProvider language={language}>
       <div className="app">
         <main>
-          <Word language={language} isTimeLow={isTimeRunningOut(counter)} />
+          <Word language={language} isTimeLow={isTimeRunningOut(counter)} onWordChange={restartCounter} />
           <div className="language-button-wrapper">
             <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
           </div>
