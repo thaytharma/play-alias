@@ -1,33 +1,30 @@
-## Play Alias
-[Play alias](https://play-alias.herokuapp.com/) generates random words in English or Norwegian.
-This app was primarily created to play Alias on the go!
+# Play Alias
 
-* Built with [React](https://reactjs.org/) / [TypeScript](https://www.typescriptlang.org/) / [SCSS](https://sass-lang.com/) 
-* Deployed to [Heroku](https://heroku.com/)
+Generates random words in **English**, **Norwegian** and **French** for playing
+[Alias](https://en.wikipedia.org/wiki/Alias_%28board_game%29) — the word-guessing
+party game — on the go. Pick a language, describe the word to your team without
+saying it, and beat the 60-second timer.
 
-### Available Scripts
+Built with [React](https://react.dev/) 18, [TypeScript](https://www.typescriptlang.org/),
+[Vite](https://vitejs.dev/) and [SCSS](https://sass-lang.com/).
 
-In the project directory, you can run:
+## Getting started
 
-#### `yarn start`
+```bash
+npm install
+npm run dev
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Then open [http://localhost:3000](http://localhost:3000).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Scripts
 
-#### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-#### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server with hot reload |
+| `npm run build` | Type-check and build for production into `build/` |
+| `npm run preview` | Preview the production build locally |
+| `npm test` | Run the Vitest suite once |
+| `npm run test:watch` | Run Vitest in watch mode |
+| `npm run lint` | Lint with ESLint |
+| `npm run format` | Format the codebase with Prettier |
