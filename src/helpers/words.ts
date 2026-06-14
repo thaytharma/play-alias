@@ -33,8 +33,8 @@ export const generateEnglishWord = (): string => {
 
     return slug;
   };
-  const generateRandomEnglishWordsFunctions = [randomEnglishWord(), randomEnglishSlug()];
-  const randomWord = generateRandomEnglishWordsFunctions[Math.floor(Math.random() * generateRandomEnglishWordsFunctions.length)];
+  const englishWordCandidates = [randomEnglishWord(), randomEnglishSlug()];
+  const randomWord = englishWordCandidates[Math.floor(Math.random() * englishWordCandidates.length)];
 
   return capitalizeFirstLetter(randomWord);
 };
