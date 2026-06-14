@@ -1,6 +1,15 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { Language } from '../types/Language';
-import { DEFAULT_LANGUAGE, getInitialLanguage, parseLanguage, saveLanguage } from './preferences';
+import {
+  DEFAULT_DURATION,
+  DEFAULT_LANGUAGE,
+  getInitialDuration,
+  getInitialLanguage,
+  parseDuration,
+  parseLanguage,
+  saveDuration,
+  saveLanguage,
+} from './preferences';
 
 describe('parseLanguage', () => {
   it('accepts short codes and full names, case-insensitively', () => {
@@ -50,5 +59,38 @@ describe('saveLanguage', () => {
   it('round-trips through getInitialLanguage', () => {
     saveLanguage(Language.FR);
     expect(getInitialLanguage('')).toBe(Language.FR);
+  });
+});
+
+describe('parseDuration', () => {
+  it('accepts known durations', () => {
+    expect(parseDuration('60')).toBe(60);
+    expect(parseDuration('120')).toBe(120);
+  });
+
+  it('rejects unknown or invalid durations', () => {
+    expect(parseDuration('45')).toBeNull();
+    expect(parseDuration('abc')).toBeNull();
+    expect(parseDuration(null)).toBeNull();
+  });
+});
+
+describe('duration storage', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('defaults when nothing is stored', () => {
+    expect(getInitialDuration()).toBe(DEFAULT_DURATION);
+  });
+
+  it('round-trips through getInitialDuration', () => {
+    saveDuration(120);
+    expect(getInitialDuration()).toBe(120);
+  });
+
+  it('ignores a stored value that is no longer a valid option', () => {
+    localStorage.setItem('alias.duration', '999');
+    expect(getInitialDuration()).toBe(DEFAULT_DURATION);
   });
 });

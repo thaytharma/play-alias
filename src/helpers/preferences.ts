@@ -56,3 +56,26 @@ export function getInitialLanguage(search: string = window.location.search): Lan
 export function saveLanguage(language: Language): void {
   writeStorage(LANGUAGE_STORAGE_KEY, language);
 }
+
+const DURATION_STORAGE_KEY = 'alias.duration';
+
+/** Selectable round lengths, in seconds. */
+export const DURATION_OPTIONS: readonly number[] = [60, 90, 120];
+export const DEFAULT_DURATION = 60;
+
+/** Resolve a stored value to a known duration, or null. */
+export function parseDuration(value: string | null | undefined): number | null {
+  if (!value) {
+    return null;
+  }
+  const parsed = Number(value);
+  return DURATION_OPTIONS.includes(parsed) ? parsed : null;
+}
+
+export function getInitialDuration(): number {
+  return parseDuration(readStorage(DURATION_STORAGE_KEY)) ?? DEFAULT_DURATION;
+}
+
+export function saveDuration(duration: number): void {
+  writeStorage(DURATION_STORAGE_KEY, String(duration));
+}

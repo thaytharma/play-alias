@@ -5,21 +5,33 @@ import LanguageButtons from './components/LanguageButtons/LanguageButtons';
 import Footer from './components/Footer/Footer';
 import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
-import { getInitialLanguage, saveLanguage } from './helpers/preferences';
+import Settings from './components/Settings/Settings';
+import { getInitialDuration, getInitialLanguage, saveDuration, saveLanguage } from './helpers/preferences';
 import { isTimeRunningOut } from './helpers/timer';
 
 const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
-  const [counter, setCounter] = React.useState<number>(60);
+  const [duration, setDuration] = useState<number>(getInitialDuration);
+  const [counter, setCounter] = React.useState<number>(duration);
 
   // Persist the language (covers both `?lang=` visits and manual changes).
   useEffect(() => {
     saveLanguage(language);
   }, [language]);
 
+  // Persist the chosen round length.
+  useEffect(() => {
+    saveDuration(duration);
+  }, [duration]);
+
   const handleChangeLanguage = (language: Language) => {
     setLanguage(language);
     restartCounter();
+  };
+
+  const handleChangeDuration = (nextDuration: number) => {
+    setDuration(nextDuration);
+    setCounter(nextDuration);
   };
 
   useEffect(() => {
@@ -31,7 +43,7 @@ const App: React.FC = () => {
   }, [counter]);
 
   const restartCounter = () => {
-    setCounter(60);
+    setCounter(duration);
   };
 
   return (
@@ -40,6 +52,9 @@ const App: React.FC = () => {
         <Word language={language} isTimeLow={isTimeRunningOut(counter)} />
         <div className="language-button-wrapper">
           <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
+        </div>
+        <div className="settings-wrapper">
+          <Settings duration={duration} onChangeDuration={handleChangeDuration} />
         </div>
         <Counter counter={counter} restartCounter={restartCounter} />
       </main>
