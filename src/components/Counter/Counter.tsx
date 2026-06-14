@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { isTimeRunningOut } from '../../helpers/timer';
+import { useTranslation } from '../../i18n/useTranslation';
 import styles from './Counter.module.scss';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const Counter: React.FC<Props> = ({ counter, restartCounter }: Props) => {
+  const t = useTranslation();
   const className = classNames(styles.counter, {
     [styles.urgent]: isTimeRunningOut(counter),
   });
@@ -20,7 +22,7 @@ const Counter: React.FC<Props> = ({ counter, restartCounter }: Props) => {
 
   function getContent() {
     if (counter === 0) {
-      return <button onClick={restartCounter}>Restart</button>;
+      return <button onClick={restartCounter}>{t('restart')}</button>;
     }
     return counter;
   }

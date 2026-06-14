@@ -8,6 +8,7 @@ import Counter from './components/Counter/Counter';
 import Settings from './components/Settings/Settings';
 import { getInitialDuration, getInitialLanguage, saveDuration, saveLanguage } from './helpers/preferences';
 import { isTimeRunningOut } from './helpers/timer';
+import { TranslationProvider } from './i18n/useTranslation';
 
 const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
@@ -47,19 +48,21 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app">
-      <main>
-        <Word language={language} isTimeLow={isTimeRunningOut(counter)} />
-        <div className="language-button-wrapper">
-          <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
-        </div>
-        <div className="settings-wrapper">
-          <Settings duration={duration} onChangeDuration={handleChangeDuration} />
-        </div>
-        <Counter counter={counter} restartCounter={restartCounter} />
-      </main>
-      <Footer />
-    </div>
+    <TranslationProvider language={language}>
+      <div className="app">
+        <main>
+          <Word language={language} isTimeLow={isTimeRunningOut(counter)} />
+          <div className="language-button-wrapper">
+            <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
+          </div>
+          <div className="settings-wrapper">
+            <Settings duration={duration} onChangeDuration={handleChangeDuration} />
+          </div>
+          <Counter counter={counter} restartCounter={restartCounter} />
+        </main>
+        <Footer />
+      </div>
+    </TranslationProvider>
   );
 };
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { isEnglish, isFrench, isNorwegian } from '../../helpers/language';
 import { Language } from '../../types/Language';
+import { languageNameKeys } from '../../i18n/translations';
+import { useTranslation } from '../../i18n/useTranslation';
 import Flag from '../Flag/Flag';
 import LanguageButton from '../LanguageButton/LanguageButton';
 import styles from './LanguageButtons.module.scss';
@@ -11,10 +13,12 @@ interface Props {
 }
 
 const LanguageButtons: React.FC<Props> = ({ language, handleChangeLanguage }: Props) => {
+  const t = useTranslation();
+
   return (
     <div className={styles.languageButtons}>
       <LanguageButton
-        title={Language.NO}
+        title={t(languageNameKeys[Language.NO])}
         onClick={() => {
           handleChangeLanguage(Language.NO);
         }}
@@ -22,7 +26,7 @@ const LanguageButtons: React.FC<Props> = ({ language, handleChangeLanguage }: Pr
         <Flag language={Language.NO} isCurrent={!isNorwegian(language)} />
       </LanguageButton>
       <LanguageButton
-        title={Language.EN}
+        title={t(languageNameKeys[Language.EN])}
         onClick={() => {
           handleChangeLanguage(Language.EN);
         }}
@@ -30,7 +34,7 @@ const LanguageButtons: React.FC<Props> = ({ language, handleChangeLanguage }: Pr
         <Flag language={Language.EN} isCurrent={!isEnglish(language)} />
       </LanguageButton>
       <LanguageButton
-        title={Language.FR}
+        title={t(languageNameKeys[Language.FR])}
         onClick={() => {
           handleChangeLanguage(Language.FR);
         }}

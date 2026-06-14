@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { DURATION_OPTIONS } from '../../helpers/preferences';
+import { useTranslation } from '../../i18n/useTranslation';
 import styles from './Settings.module.scss';
 
 interface Props {
@@ -9,10 +10,12 @@ interface Props {
 }
 
 const Settings: React.FC<Props> = ({ duration, onChangeDuration }: Props) => {
+  const t = useTranslation();
+
   return (
     <div className={styles.settings}>
-      <span className={styles.label}>Timer</span>
-      <div className={styles.options} role="group" aria-label="Timer duration">
+      <span className={styles.label}>{t('timer')}</span>
+      <div className={styles.options} role="group" aria-label={t('timer')}>
         {DURATION_OPTIONS.map((option) => (
           <button
             key={option}
