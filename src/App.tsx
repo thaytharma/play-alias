@@ -47,11 +47,19 @@ const App: React.FC = () => {
     setCounter(duration);
   };
 
+  const handleWordChange = () => {
+    // Mid-round a new word just swaps the word; once time is up, changing the
+    // word also starts the next round's timer.
+    if (counter === 0) {
+      restartCounter();
+    }
+  };
+
   return (
     <TranslationProvider language={language}>
       <div className="app">
         <main>
-          <Word language={language} isTimeLow={isTimeRunningOut(counter)} onWordChange={restartCounter} />
+          <Word language={language} isTimeLow={isTimeRunningOut(counter)} onWordChange={handleWordChange} />
           <div className="language-button-wrapper">
             <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
           </div>
