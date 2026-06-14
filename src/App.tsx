@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer';
 import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
 import { getInitialLanguage, saveLanguage } from './helpers/preferences';
+import { isTimeRunningOut } from './helpers/timer';
 
 const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
@@ -36,7 +37,7 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <main>
-        <Word language={language} />
+        <Word language={language} isTimeLow={isTimeRunningOut(counter)} />
         <div className="language-button-wrapper">
           <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
         </div>

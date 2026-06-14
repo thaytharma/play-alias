@@ -17,6 +17,10 @@
     animation: bop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards alternate;
     padding: 2.5rem;
   }
+
+  &.timeLow {
+    animation: shake 0.4s ease-in-out infinite;
+  }
 }
 
 @keyframes bop {
@@ -28,5 +32,18 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+  25% {
+    transform: translateX(-4px) rotate(-1.5deg);
+  }
+  75% {
+    transform: translateX(4px) rotate(1.5deg);
   }
 }

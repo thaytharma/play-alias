@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import { isTimeRunningOut } from '../../helpers/timer';
 import styles from './Counter.module.scss';
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 
 const Counter: React.FC<Props> = ({ counter, restartCounter }: Props) => {
   const className = classNames(styles.counter, {
-    [styles.urgent]: counter <= 10,
+    [styles.urgent]: isTimeRunningOut(counter),
   });
   return (
     <span key={counter} className={className}>
