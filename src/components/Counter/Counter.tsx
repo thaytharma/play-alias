@@ -4,7 +4,6 @@ import styles from './Counter.module.scss';
 
 interface Props {
   counter: number;
-  startCounter: () => void;
   restartCounter: () => void;
 }
 

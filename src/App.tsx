@@ -20,11 +20,6 @@ const App: React.FC = () => {
     return () => clearInterval(timer);
   }, [counter]);
 
-  const startCounter = () => {
-    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    return () => clearInterval(timer);
-  };
-
   const restartCounter = () => {
     setCounter(60);
   };
@@ -36,7 +31,7 @@ const App: React.FC = () => {
         <div className="language-button-wrapper">
           <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
         </div>
-        <Counter counter={counter} startCounter={startCounter} restartCounter={restartCounter} />
+        <Counter counter={counter} restartCounter={restartCounter} />
       </main>
       <Footer />
     </div>
