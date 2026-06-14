@@ -30,17 +30,22 @@ const Word: React.FC<Props> = ({ language }: Props) => {
     return generateNorwegianWord();
   };
 
-  const handleWordChange = () => {
-    const newWord = generateNewWord();
-
-    if (!usedWords.includes(newWord)) {
-      setWord(newWord);
-      setUsedWords([...usedWords, newWord]);
-    } else {
-      const nextWord = generateNewWord();
-      setWord(nextWord);
-      setUsedWords([...usedWords, nextWord]);
+  // Try a few times to surface a word that hasn't been shown yet, falling back to
+  // whatever we drew last if the pool keeps repeating.
+  const generateUnusedWord = (): string => {
+    for (let attempt = 0; attempt < 10; attempt++) {
+      const candidate = generateNewWord();
+      if (!usedWords.includes(candidate)) {
+        return candidate;
+      }
     }
+    return generateNewWord();
+  };
+
+  const handleWordChange = () => {
+    const nextWord = generateUnusedWord();
+    setWord(nextWord);
+    setUsedWords([...usedWords, nextWord]);
   };
 
   return (
