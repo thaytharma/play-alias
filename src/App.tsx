@@ -5,10 +5,16 @@ import LanguageButtons from './components/LanguageButtons/LanguageButtons';
 import Footer from './components/Footer/Footer';
 import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
+import { getInitialLanguage, saveLanguage } from './helpers/preferences';
 
 const App: React.FC = () => {
-  const [language, setLanguage] = useState<Language>(Language.NO);
+  const [language, setLanguage] = useState<Language>(getInitialLanguage);
   const [counter, setCounter] = React.useState<number>(60);
+
+  // Persist the language (covers both `?lang=` visits and manual changes).
+  useEffect(() => {
+    saveLanguage(language);
+  }, [language]);
 
   const handleChangeLanguage = (language: Language) => {
     setLanguage(language);
