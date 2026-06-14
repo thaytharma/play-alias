@@ -7,6 +7,21 @@
   }
 }
 
+.timesUp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+
+.hint {
+  font-size: 0.5em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 @keyframes shake {
   0%,
   100% {

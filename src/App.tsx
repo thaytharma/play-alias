@@ -58,7 +58,7 @@ const App: React.FC = () => {
           <div className="settings-wrapper">
             <Settings duration={duration} onChangeDuration={handleChangeDuration} />
           </div>
-          <Counter counter={counter} restartCounter={restartCounter} />
+          <Counter counter={counter} />
         </main>
         <Footer />
       </div>

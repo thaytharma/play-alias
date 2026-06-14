@@ -6,26 +6,29 @@ import styles from './Counter.module.scss';
 
 interface Props {
   counter: number;
-  restartCounter: () => void;
 }
 
-const Counter: React.FC<Props> = ({ counter, restartCounter }: Props) => {
+const Counter: React.FC<Props> = ({ counter }: Props) => {
   const t = useTranslation();
+
+  if (counter === 0) {
+    return (
+      <div className={styles.timesUp}>
+        <span>{t('timesUp')}</span>
+        <span className={styles.hint}>{t('clickWordToRestart')}</span>
+      </div>
+    );
+  }
+
   const className = classNames(styles.counter, {
     [styles.urgent]: isTimeRunningOut(counter),
   });
+
   return (
     <span key={counter} className={className}>
-      {getContent()}
+      {counter}
     </span>
   );
-
-  function getContent() {
-    if (counter === 0) {
-      return <button onClick={restartCounter}>{t('restart')}</button>;
-    }
-    return counter;
-  }
 };
 
 export default Counter;

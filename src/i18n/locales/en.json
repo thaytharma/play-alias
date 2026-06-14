@@ -1,5 +1,6 @@
 {
-  "restart": "Restart",
+  "timesUp": "Time's up!",
+  "clickWordToRestart": "Click the word to restart the timer",
   "timer": "Timer",
   "languageEnglish": "English",
   "languageNorwegian": "Norwegian",

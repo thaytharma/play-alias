@@ -1,5 +1,6 @@
 {
-  "restart": "Start på nytt",
+  "timesUp": "Tiden er ute",
+  "clickWordToRestart": "Klikk på ordet for å starte tiden på nytt",
   "timer": "Tid",
   "languageEnglish": "Engelsk",
   "languageNorwegian": "Norsk",

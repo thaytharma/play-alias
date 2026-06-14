@@ -1,5 +1,6 @@
 {
-  "restart": "Recommencer",
+  "timesUp": "Temps écoulé !",
+  "clickWordToRestart": "Cliquez sur le mot pour relancer le minuteur",
   "timer": "Minuteur",
   "languageEnglish": "Anglais",
   "languageNorwegian": "Norvégien",
