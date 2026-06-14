@@ -19,8 +19,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sass": "^1.70.0",
-    "tilfeldigeord": "^1.0.5",
-    "web-vitals": "^1.0.1"
+    "tilfeldigeord": "^1.0.5"
   },
   "scripts": {
     "dev": "vite",
@@ -31,18 +30,6 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,scss,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,scss,json}\""
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@types/node": "^20.19.43",
