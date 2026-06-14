@@ -1,4 +1,4 @@
-import { Language } from "../types/Language";
+import { Language } from '../types/Language';
 
 export function isEnglish(language: Language): boolean {
   return language === Language.EN;

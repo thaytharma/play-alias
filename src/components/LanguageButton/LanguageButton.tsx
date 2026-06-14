@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./LanguageButton.module.scss";
+import React from 'react';
+import styles from './LanguageButton.module.scss';
 
 interface Props {
   children: React.ReactNode;
@@ -7,11 +7,7 @@ interface Props {
   title: string;
 }
 
-const LanguageButton: React.FC<Props> = ({
-  children,
-  title,
-  onClick,
-}: Props) => {
+const LanguageButton: React.FC<Props> = ({ children, title, onClick }: Props) => {
   return (
     <button title={title} className={styles.languageButton} onClick={onClick}>
       <span className={styles.languageButtonText}>{title}</span>
