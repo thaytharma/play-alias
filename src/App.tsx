@@ -16,8 +16,11 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    return () => clearInterval(timer);
+    if (counter <= 0) {
+      return;
+    }
+    const timer = setTimeout(() => setCounter(counter - 1), 1000);
+    return () => clearTimeout(timer);
   }, [counter]);
 
   const restartCounter = () => {
