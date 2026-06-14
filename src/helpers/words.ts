@@ -1,7 +1,7 @@
 import randomEnglishWord from 'random-words';
 import { generateSlug } from 'random-word-slugs';
 import randomNorwegianWord from 'tilfeldigeord';
-import allFrenchWords from 'an-array-of-french-words';
+import frenchWords from '../data/frenchWords';
 import firstWord, { capitalizeFirstLetter } from './strings';
 
 export const generateEnglishWord = (): string => {
@@ -43,13 +43,9 @@ export const generateNorwegianWord = (): string => {
   return capitalizeFirstLetter(firstWord(randomNorwegianWord.getTilfeldigOrd()));
 };
 
-// `an-array-of-french-words` is a ~336k entry spell-check corpus that includes many
-// rare, archaic and inflected forms. Narrow it once to single, lowercase words of a
-// playable length so the game surfaces recognisable words rather than obscure ones.
-const frenchWordPool = allFrenchWords.filter((word) => /^[a-zàâäçéèêëîïôöùûüÿœæ]{4,10}$/.test(word));
-
+// A hand-picked list of common, describable French words (see ../data/frenchWords).
 export const generateFrenchWord = (): string => {
-  const randomWord = frenchWordPool[Math.floor(Math.random() * frenchWordPool.length)];
+  const randomWord = frenchWords[Math.floor(Math.random() * frenchWords.length)];
 
   return capitalizeFirstLetter(randomWord);
 };
