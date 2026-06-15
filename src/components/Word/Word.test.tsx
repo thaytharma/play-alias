@@ -6,14 +6,14 @@ import Word from './Word';
 
 describe('Word', () => {
   it('shows a word for the selected language', () => {
-    render(<Word language={Language.EN} isTimeLow={false} onWordChange={vi.fn()} />);
+    render(<Word language={Language.EN} onWordChange={vi.fn()} />);
 
     expect(screen.getByRole('button').textContent?.trim().length).toBeGreaterThan(0);
   });
 
   it('calls onWordChange when the word is clicked', async () => {
     const onWordChange = vi.fn();
-    render(<Word language={Language.EN} isTimeLow={false} onWordChange={onWordChange} />);
+    render(<Word language={Language.EN} onWordChange={onWordChange} />);
 
     await userEvent.click(screen.getByRole('button'));
 

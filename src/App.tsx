@@ -9,7 +9,6 @@ import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
 import SettingsModal from './components/SettingsModal/SettingsModal';
 import { getInitialDuration, getInitialLanguage, saveDuration, saveLanguage } from './helpers/preferences';
-import { isTimeRunningOut } from './helpers/timer';
 import { TranslationProvider } from './i18n/useTranslation';
 
 const App: React.FC = () => {
@@ -74,7 +73,7 @@ const App: React.FC = () => {
         <main>
           {started ? (
             <>
-              <Word language={language} isTimeLow={isTimeRunningOut(counter)} onWordChange={handleWordChange} />
+              <Word language={language} onWordChange={handleWordChange} />
               <Counter counter={counter} />
             </>
           ) : (

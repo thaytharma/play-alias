@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import styles from './Word.module.scss';
 import { isEnglish, isFrench } from '../../helpers/language';
@@ -7,11 +6,10 @@ import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '
 
 interface Props {
   language: Language;
-  isTimeLow: boolean;
   onWordChange: () => void;
 }
 
-const Word: React.FC<Props> = ({ language, isTimeLow, onWordChange }: Props) => {
+const Word: React.FC<Props> = ({ language, onWordChange }: Props) => {
   const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
@@ -53,7 +51,7 @@ const Word: React.FC<Props> = ({ language, isTimeLow, onWordChange }: Props) => 
   };
 
   return (
-    <h1 className={classNames(styles.word, { [styles.timeLow]: isTimeLow })}>
+    <h1 className={styles.word}>
       <button
         key={word}
         tabIndex={0}
