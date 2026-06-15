@@ -9,5 +9,10 @@
   "settings": "Innstillinger",
   "close": "Lukk",
   "tapToStart": "Trykk for å starte",
-  "stop": "Stopp"
+  "stop": "Stopp",
+  "rules": "Slik spiller du",
+  "rulesStep1": "Del dere inn i to eller flere lag.",
+  "rulesStep2": "Når det er din tur, forklar ordet på skjermen uten å si det eller deler av det.",
+  "rulesStep3": "Laget ditt gjetter så mange ord som mulig før tiden er ute.",
+  "rulesStep4": "Trykk på ordet for å hente det neste – ett poeng for hvert riktige svar."
 }

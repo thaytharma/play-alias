@@ -25,6 +25,18 @@ test('starts on the splash and reveals the game word once started', async () => 
   expect(screen.getByRole('heading')).toBeInTheDocument();
 });
 
+test('shows the rules button on the splash and the stop button during a round', async () => {
+  render(<App />);
+
+  expect(screen.getByRole('button', { name: translations[Language.NO].rules })).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: translations[Language.NO].stop })).not.toBeInTheDocument();
+
+  await userEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
+
+  expect(screen.getByRole('button', { name: translations[Language.NO].stop })).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: translations[Language.NO].rules })).not.toBeInTheDocument();
+});
+
 test('stopping returns to the splash', async () => {
   render(<App />);
 

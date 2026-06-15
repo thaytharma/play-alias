@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Word from './components/Word/Word';
 import Splash from './components/Splash/Splash';
 import StopButton from './components/StopButton/StopButton';
+import RulesModal from './components/RulesModal/RulesModal';
 import Footer from './components/Footer/Footer';
 import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
@@ -81,7 +82,7 @@ const App: React.FC = () => {
           )}
         </main>
         <Footer />
-        {started && <StopButton onStop={handleStop} />}
+        {started ? <StopButton onStop={handleStop} /> : <RulesModal />}
         <SettingsModal
           language={language}
           handleChangeLanguage={handleChangeLanguage}

@@ -9,5 +9,10 @@
   "settings": "Paramètres",
   "close": "Fermer",
   "tapToStart": "Touchez pour commencer",
-  "stop": "Arrêter"
+  "stop": "Arrêter",
+  "rules": "Comment jouer",
+  "rulesStep1": "Formez deux équipes ou plus.",
+  "rulesStep2": "À votre tour, faites deviner le mot affiché sans le dire ni en dire une partie.",
+  "rulesStep3": "Votre équipe devine le plus de mots possible avant la fin du minuteur.",
+  "rulesStep4": "Touchez le mot pour passer au suivant — un point par bonne réponse."
 }

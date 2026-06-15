@@ -9,5 +9,10 @@
   "settings": "Settings",
   "close": "Close",
   "tapToStart": "Tap to start",
-  "stop": "Stop"
+  "stop": "Stop",
+  "rules": "How to play",
+  "rulesStep1": "Split into two or more teams.",
+  "rulesStep2": "On your turn, describe the word on screen without saying it or any part of it.",
+  "rulesStep3": "Your team guesses as many words as they can before the timer runs out.",
+  "rulesStep4": "Tap the word to bring up the next one — score a point for each correct guess."
 }
