@@ -107,7 +107,8 @@ test('plays a sound when the word changes', () => {
   expect(playWordChange).toHaveBeenCalledWith('low');
 });
 
-test('Space starts the round from the splash', () => {  render(<App />);
+test('Space starts the round from the splash', () => {
+  render(<App />);
 
   fireEvent.keyDown(document.body, { key: ' ' });
 

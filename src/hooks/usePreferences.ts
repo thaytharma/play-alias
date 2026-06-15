@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Language } from '../types/Language';
-import { Appearance, Theme } from '../types/Theme';
-import { SoundLevel } from '../helpers/sound';
+import type { Language } from '../types/Language';
+import type { Appearance, Theme } from '../types/Theme';
+import type { SoundLevel } from '../helpers/sound';
 import {
   getInitialAppearance,
   getInitialDuration,

@@ -1,6 +1,6 @@
 import { Language } from '../types/Language';
-import { Appearance, Theme } from '../types/Theme';
-import { SoundLevel } from './sound';
+import type { Appearance, Theme } from '../types/Theme';
+import type { SoundLevel } from './sound';
 
 const LANGUAGE_STORAGE_KEY = 'alias.language';
 const LANGUAGE_QUERY_KEY = 'lang';
@@ -166,5 +166,7 @@ export function saveStoredWords(language: Language, words: string[]): void {
 
 /** Forget the shown-words history for every language. */
 export function clearStoredWords(): void {
-  Object.values(Language).forEach((language) => removeStorage(USED_WORDS_KEY_PREFIX + language));
+  Object.values(Language).forEach((language) => {
+    removeStorage(USED_WORDS_KEY_PREFIX + language);
+  });
 }

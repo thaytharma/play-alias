@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
-import { TranslationKey } from '../../i18n/translations';
+import type { TranslationKey } from '../../i18n/translations';
 import Modal from '../Modal/Modal';
 import styles from './RulesModal.module.scss';
 

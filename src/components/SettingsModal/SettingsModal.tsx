@@ -1,7 +1,7 @@
-import React from 'react';
-import { Language } from '../../types/Language';
-import { Appearance, Theme, THEME_LABELS } from '../../types/Theme';
-import { SoundLevel } from '../../helpers/sound';
+import type React from 'react';
+import type { Language } from '../../types/Language';
+import { type Appearance, type Theme, THEME_LABELS } from '../../types/Theme';
+import type { SoundLevel } from '../../helpers/sound';
 import { useTranslation } from '../../i18n/useTranslation';
 import { APPEARANCE_OPTIONS, DURATION_OPTIONS, SOUND_OPTIONS, THEME_OPTIONS } from '../../helpers/preferences';
 import { LANGUAGE_ENDONYMS, LANGUAGE_ORDER } from '../../helpers/language';
@@ -61,12 +61,7 @@ const SettingsModal: React.FC<Props> = ({
   return (
     <Modal label={t('settings')} side="right" icon={gearIcon}>
       <div className={styles.body}>
-        <OptionGroup
-          label={t('language')}
-          options={languageOptions}
-          value={language}
-          onChange={handleChangeLanguage}
-        />
+        <OptionGroup label={t('language')} options={languageOptions} value={language} onChange={handleChangeLanguage} />
         <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
         {soundSupported && (
           <OptionGroup label={t('sound')} options={soundOptions} value={sound} onChange={onChangeSound} />

@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useMemo } from 'react';
-import { Language } from '../types/Language';
-import { TranslationKey, translations } from './translations';
+import type React from 'react';
+import { createContext, useContext, useMemo } from 'react';
+import type { Language } from '../types/Language';
+import { type TranslationKey, translations } from './translations';
 
 type TranslateFn = (key: TranslationKey) => string;
 

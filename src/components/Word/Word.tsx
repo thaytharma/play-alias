@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import styles from './Word.module.scss';
 import { isEnglish, isFrench } from '../../helpers/language';
-import { Language } from '../../types/Language';
+import type { Language } from '../../types/Language';
 import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '../../helpers/words';
 import { getStoredWords, saveStoredWords } from '../../helpers/preferences';
 import { APP_NAME } from '../../constants';
@@ -23,6 +23,7 @@ const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }
   const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-seed only when the language changes
   useEffect(() => {
     // Seed from previously-shown words so they keep being avoided across sessions.
     const stored = getStoredWords(language);
@@ -83,6 +84,7 @@ const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }
     <h1 className={styles.word}>
       <button
         key={display}
+        type="button"
         tabIndex={0}
         className={styles.wordButton}
         onClick={() => {

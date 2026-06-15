@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import type React from 'react';
 import { isTimeRunningOut } from '../../helpers/timer';
 import { useTranslation } from '../../i18n/useTranslation';
 import styles from './Counter.module.scss';

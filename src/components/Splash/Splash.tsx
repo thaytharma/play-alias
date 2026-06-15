@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import styles from './Splash.module.scss';
 import { useTranslation } from '../../i18n/useTranslation';
 import { APP_NAME } from '../../constants';

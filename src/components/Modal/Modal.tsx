@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
 import IconButton from '../IconButton/IconButton';
 import styles from './Modal.module.scss';

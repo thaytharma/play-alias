@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Language } from '../../types/Language';
 import { getStoredWords } from '../../helpers/preferences';
 import { APP_NAME } from '../../constants';
-import Word, { WordHandle } from './Word';
+import Word, { type WordHandle } from './Word';
 
 beforeEach(() => {
   localStorage.clear();
