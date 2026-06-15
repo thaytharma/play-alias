@@ -21,6 +21,7 @@ describe('RulesModal', () => {
     await userEvent.click(screen.getByRole('button', { name: translations[Language.EN].rules }));
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByText(translations[Language.EN].howToPlay)).toBeInTheDocument();
     expect(screen.getByText(translations[Language.EN].rulesStep1)).toBeInTheDocument();
     expect(screen.getByText(translations[Language.EN].rulesStep4)).toBeInTheDocument();
   });

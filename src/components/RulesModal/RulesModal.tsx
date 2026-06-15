@@ -17,25 +17,30 @@ const RulesModal: React.FC = () => {
 
   return (
     <Modal label={t('rules')} side="left" icon={helpIcon}>
-      <ol className={styles.steps}>
-        {STEP_KEYS.map((key) => (
-          <li key={key}>{t(key)}</li>
-        ))}
-      </ol>
+      <div className={styles.body}>
+        <section className={styles.section}>
+          <span className={styles.label}>{t('howToPlay')}</span>
+          <ol className={styles.steps}>
+            {STEP_KEYS.map((key) => (
+              <li key={key}>{t(key)}</li>
+            ))}
+          </ol>
+        </section>
 
-      <section className={styles.shortcuts}>
-        <span className={styles.shortcutsTitle}>{t('keyboardShortcuts')}</span>
-        <ul className={styles.shortcutList}>
-          <li>
-            <kbd className={styles.key}>Space</kbd>
-            <span>{t('shortcutSpace')}</span>
-          </li>
-          <li>
-            <kbd className={styles.key}>Esc</kbd>
-            <span>{t('shortcutEsc')}</span>
-          </li>
-        </ul>
-      </section>
+        <section className={`${styles.section} ${styles.shortcuts}`}>
+          <span className={styles.label}>{t('keyboardShortcuts')}</span>
+          <ul className={styles.shortcutList}>
+            <li>
+              <kbd className={styles.key}>Space</kbd>
+              <span>{t('shortcutSpace')}</span>
+            </li>
+            <li>
+              <kbd className={styles.key}>Esc</kbd>
+              <span>{t('shortcutEsc')}</span>
+            </li>
+          </ul>
+        </section>
+      </div>
     </Modal>
   );
 };

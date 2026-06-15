@@ -1,3 +1,5 @@
+@use '../../styles/typography';
+
 .group {
   display: flex;
   flex-direction: column;
@@ -6,10 +8,7 @@
 }
 
 .label {
-  color: var(--color-text-label);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.7rem;
+  @include typography.section-label;
 }
 
 .options {

@@ -1,0 +1,8 @@
+// Shared small uppercase section label, used by settings groups and the help
+// modal so every labelled section looks identical.
+@mixin section-label {
+  color: var(--color-text-label);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.7rem;
+}

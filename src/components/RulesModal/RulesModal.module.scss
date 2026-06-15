@@ -1,3 +1,22 @@
+@use '../../styles/typography';
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.label {
+  @include typography.section-label;
+}
+
 .steps {
   margin: 0;
   padding-left: 1.2rem;
@@ -7,7 +26,6 @@
   color: var(--color-text-body);
   font-size: 0.95rem;
   line-height: 1.4;
-  text-align: left;
 }
 
 // Keyboard shortcuts: only relevant on devices with a keyboard.
@@ -17,20 +35,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .shortcuts {
-    display: block;
-    margin-top: 1.25rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--color-border);
+    display: flex;
   }
-}
-
-.shortcutsTitle {
-  display: block;
-  margin-bottom: 0.6rem;
-  color: var(--color-text-label);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.7rem;
 }
 
 .shortcutList {
