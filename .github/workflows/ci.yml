@@ -30,8 +30,7 @@ jobs:
           DISPATCH_TOKEN: ${{ secrets.DEPLOY_DISPATCH_TOKEN }}
         run: |
           if [ -z "$DISPATCH_TOKEN" ]; then
-            echo "DEPLOY_DISPATCH_TOKEN not set — skipping deploy trigger."
-            echo "Add the secret to auto-deploy thay-web when alias changes."
+            echo "::warning title=Not deployed::DEPLOY_DISPATCH_TOKEN is not set, so thay-web was NOT deployed. Add the secret (Settings → Secrets and variables → Actions) to enable auto-deploy."
             exit 0
           fi
           curl -sf -X POST \
