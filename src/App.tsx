@@ -8,53 +8,19 @@ import Footer from './components/Footer/Footer';
 import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
 import SettingsModal from './components/SettingsModal/SettingsModal';
-import { getInitialDuration, getInitialLanguage, saveDuration, saveLanguage } from './helpers/preferences';
-import { getInitialAppearance, getInitialTheme, saveAppearance, saveTheme } from './helpers/preferences';
-import { getInitialSound, saveSound } from './helpers/preferences';
 import { clearStoredWords } from './helpers/preferences';
-import { Appearance, Theme } from './types/Theme';
-import { SoundLevel } from './helpers/sound';
-import { isSoundSupported, playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
+import { SoundLevel, isSoundSupported, playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
 import { isTimeRunningOut } from './helpers/timer';
+import { usePreferences } from './hooks/usePreferences';
 import { TranslationProvider } from './i18n/useTranslation';
 
 const App: React.FC = () => {
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
-  const [duration, setDuration] = useState<number>(getInitialDuration);
-  const [appearance, setAppearance] = useState<Appearance>(getInitialAppearance);
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
-  const [sound, setSound] = useState<SoundLevel>(getInitialSound);
+  const { language, setLanguage, duration, setDuration, appearance, setAppearance, theme, setTheme, sound, setSound } =
+    usePreferences();
   const [soundSupported] = useState(() => isSoundSupported());
-  const [counter, setCounter] = React.useState<number>(duration);
+  const [counter, setCounter] = useState<number>(duration);
   const [started, setStarted] = useState<boolean>(false);
   const wordRef = useRef<WordHandle>(null);
-
-  // Persist the language (covers both `?lang=` visits and manual changes).
-  useEffect(() => {
-    saveLanguage(language);
-  }, [language]);
-
-  // Persist the chosen round length.
-  useEffect(() => {
-    saveDuration(duration);
-  }, [duration]);
-
-  // Persist the appearance and theme, and apply them as data attributes so the
-  // token overrides in index.scss take effect.
-  useEffect(() => {
-    saveAppearance(appearance);
-    document.documentElement.dataset.appearance = appearance;
-  }, [appearance]);
-
-  useEffect(() => {
-    saveTheme(theme);
-    document.documentElement.dataset.theme = theme;
-  }, [theme]);
-
-  // Persist the sound level.
-  useEffect(() => {
-    saveSound(sound);
-  }, [sound]);
 
   // Tick on each of the final seconds, and chime when time is up (same
   // threshold as the urgent counter).
@@ -69,18 +35,8 @@ const App: React.FC = () => {
     }
   }, [counter, started, sound]);
 
-  const handleChangeLanguage = (language: Language) => {
-    setLanguage(language);
-    restartCounter();
-  };
-
-  const handleChangeDuration = (nextDuration: number) => {
-    setDuration(nextDuration);
-    setCounter(nextDuration);
-  };
-
+  // Hold the timer until the player starts from the splash.
   useEffect(() => {
-    // Hold the timer until the player starts from the splash.
     if (!started || counter <= 0) {
       return;
     }
@@ -90,6 +46,16 @@ const App: React.FC = () => {
 
   const restartCounter = () => {
     setCounter(duration);
+  };
+
+  const handleChangeLanguage = (nextLanguage: Language) => {
+    setLanguage(nextLanguage);
+    restartCounter();
+  };
+
+  const handleChangeDuration = (nextDuration: number) => {
+    setDuration(nextDuration);
+    setCounter(nextDuration);
   };
 
   const handleStart = () => {
@@ -129,8 +95,7 @@ const App: React.FC = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const dialogOpen = !!document.querySelector('[role="dialog"]');
       const focused = document.activeElement;
-      const focusedControl =
-        !!focused && ['BUTTON', 'INPUT', 'TEXTAREA', 'SELECT'].includes(focused.tagName);
+      const focusedControl = !!focused && ['BUTTON', 'INPUT', 'TEXTAREA', 'SELECT'].includes(focused.tagName);
 
       if (event.key === 'Escape') {
         // An open modal handles its own Escape; otherwise stop the round.
@@ -166,12 +131,7 @@ const App: React.FC = () => {
         <main>
           {started ? (
             <>
-              <Word
-                ref={wordRef}
-                language={language}
-                isTimeUp={counter === 0}
-                onWordChange={handleWordChange}
-              />
+              <Word ref={wordRef} language={language} isTimeUp={counter === 0} onWordChange={handleWordChange} />
               <Counter counter={counter} />
             </>
           ) : (
