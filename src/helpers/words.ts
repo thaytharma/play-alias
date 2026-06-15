@@ -1,51 +1,16 @@
-import randomEnglishWord from 'random-words';
-import { generateSlug } from 'random-word-slugs';
 import randomNorwegianWord from 'tilfeldigeord';
+import englishWords from '../data/englishWords';
 import frenchWords from '../data/frenchWords';
 import firstWord, { capitalizeFirstLetter } from './strings';
 
-export const generateEnglishWord = (): string => {
-  const randomEnglishSlug = () => {
-    const slug = generateSlug(1, {
-      format: 'title',
-      categories: {
-        adjective: ['color', 'appearance', 'condition', 'personality', 'taste', 'sounds', 'time', 'touch', 'shapes'],
-        noun: [
-          'animals',
-          'business',
-          'education',
-          'family',
-          'food',
-          'health',
-          'media',
-          'people',
-          'profession',
-          'religion',
-          'science',
-          'sports',
-          'technology',
-          'thing',
-          'time',
-          'transportation',
-        ],
-      },
-    });
+/** Pick a random word from a curated list, capitalised for display. */
+const randomFrom = (words: readonly string[]): string =>
+  capitalizeFirstLetter(words[Math.floor(Math.random() * words.length)]);
 
-    return slug;
-  };
-  const englishWordCandidates = [randomEnglishWord(), randomEnglishSlug()];
-  const randomWord = englishWordCandidates[Math.floor(Math.random() * englishWordCandidates.length)];
+// Hand-picked lists of common, describable words (see ../data).
+export const generateEnglishWord = (): string => randomFrom(englishWords);
 
-  return capitalizeFirstLetter(randomWord);
-};
+export const generateNorwegianWord = (): string =>
+  capitalizeFirstLetter(firstWord(randomNorwegianWord.getTilfeldigOrd()));
 
-export const generateNorwegianWord = (): string => {
-  return capitalizeFirstLetter(firstWord(randomNorwegianWord.getTilfeldigOrd()));
-};
-
-// A hand-picked list of common, describable French words (see ../data/frenchWords).
-export const generateFrenchWord = (): string => {
-  const randomWord = frenchWords[Math.floor(Math.random() * frenchWords.length)];
-
-  return capitalizeFirstLetter(randomWord);
-};
+export const generateFrenchWord = (): string => randomFrom(frenchWords);
