@@ -7,7 +7,7 @@ body {
   touch-action: manipulation;
   user-select: none;
   overflow: hidden;
-  background-color: #041c32;
+  background-color: var(--color-bg);
   min-height: 100vh;
   min-height: -webkit-fill-available;
 }
@@ -43,5 +43,5 @@ main {
 }
 
 .counter {
-  color: white;
+  color: var(--color-text);
 }

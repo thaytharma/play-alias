@@ -1,5 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
+/* Design tokens. Colours only — themes override these.
+ *
+ * `--c-fg` / `--c-bg` are the raw RGB channels everything alpha-based derives
+ * from, so flipping them retones every border, fill and muted text at once.
+ * To add a theme later, override tokens under a selector, e.g.:
+ *
+ *   [data-theme='light'] {
+ *     --c-fg: 4, 28, 50;
+ *     --c-bg: 245, 247, 250;
+ *     --color-bg: #f5f7fa;
+ *     --color-surface: #ffffff;
+ *     --color-on-primary: #ffffff;
+ *   }
+ */
+:root {
+  // Channels (R, G, B) — the basis for all alpha-derived tokens.
+  --c-fg: 255, 255, 255; // foreground: text, lines, fills
+  --c-bg: 4, 28, 50; // background
+
+  // Surfaces & brand
+  --color-bg: #041c32;
+  --color-bg-raised: #064663;
+  --color-surface: #06243f;
+  --color-primary: #ffb651;
+  --color-primary-hover: #f8ad46;
+  --color-on-primary: #041c32;
+  --color-danger: #ff6b6b;
+
+  // Text
+  --color-text: #{'rgb(var(--c-fg))'};
+  --color-text-body: #{'rgba(var(--c-fg), 0.85)'};
+  --color-text-muted: #{'rgba(var(--c-fg), 0.7)'};
+  --color-text-label: #{'rgba(var(--c-fg), 0.6)'};
+  --color-text-faint: #{'rgba(var(--c-fg), 0.55)'};
+
+  // Lines & fills (derived from the foreground channel)
+  --color-border: #{'rgba(var(--c-fg), 0.15)'};
+  --color-border-strong: #{'rgba(var(--c-fg), 0.3)'};
+  --color-fill: #{'rgba(var(--c-fg), 0.08)'};
+  --color-fill-hover: #{'rgba(var(--c-fg), 0.12)'};
+
+  // Effects
+  --color-overlay: #{'rgba(var(--c-bg), 0.7)'};
+  --color-shadow: rgba(0, 0, 0, 0.5);
+  --color-text-shadow: #000000;
+}
+
 body {
   margin: 0;
   font-family: 'Luckiest Guy', cursive;

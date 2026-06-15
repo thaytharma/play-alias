@@ -1,8 +1,8 @@
 .counter {
-  color: white;
+  color: var(--color-text);
 
   &.urgent {
-    color: #ff6b6b;
+    color: var(--color-danger);
     animation: shake 0.4s ease-in-out infinite;
   }
 }
@@ -12,12 +12,12 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  color: white;
+  color: var(--color-text);
 }
 
 .hint {
   font-size: 0.5em;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-text-faint);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
