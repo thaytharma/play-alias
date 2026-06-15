@@ -73,7 +73,7 @@ const App: React.FC = () => {
         <main>
           {started ? (
             <>
-              <Word language={language} onWordChange={handleWordChange} />
+              <Word language={language} isTimeUp={counter === 0} onWordChange={handleWordChange} />
               <Counter counter={counter} />
             </>
           ) : (
@@ -81,7 +81,7 @@ const App: React.FC = () => {
           )}
         </main>
         <Footer />
-        {started ? <StopButton onStop={handleStop} /> : <RulesModal />}
+        {started && counter > 0 ? <StopButton onStop={handleStop} /> : <RulesModal />}
         <SettingsModal
           language={language}
           handleChangeLanguage={handleChangeLanguage}

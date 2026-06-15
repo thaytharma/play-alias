@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach } from 'vitest';
 import App from './App';
 import { Language } from './types/Language';
 import { translations } from './i18n/translations';
+import { APP_NAME } from './constants';
 
 beforeEach(() => {
   localStorage.clear();
@@ -45,4 +46,29 @@ test('stopping returns to the splash', async () => {
 
   expect(screen.getByText(translations[Language.NO].tapToStart)).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: translations[Language.NO].stop })).not.toBeInTheDocument();
+});
+
+test("at time's up, shows the brand and swaps the stop button for the rules button", async () => {
+  vi.useFakeTimers();
+  try {
+    render(<App />);
+
+    // fireEvent (not userEvent) — userEvent deadlocks under fake timers.
+    fireEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
+
+    // Run the default 60s round down to zero. The timer reschedules itself each
+    // tick, so advance one second at a time, flushing effects between ticks.
+    for (let second = 0; second < 60; second++) {
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(1000);
+      });
+    }
+
+    expect(screen.getByText(translations[Language.NO].timesUp)).toBeInTheDocument();
+    expect(screen.getByRole('heading')).toHaveTextContent(APP_NAME);
+    expect(screen.getByRole('button', { name: translations[Language.NO].rules })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: translations[Language.NO].stop })).not.toBeInTheDocument();
+  } finally {
+    vi.useRealTimers();
+  }
 });

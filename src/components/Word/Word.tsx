@@ -3,13 +3,15 @@ import styles from './Word.module.scss';
 import { isEnglish, isFrench } from '../../helpers/language';
 import { Language } from '../../types/Language';
 import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '../../helpers/words';
+import { APP_NAME } from '../../constants';
 
 interface Props {
   language: Language;
+  isTimeUp: boolean;
   onWordChange: () => void;
 }
 
-const Word: React.FC<Props> = ({ language, onWordChange }: Props) => {
+const Word: React.FC<Props> = ({ language, isTimeUp, onWordChange }: Props) => {
   const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
@@ -50,17 +52,21 @@ const Word: React.FC<Props> = ({ language, onWordChange }: Props) => {
     onWordChange();
   };
 
+  // While time is up, the word area shows the brand instead of the last word —
+  // clicking it still draws the next word and restarts the round.
+  const display = isTimeUp ? APP_NAME : word;
+
   return (
     <h1 className={styles.word}>
       <button
-        key={word}
+        key={display}
         tabIndex={0}
         className={styles.wordButton}
         onClick={() => {
           handleWordChange();
         }}
       >
-        {word}
+        {display}
       </button>
     </h1>
   );
