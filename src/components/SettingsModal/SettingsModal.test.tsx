@@ -33,7 +33,7 @@ describe('SettingsModal', () => {
     await userEvent.click(screen.getByRole('button', { name: en.settings }));
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: en.languageFrench })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Français' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '120s' })).toBeInTheDocument();
   });
 
@@ -42,7 +42,7 @@ describe('SettingsModal', () => {
     renderModal(handleChangeLanguage);
     await userEvent.click(screen.getByRole('button', { name: en.settings }));
 
-    await userEvent.click(screen.getByRole('button', { name: en.languageEnglish }));
+    await userEvent.click(screen.getByRole('button', { name: 'English' }));
 
     expect(handleChangeLanguage).toHaveBeenCalledWith(Language.EN);
   });

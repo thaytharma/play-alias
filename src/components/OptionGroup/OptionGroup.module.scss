@@ -1,8 +1,8 @@
-.settings {
+.group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 
 .label {
@@ -20,9 +20,12 @@
   color: rgba(255, 255, 255, 0.7);
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0.25rem 0.6rem;
+  padding: 0.45rem 0.9rem;
   font-size: 0.9rem;
   cursor: pointer;
+  transition:
+    color 150ms ease,
+    background 150ms ease;
 
   &:not(:last-of-type) {
     border-right: none;
@@ -36,6 +39,11 @@
   &:last-of-type {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
+  }
+
+  &:hover:not(.active) {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
   }
 
   &.active {

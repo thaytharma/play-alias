@@ -1,8 +1,9 @@
 import React from 'react';
 import { Language } from '../../types/Language';
 import { useTranslation } from '../../i18n/useTranslation';
-import LanguageButtons from '../LanguageButtons/LanguageButtons';
-import Settings from '../Settings/Settings';
+import { DURATION_OPTIONS } from '../../helpers/preferences';
+import { LANGUAGE_ENDONYMS, LANGUAGE_ORDER } from '../../helpers/language';
+import OptionGroup from '../OptionGroup/OptionGroup';
 import Modal from '../Modal/Modal';
 import styles from './SettingsModal.module.scss';
 
@@ -22,14 +23,19 @@ const gearIcon = (
 const SettingsModal: React.FC<Props> = ({ language, handleChangeLanguage, duration, onChangeDuration }: Props) => {
   const t = useTranslation();
 
+  const languageOptions = LANGUAGE_ORDER.map((lang) => ({ value: lang, label: LANGUAGE_ENDONYMS[lang] }));
+  const durationOptions = DURATION_OPTIONS.map((seconds) => ({ value: seconds, label: `${seconds}s` }));
+
   return (
     <Modal label={t('settings')} side="right" icon={gearIcon}>
       <div className={styles.body}>
-        <div className={styles.group}>
-          <span className={styles.groupLabel}>{t('language')}</span>
-          <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
-        </div>
-        <Settings duration={duration} onChangeDuration={onChangeDuration} />
+        <OptionGroup
+          label={t('language')}
+          options={languageOptions}
+          value={language}
+          onChange={handleChangeLanguage}
+        />
+        <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
       </div>
     </Modal>
   );
