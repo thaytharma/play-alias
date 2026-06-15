@@ -4,5 +4,7 @@
   "timer": "Timer",
   "languageEnglish": "English",
   "languageNorwegian": "Norwegian",
-  "languageFrench": "French"
+  "languageFrench": "French",
+  "settings": "Settings",
+  "close": "Close"
 }

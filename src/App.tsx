@@ -5,7 +5,7 @@ import LanguageButtons from './components/LanguageButtons/LanguageButtons';
 import Footer from './components/Footer/Footer';
 import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
-import Settings from './components/Settings/Settings';
+import SettingsModal from './components/SettingsModal/SettingsModal';
 import { getInitialDuration, getInitialLanguage, saveDuration, saveLanguage } from './helpers/preferences';
 import { isTimeRunningOut } from './helpers/timer';
 import { TranslationProvider } from './i18n/useTranslation';
@@ -63,12 +63,10 @@ const App: React.FC = () => {
           <div className="language-button-wrapper">
             <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
           </div>
-          <div className="settings-wrapper">
-            <Settings duration={duration} onChangeDuration={handleChangeDuration} />
-          </div>
           <Counter counter={counter} />
         </main>
         <Footer />
+        <SettingsModal duration={duration} onChangeDuration={handleChangeDuration} />
       </div>
     </TranslationProvider>
   );
