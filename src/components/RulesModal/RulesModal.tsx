@@ -50,6 +50,19 @@ const RulesModal: React.FC = () => {
             </li>
           </ul>
         </section>
+
+        <section className={styles.section}>
+          <span className={styles.label}>{t('support')}</span>
+          <a
+            className={styles.coffee}
+            href="https://buymeacoffee.com/thaytharma"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span aria-hidden="true">☕</span>
+            {t('buyMeCoffee')}
+          </a>
+        </section>
       </div>
     </Modal>
   );

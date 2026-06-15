@@ -72,3 +72,21 @@
   border: 1px solid var(--color-border-strong);
   border-radius: 5px;
 }
+
+.coffee {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border-radius: 6px;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: var(--color-primary-hover);
+  }
+}

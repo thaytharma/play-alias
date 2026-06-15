@@ -38,6 +38,17 @@ describe('RulesModal', () => {
     expect(screen.getByText(translations[Language.EN].shortcutEsc)).toBeInTheDocument();
   });
 
+  it('links to Buy Me a Coffee in a new tab', async () => {
+    renderRulesModal();
+
+    await userEvent.click(screen.getByRole('button', { name: translations[Language.EN].rules }));
+
+    const link = screen.getByRole('link', { name: new RegExp(translations[Language.EN].buyMeCoffee, 'i') });
+    expect(link).toHaveAttribute('href', 'https://buymeacoffee.com/thaytharma');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
   it('closes the dialog with the close button', async () => {
     renderRulesModal();
     await userEvent.click(screen.getByRole('button', { name: translations[Language.EN].rules }));
