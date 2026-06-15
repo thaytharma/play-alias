@@ -22,6 +22,7 @@ const renderModal = (overrides = {}) =>
         onChangeTheme={vi.fn()}
         sound="low"
         onChangeSound={vi.fn()}
+        soundSupported
         {...overrides}
       />
     </TranslationProvider>,
@@ -78,6 +79,15 @@ describe('SettingsModal', () => {
     await userEvent.click(screen.getByRole('button', { name: en.soundHigh }));
 
     expect(onChangeSound).toHaveBeenCalledWith('high');
+  });
+
+  it('hides the sound setting when audio is unsupported', async () => {
+    renderModal({ soundSupported: false });
+    await userEvent.click(screen.getByRole('button', { name: en.settings }));
+
+    expect(screen.queryByRole('button', { name: en.soundHigh })).not.toBeInTheDocument();
+    // other settings still render
+    expect(screen.getByRole('button', { name: '120s' })).toBeInTheDocument();
   });
 
   it('closes the dialog via the close button', async () => {

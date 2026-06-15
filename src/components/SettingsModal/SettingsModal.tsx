@@ -20,6 +20,7 @@ interface Props {
   onChangeTheme: (theme: Theme) => void;
   sound: SoundLevel;
   onChangeSound: (sound: SoundLevel) => void;
+  soundSupported: boolean;
 }
 
 const gearIcon = (
@@ -39,6 +40,7 @@ const SettingsModal: React.FC<Props> = ({
   onChangeTheme,
   sound,
   onChangeSound,
+  soundSupported,
 }: Props) => {
   const t = useTranslation();
 
@@ -64,7 +66,9 @@ const SettingsModal: React.FC<Props> = ({
           onChange={handleChangeLanguage}
         />
         <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
-        <OptionGroup label={t('sound')} options={soundOptions} value={sound} onChange={onChangeSound} />
+        {soundSupported && (
+          <OptionGroup label={t('sound')} options={soundOptions} value={sound} onChange={onChangeSound} />
+        )}
         <OptionGroup
           label={t('appearance')}
           options={appearanceOptions}

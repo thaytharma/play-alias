@@ -13,7 +13,7 @@ import { getInitialAppearance, getInitialTheme, saveAppearance, saveTheme } from
 import { getInitialSound, saveSound } from './helpers/preferences';
 import { Appearance, Theme } from './types/Theme';
 import { SoundLevel } from './helpers/sound';
-import { playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
+import { isSoundSupported, playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
 import { isTimeRunningOut } from './helpers/timer';
 import { TranslationProvider } from './i18n/useTranslation';
 
@@ -23,6 +23,7 @@ const App: React.FC = () => {
   const [appearance, setAppearance] = useState<Appearance>(getInitialAppearance);
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [sound, setSound] = useState<SoundLevel>(getInitialSound);
+  const [soundSupported] = useState(() => isSoundSupported());
   const [counter, setCounter] = React.useState<number>(duration);
   const [started, setStarted] = useState<boolean>(false);
   const wordRef = useRef<WordHandle>(null);
@@ -183,6 +184,7 @@ const App: React.FC = () => {
           onChangeTheme={setTheme}
           sound={sound}
           onChangeSound={handleChangeSound}
+          soundSupported={soundSupported}
         />
       </div>
     </TranslationProvider>

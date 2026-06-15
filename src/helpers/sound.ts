@@ -35,6 +35,16 @@ export function unlockAudio(): void {
   }
 }
 
+/** Whether the Web Audio API exists — used to hide sound settings when it doesn't. */
+export function isSoundSupported(): boolean {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+  return Boolean(
+    window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext,
+  );
+}
+
 interface Note {
   freq: number;
   /** Seconds from now to start the note. */

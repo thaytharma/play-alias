@@ -12,6 +12,7 @@ vi.mock('./helpers/sound', () => ({
   playTimeUp: vi.fn(),
   playWordChange: vi.fn(),
   unlockAudio: vi.fn(),
+  isSoundSupported: vi.fn(() => true),
 }));
 
 beforeEach(() => {
