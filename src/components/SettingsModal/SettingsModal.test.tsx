@@ -20,6 +20,8 @@ const renderModal = (overrides = {}) =>
         onChangeAppearance={vi.fn()}
         theme="sunset"
         onChangeTheme={vi.fn()}
+        sound="low"
+        onChangeSound={vi.fn()}
         {...overrides}
       />
     </TranslationProvider>,
@@ -41,6 +43,7 @@ describe('SettingsModal', () => {
     expect(screen.getByRole('button', { name: 'Français' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '120s' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: en.appearanceLight })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: en.soundHigh })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ocean' })).toBeInTheDocument();
   });
 
@@ -65,6 +68,16 @@ describe('SettingsModal', () => {
 
     expect(onChangeAppearance).toHaveBeenCalledWith('light');
     expect(onChangeTheme).toHaveBeenCalledWith('berry');
+  });
+
+  it('changes the sound level from the modal', async () => {
+    const onChangeSound = vi.fn();
+    renderModal({ onChangeSound });
+    await userEvent.click(screen.getByRole('button', { name: en.settings }));
+
+    await userEvent.click(screen.getByRole('button', { name: en.soundHigh }));
+
+    expect(onChangeSound).toHaveBeenCalledWith('high');
   });
 
   it('closes the dialog via the close button', async () => {

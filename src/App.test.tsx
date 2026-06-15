@@ -5,9 +5,16 @@ import App from './App';
 import { Language } from './types/Language';
 import { translations } from './i18n/translations';
 import { APP_NAME } from './constants';
+import { playTick, unlockAudio } from './helpers/sound';
+
+vi.mock('./helpers/sound', () => ({
+  playTick: vi.fn(),
+  unlockAudio: vi.fn(),
+}));
 
 beforeEach(() => {
   localStorage.clear();
+  vi.clearAllMocks();
 });
 
 test('renders the settings button (default language Norwegian)', () => {
@@ -58,8 +65,35 @@ test('applies the selected theme to the document element', async () => {
   expect(document.documentElement.dataset.appearance).toBe('dark');
 });
 
-test('Space starts the round from the splash', () => {
+test('unlocks audio when the round starts', () => {
   render(<App />);
+
+  fireEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
+
+  expect(unlockAudio).toHaveBeenCalled();
+});
+
+test('ticks during the last 10 seconds', async () => {
+  localStorage.setItem('alias.duration', '30');
+  vi.useFakeTimers();
+  try {
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
+
+    // 30s round → advance past the 10s threshold; ticks fire at 10, 9, …
+    for (let second = 0; second < 21; second++) {
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(1000);
+      });
+    }
+
+    expect(playTick).toHaveBeenCalledWith('low');
+  } finally {
+    vi.useRealTimers();
+  }
+});
+
+test('Space starts the round from the splash', () => {  render(<App />);
 
   fireEvent.keyDown(document.body, { key: ' ' });
 

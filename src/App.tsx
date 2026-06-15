@@ -10,7 +10,11 @@ import Counter from './components/Counter/Counter';
 import SettingsModal from './components/SettingsModal/SettingsModal';
 import { getInitialDuration, getInitialLanguage, saveDuration, saveLanguage } from './helpers/preferences';
 import { getInitialAppearance, getInitialTheme, saveAppearance, saveTheme } from './helpers/preferences';
+import { getInitialSound, saveSound } from './helpers/preferences';
 import { Appearance, Theme } from './types/Theme';
+import { SoundLevel } from './helpers/sound';
+import { playTick, unlockAudio } from './helpers/sound';
+import { isTimeRunningOut } from './helpers/timer';
 import { TranslationProvider } from './i18n/useTranslation';
 
 const App: React.FC = () => {
@@ -18,6 +22,7 @@ const App: React.FC = () => {
   const [duration, setDuration] = useState<number>(getInitialDuration);
   const [appearance, setAppearance] = useState<Appearance>(getInitialAppearance);
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [sound, setSound] = useState<SoundLevel>(getInitialSound);
   const [counter, setCounter] = React.useState<number>(duration);
   const [started, setStarted] = useState<boolean>(false);
   const wordRef = useRef<WordHandle>(null);
@@ -44,6 +49,18 @@ const App: React.FC = () => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
 
+  // Persist the sound level.
+  useEffect(() => {
+    saveSound(sound);
+  }, [sound]);
+
+  // Tick on each of the final seconds (same threshold as the urgent counter).
+  useEffect(() => {
+    if (started && sound !== 'off' && isTimeRunningOut(counter)) {
+      playTick(sound);
+    }
+  }, [counter, started, sound]);
+
   const handleChangeLanguage = (language: Language) => {
     setLanguage(language);
     restartCounter();
@@ -68,12 +85,19 @@ const App: React.FC = () => {
   };
 
   const handleStart = () => {
+    // Unlock audio within the start gesture so ticks can play on mobile.
+    unlockAudio();
     restartCounter();
     setStarted(true);
   };
 
   const handleStop = () => {
     setStarted(false);
+  };
+
+  const handleChangeSound = (nextSound: SoundLevel) => {
+    unlockAudio();
+    setSound(nextSound);
   };
 
   const handleWordChange = () => {
@@ -110,6 +134,7 @@ const App: React.FC = () => {
         if (started) {
           wordRef.current?.advance();
         } else {
+          unlockAudio();
           setCounter(duration);
           setStarted(true);
         }
@@ -149,6 +174,8 @@ const App: React.FC = () => {
           onChangeAppearance={setAppearance}
           theme={theme}
           onChangeTheme={setTheme}
+          sound={sound}
+          onChangeSound={handleChangeSound}
         />
       </div>
     </TranslationProvider>

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Language } from '../../types/Language';
 import { Appearance, Theme, THEME_LABELS } from '../../types/Theme';
+import { SoundLevel } from '../../helpers/sound';
 import { useTranslation } from '../../i18n/useTranslation';
-import { APPEARANCE_OPTIONS, DURATION_OPTIONS, THEME_OPTIONS } from '../../helpers/preferences';
+import { APPEARANCE_OPTIONS, DURATION_OPTIONS, SOUND_OPTIONS, THEME_OPTIONS } from '../../helpers/preferences';
 import { LANGUAGE_ENDONYMS, LANGUAGE_ORDER } from '../../helpers/language';
 import OptionGroup from '../OptionGroup/OptionGroup';
 import Modal from '../Modal/Modal';
@@ -17,6 +18,8 @@ interface Props {
   onChangeAppearance: (appearance: Appearance) => void;
   theme: Theme;
   onChangeTheme: (theme: Theme) => void;
+  sound: SoundLevel;
+  onChangeSound: (sound: SoundLevel) => void;
 }
 
 const gearIcon = (
@@ -34,6 +37,8 @@ const SettingsModal: React.FC<Props> = ({
   onChangeAppearance,
   theme,
   onChangeTheme,
+  sound,
+  onChangeSound,
 }: Props) => {
   const t = useTranslation();
 
@@ -44,6 +49,10 @@ const SettingsModal: React.FC<Props> = ({
     label: value === 'dark' ? t('appearanceDark') : t('appearanceLight'),
   }));
   const themeOptions = THEME_OPTIONS.map((value) => ({ value, label: THEME_LABELS[value] }));
+  const soundOptions = SOUND_OPTIONS.map((value) => ({
+    value,
+    label: value === 'off' ? t('soundOff') : value === 'low' ? t('soundLow') : t('soundHigh'),
+  }));
 
   return (
     <Modal label={t('settings')} side="right" icon={gearIcon}>
@@ -55,6 +64,7 @@ const SettingsModal: React.FC<Props> = ({
           onChange={handleChangeLanguage}
         />
         <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
+        <OptionGroup label={t('sound')} options={soundOptions} value={sound} onChange={onChangeSound} />
         <OptionGroup
           label={t('appearance')}
           options={appearanceOptions}

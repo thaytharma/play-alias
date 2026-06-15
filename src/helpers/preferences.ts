@@ -1,5 +1,6 @@
 import { Language } from '../types/Language';
 import { Appearance, Theme } from '../types/Theme';
+import { SoundLevel } from './sound';
 
 const LANGUAGE_STORAGE_KEY = 'alias.language';
 const LANGUAGE_QUERY_KEY = 'lang';
@@ -115,4 +116,22 @@ export function getInitialTheme(): Theme {
 
 export function saveTheme(theme: Theme): void {
   writeStorage(THEME_STORAGE_KEY, theme);
+}
+
+const SOUND_STORAGE_KEY = 'alias.sound';
+
+export const SOUND_OPTIONS: readonly SoundLevel[] = ['off', 'low', 'high'];
+export const DEFAULT_SOUND: SoundLevel = 'low';
+
+/** Resolve a stored value to a known sound level, or null. */
+export function parseSound(value: string | null | undefined): SoundLevel | null {
+  return SOUND_OPTIONS.includes(value as SoundLevel) ? (value as SoundLevel) : null;
+}
+
+export function getInitialSound(): SoundLevel {
+  return parseSound(readStorage(SOUND_STORAGE_KEY)) ?? DEFAULT_SOUND;
+}
+
+export function saveSound(sound: SoundLevel): void {
+  writeStorage(SOUND_STORAGE_KEY, sound);
 }

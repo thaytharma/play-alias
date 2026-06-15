@@ -4,18 +4,22 @@ import {
   DEFAULT_APPEARANCE,
   DEFAULT_DURATION,
   DEFAULT_LANGUAGE,
+  DEFAULT_SOUND,
   DEFAULT_THEME,
   getInitialAppearance,
   getInitialDuration,
   getInitialLanguage,
+  getInitialSound,
   getInitialTheme,
   parseAppearance,
   parseDuration,
   parseLanguage,
+  parseSound,
   parseTheme,
   saveAppearance,
   saveDuration,
   saveLanguage,
+  saveSound,
   saveTheme,
 } from './preferences';
 
@@ -144,5 +148,33 @@ describe('appearance and theme storage', () => {
     saveTheme('ocean');
     expect(getInitialAppearance()).toBe('light');
     expect(getInitialTheme()).toBe('ocean');
+  });
+});
+
+describe('parseSound', () => {
+  it('accepts known sound levels', () => {
+    expect(parseSound('off')).toBe('off');
+    expect(parseSound('low')).toBe('low');
+    expect(parseSound('high')).toBe('high');
+  });
+
+  it('rejects unknown values', () => {
+    expect(parseSound('loud')).toBeNull();
+    expect(parseSound(null)).toBeNull();
+  });
+});
+
+describe('sound storage', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('defaults when nothing is stored', () => {
+    expect(getInitialSound()).toBe(DEFAULT_SOUND);
+  });
+
+  it('round-trips through getInitialSound', () => {
+    saveSound('high');
+    expect(getInitialSound()).toBe('high');
   });
 });
