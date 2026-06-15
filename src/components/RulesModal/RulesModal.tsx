@@ -22,6 +22,20 @@ const RulesModal: React.FC = () => {
           <li key={key}>{t(key)}</li>
         ))}
       </ol>
+
+      <section className={styles.shortcuts}>
+        <span className={styles.shortcutsTitle}>{t('keyboardShortcuts')}</span>
+        <ul className={styles.shortcutList}>
+          <li>
+            <kbd className={styles.key}>Space</kbd>
+            <span>{t('shortcutSpace')}</span>
+          </li>
+          <li>
+            <kbd className={styles.key}>Esc</kbd>
+            <span>{t('shortcutEsc')}</span>
+          </li>
+        </ul>
+      </section>
     </Modal>
   );
 };

@@ -15,5 +15,8 @@
   "rulesStep1": "Split into two or more teams.",
   "rulesStep2": "On your turn, describe the word on screen without saying it or any part of it.",
   "rulesStep3": "Your team guesses as many words as they can before the timer runs out.",
-  "rulesStep4": "Tap the word to bring up the next one — score a point for each correct guess."
+  "rulesStep4": "Tap the word to bring up the next one — score a point for each correct guess.",
+  "keyboardShortcuts": "Keyboard shortcuts",
+  "shortcutSpace": "Start / next word",
+  "shortcutEsc": "Stop / close"
 }

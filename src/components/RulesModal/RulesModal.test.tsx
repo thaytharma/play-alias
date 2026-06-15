@@ -25,6 +25,16 @@ describe('RulesModal', () => {
     expect(screen.getByText(translations[Language.EN].rulesStep4)).toBeInTheDocument();
   });
 
+  it('includes the keyboard shortcuts section', async () => {
+    renderRulesModal();
+
+    await userEvent.click(screen.getByRole('button', { name: translations[Language.EN].rules }));
+
+    expect(screen.getByText(translations[Language.EN].keyboardShortcuts)).toBeInTheDocument();
+    expect(screen.getByText(translations[Language.EN].shortcutSpace)).toBeInTheDocument();
+    expect(screen.getByText(translations[Language.EN].shortcutEsc)).toBeInTheDocument();
+  });
+
   it('closes the dialog with the close button', async () => {
     renderRulesModal();
     await userEvent.click(screen.getByRole('button', { name: translations[Language.EN].rules }));

@@ -9,3 +9,55 @@
   line-height: 1.4;
   text-align: left;
 }
+
+// Keyboard shortcuts: only relevant on devices with a keyboard.
+.shortcuts {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .shortcuts {
+    display: block;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+.shortcutsTitle {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.7rem;
+}
+
+.shortcutList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+  }
+}
+
+.key {
+  min-width: 3rem;
+  padding: 0.15rem 0.4rem;
+  text-align: center;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+}

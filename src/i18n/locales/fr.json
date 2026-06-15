@@ -15,5 +15,8 @@
   "rulesStep1": "Formez deux équipes ou plus.",
   "rulesStep2": "À votre tour, faites deviner le mot affiché sans le dire ni en dire une partie.",
   "rulesStep3": "Votre équipe devine le plus de mots possible avant la fin du minuteur.",
-  "rulesStep4": "Touchez le mot pour passer au suivant — un point par bonne réponse."
+  "rulesStep4": "Touchez le mot pour passer au suivant — un point par bonne réponse.",
+  "keyboardShortcuts": "Raccourcis clavier",
+  "shortcutSpace": "Démarrer / mot suivant",
+  "shortcutEsc": "Arrêter / fermer"
 }
