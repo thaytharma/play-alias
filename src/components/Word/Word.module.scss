@@ -3,7 +3,12 @@
   position: relative;
   cursor: pointer;
   color: var(--color-primary);
-  transition: 350ms ease-in-out;
+  transform: perspective(700px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    transform 150ms ease-out,
+    color 350ms ease-in-out;
 
   &:hover {
     text-shadow: none;

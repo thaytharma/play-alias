@@ -4,6 +4,7 @@ import { isEnglish, isFrench } from '../../helpers/language';
 import type { Language } from '../../types/Language';
 import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '../../helpers/words';
 import { getStoredWords, saveStoredWords } from '../../helpers/preferences';
+import { useTilt } from '../../hooks/useTilt';
 import { APP_NAME } from '../../constants';
 
 export interface WordHandle {
@@ -22,6 +23,7 @@ interface Props {
 const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }: Props, ref) => {
   const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
+  const tiltRef = useTilt<HTMLHeadingElement>();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: re-seed only when the language changes
   useEffect(() => {
@@ -81,7 +83,7 @@ const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }
   const display = isTimeUp ? APP_NAME : word;
 
   return (
-    <h1 className={styles.word}>
+    <h1 ref={tiltRef} className={styles.word}>
       <button
         key={display}
         type="button"
