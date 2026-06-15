@@ -9,11 +9,15 @@ import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
 import SettingsModal from './components/SettingsModal/SettingsModal';
 import { getInitialDuration, getInitialLanguage, saveDuration, saveLanguage } from './helpers/preferences';
+import { getInitialAppearance, getInitialTheme, saveAppearance, saveTheme } from './helpers/preferences';
+import { Appearance, Theme } from './types/Theme';
 import { TranslationProvider } from './i18n/useTranslation';
 
 const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
   const [duration, setDuration] = useState<number>(getInitialDuration);
+  const [appearance, setAppearance] = useState<Appearance>(getInitialAppearance);
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [counter, setCounter] = React.useState<number>(duration);
   const [started, setStarted] = useState<boolean>(false);
   const wordRef = useRef<WordHandle>(null);
@@ -27,6 +31,18 @@ const App: React.FC = () => {
   useEffect(() => {
     saveDuration(duration);
   }, [duration]);
+
+  // Persist the appearance and theme, and apply them as data attributes so the
+  // token overrides in index.scss take effect.
+  useEffect(() => {
+    saveAppearance(appearance);
+    document.documentElement.dataset.appearance = appearance;
+  }, [appearance]);
+
+  useEffect(() => {
+    saveTheme(theme);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   const handleChangeLanguage = (language: Language) => {
     setLanguage(language);
@@ -129,6 +145,10 @@ const App: React.FC = () => {
           handleChangeLanguage={handleChangeLanguage}
           duration={duration}
           onChangeDuration={handleChangeDuration}
+          appearance={appearance}
+          onChangeAppearance={setAppearance}
+          theme={theme}
+          onChangeTheme={setTheme}
         />
       </div>
     </TranslationProvider>

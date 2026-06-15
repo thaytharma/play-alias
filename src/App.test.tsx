@@ -48,6 +48,16 @@ test('stopping returns to the splash', async () => {
   expect(screen.queryByRole('button', { name: translations[Language.NO].stop })).not.toBeInTheDocument();
 });
 
+test('applies the selected theme to the document element', async () => {
+  render(<App />);
+  await userEvent.click(screen.getByRole('button', { name: translations[Language.NO].settings }));
+
+  await userEvent.click(screen.getByRole('button', { name: 'Ocean' }));
+
+  expect(document.documentElement.dataset.theme).toBe('ocean');
+  expect(document.documentElement.dataset.appearance).toBe('dark');
+});
+
 test('Space starts the round from the splash', () => {
   render(<App />);
 

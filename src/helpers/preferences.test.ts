@@ -1,14 +1,22 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { Language } from '../types/Language';
 import {
+  DEFAULT_APPEARANCE,
   DEFAULT_DURATION,
   DEFAULT_LANGUAGE,
+  DEFAULT_THEME,
+  getInitialAppearance,
   getInitialDuration,
   getInitialLanguage,
+  getInitialTheme,
+  parseAppearance,
   parseDuration,
   parseLanguage,
+  parseTheme,
+  saveAppearance,
   saveDuration,
   saveLanguage,
+  saveTheme,
 } from './preferences';
 
 describe('parseLanguage', () => {
@@ -93,5 +101,48 @@ describe('duration storage', () => {
   it('ignores a stored value that is no longer a valid option', () => {
     localStorage.setItem('alias.duration', '999');
     expect(getInitialDuration()).toBe(DEFAULT_DURATION);
+  });
+});
+
+describe('parseAppearance', () => {
+  it('accepts known appearances', () => {
+    expect(parseAppearance('dark')).toBe('dark');
+    expect(parseAppearance('light')).toBe('light');
+  });
+
+  it('rejects unknown values', () => {
+    expect(parseAppearance('sepia')).toBeNull();
+    expect(parseAppearance(null)).toBeNull();
+  });
+});
+
+describe('parseTheme', () => {
+  it('accepts known themes', () => {
+    expect(parseTheme('sunset')).toBe('sunset');
+    expect(parseTheme('ocean')).toBe('ocean');
+    expect(parseTheme('berry')).toBe('berry');
+  });
+
+  it('rejects unknown values', () => {
+    expect(parseTheme('neon')).toBeNull();
+    expect(parseTheme(null)).toBeNull();
+  });
+});
+
+describe('appearance and theme storage', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('defaults when nothing is stored', () => {
+    expect(getInitialAppearance()).toBe(DEFAULT_APPEARANCE);
+    expect(getInitialTheme()).toBe(DEFAULT_THEME);
+  });
+
+  it('round-trips through the getters', () => {
+    saveAppearance('light');
+    saveTheme('ocean');
+    expect(getInitialAppearance()).toBe('light');
+    expect(getInitialTheme()).toBe('ocean');
   });
 });

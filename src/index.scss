@@ -47,6 +47,31 @@
   --color-text-shadow: #000000;
 }
 
+/* Appearance: Light. Only flips the structural colours; the derived text/line/
+ * fill tokens recompute automatically from the channels. The default (Dark) is
+ * the :root values above. */
+[data-appearance='light'] {
+  --c-fg: 4, 28, 50;
+  --c-bg: 244, 247, 251;
+
+  --color-bg: #f4f7fb;
+  --color-bg-raised: #e2e8f0;
+  --color-surface: #ffffff;
+}
+
+/* Themes: only the accent. Sunset is the :root default. */
+[data-theme='ocean'] {
+  --color-primary: #38bdf8;
+  --color-primary-hover: #0ea5e9;
+  --color-on-primary: #04212e;
+}
+
+[data-theme='berry'] {
+  --color-primary: #f472b6;
+  --color-primary-hover: #ec4899;
+  --color-on-primary: #2a0a1d;
+}
+
 body {
   margin: 0;
   font-family: 'Luckiest Guy', cursive;

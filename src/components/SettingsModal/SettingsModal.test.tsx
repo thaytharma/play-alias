@@ -8,14 +8,19 @@ import SettingsModal from './SettingsModal';
 
 const en = translations[Language.EN];
 
-const renderModal = (handleChangeLanguage = vi.fn(), onChangeDuration = vi.fn()) =>
+const renderModal = (overrides = {}) =>
   render(
     <TranslationProvider language={Language.EN}>
       <SettingsModal
         language={Language.EN}
-        handleChangeLanguage={handleChangeLanguage}
+        handleChangeLanguage={vi.fn()}
         duration={60}
-        onChangeDuration={onChangeDuration}
+        onChangeDuration={vi.fn()}
+        appearance="dark"
+        onChangeAppearance={vi.fn()}
+        theme="sunset"
+        onChangeTheme={vi.fn()}
+        {...overrides}
       />
     </TranslationProvider>,
   );
@@ -27,7 +32,7 @@ describe('SettingsModal', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('opens a dialog with the language and timer settings', async () => {
+  it('opens a dialog with the language, timer, appearance and theme settings', async () => {
     renderModal();
 
     await userEvent.click(screen.getByRole('button', { name: en.settings }));
@@ -35,16 +40,31 @@ describe('SettingsModal', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Français' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '120s' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: en.appearanceLight })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Ocean' })).toBeInTheDocument();
   });
 
   it('changes the language from the modal', async () => {
     const handleChangeLanguage = vi.fn();
-    renderModal(handleChangeLanguage);
+    renderModal({ handleChangeLanguage });
     await userEvent.click(screen.getByRole('button', { name: en.settings }));
 
     await userEvent.click(screen.getByRole('button', { name: 'English' }));
 
     expect(handleChangeLanguage).toHaveBeenCalledWith(Language.EN);
+  });
+
+  it('changes the appearance and theme from the modal', async () => {
+    const onChangeAppearance = vi.fn();
+    const onChangeTheme = vi.fn();
+    renderModal({ onChangeAppearance, onChangeTheme });
+    await userEvent.click(screen.getByRole('button', { name: en.settings }));
+
+    await userEvent.click(screen.getByRole('button', { name: en.appearanceLight }));
+    await userEvent.click(screen.getByRole('button', { name: 'Berry' }));
+
+    expect(onChangeAppearance).toHaveBeenCalledWith('light');
+    expect(onChangeTheme).toHaveBeenCalledWith('berry');
   });
 
   it('closes the dialog via the close button', async () => {

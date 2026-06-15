@@ -1,7 +1,8 @@
 import React from 'react';
 import { Language } from '../../types/Language';
+import { Appearance, Theme, THEME_LABELS } from '../../types/Theme';
 import { useTranslation } from '../../i18n/useTranslation';
-import { DURATION_OPTIONS } from '../../helpers/preferences';
+import { APPEARANCE_OPTIONS, DURATION_OPTIONS, THEME_OPTIONS } from '../../helpers/preferences';
 import { LANGUAGE_ENDONYMS, LANGUAGE_ORDER } from '../../helpers/language';
 import OptionGroup from '../OptionGroup/OptionGroup';
 import Modal from '../Modal/Modal';
@@ -12,6 +13,10 @@ interface Props {
   handleChangeLanguage: (language: Language) => void;
   duration: number;
   onChangeDuration: (duration: number) => void;
+  appearance: Appearance;
+  onChangeAppearance: (appearance: Appearance) => void;
+  theme: Theme;
+  onChangeTheme: (theme: Theme) => void;
 }
 
 const gearIcon = (
@@ -20,11 +25,25 @@ const gearIcon = (
   </svg>
 );
 
-const SettingsModal: React.FC<Props> = ({ language, handleChangeLanguage, duration, onChangeDuration }: Props) => {
+const SettingsModal: React.FC<Props> = ({
+  language,
+  handleChangeLanguage,
+  duration,
+  onChangeDuration,
+  appearance,
+  onChangeAppearance,
+  theme,
+  onChangeTheme,
+}: Props) => {
   const t = useTranslation();
 
   const languageOptions = LANGUAGE_ORDER.map((lang) => ({ value: lang, label: LANGUAGE_ENDONYMS[lang] }));
   const durationOptions = DURATION_OPTIONS.map((seconds) => ({ value: seconds, label: `${seconds}s` }));
+  const appearanceOptions = APPEARANCE_OPTIONS.map((value) => ({
+    value,
+    label: value === 'dark' ? t('appearanceDark') : t('appearanceLight'),
+  }));
+  const themeOptions = THEME_OPTIONS.map((value) => ({ value, label: THEME_LABELS[value] }));
 
   return (
     <Modal label={t('settings')} side="right" icon={gearIcon}>
@@ -36,6 +55,13 @@ const SettingsModal: React.FC<Props> = ({ language, handleChangeLanguage, durati
           onChange={handleChangeLanguage}
         />
         <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
+        <OptionGroup
+          label={t('appearance')}
+          options={appearanceOptions}
+          value={appearance}
+          onChange={onChangeAppearance}
+        />
+        <OptionGroup label={t('theme')} options={themeOptions} value={theme} onChange={onChangeTheme} />
       </div>
     </Modal>
   );
