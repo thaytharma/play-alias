@@ -66,6 +66,14 @@
   --color-on-primary: #04212e;
 }
 
+/* Ocean's dark background — a deep teal to match the sky-blue accent. */
+[data-appearance='dark'][data-theme='ocean'] {
+  --c-bg: 4, 30, 38;
+  --color-bg: #041e26;
+  --color-bg-raised: #0a3d49;
+  --color-surface: #07303a;
+}
+
 [data-theme='berry'] {
   --color-primary: #f472b6;
   --color-primary-hover: #ec4899;
