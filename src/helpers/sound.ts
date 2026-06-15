@@ -35,11 +35,35 @@ export function unlockAudio(): void {
   }
 }
 
-/**
- * Play a short countdown tick at the given level. A no-op when the level is
- * `off` or the Web Audio API is unavailable.
- */
-export function playTick(level: SoundLevel): void {
+interface Note {
+  freq: number;
+  /** Seconds from now to start the note. */
+  delay?: number;
+  /** Note length in seconds. */
+  duration: number;
+  /** 0..1, before the level multiplier. */
+  volume: number;
+}
+
+/** Schedule one short tone with a quick attack and exponential decay. */
+function tone(ctx: AudioContext, { freq, delay = 0, duration, volume }: Note): void {
+  const start = ctx.currentTime + delay;
+  const oscillator = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  oscillator.type = 'sine';
+  oscillator.frequency.value = freq;
+  gain.gain.setValueAtTime(0, start);
+  gain.gain.linearRampToValueAtTime(volume, start + 0.005);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+
+  oscillator.connect(gain).connect(ctx.destination);
+  oscillator.start(start);
+  oscillator.stop(start + duration + 0.02);
+}
+
+/** Run `play` with a ready audio context, scaled to the chosen level. */
+function withSound(level: SoundLevel, play: (ctx: AudioContext, volume: number) => void): void {
   const volume = SOUND_GAIN[level];
   if (!volume) {
     return;
@@ -51,19 +75,27 @@ export function playTick(level: SoundLevel): void {
   if (ctx.state === 'suspended') {
     void ctx.resume();
   }
+  play(ctx, volume);
+}
 
-  const now = ctx.currentTime;
-  const oscillator = ctx.createOscillator();
-  const gain = ctx.createGain();
+/** A short tick for each of the final countdown seconds. */
+export function playTick(level: SoundLevel): void {
+  withSound(level, (ctx, volume) => {
+    tone(ctx, { freq: 880, duration: 0.05, volume });
+  });
+}
 
-  oscillator.type = 'sine';
-  oscillator.frequency.value = 880;
-  // Quick attack, short decay — a clean tick rather than a sustained beep.
-  gain.gain.setValueAtTime(0, now);
-  gain.gain.linearRampToValueAtTime(volume, now + 0.005);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+/** A soft, quiet blip when the word changes — subtle enough to repeat often. */
+export function playWordChange(level: SoundLevel): void {
+  withSound(level, (ctx, volume) => {
+    tone(ctx, { freq: 520, duration: 0.04, volume: volume * 0.45 });
+  });
+}
 
-  oscillator.connect(gain).connect(ctx.destination);
-  oscillator.start(now);
-  oscillator.stop(now + 0.06);
+/** A gentle descending two-note chime when the round's time is up. */
+export function playTimeUp(level: SoundLevel): void {
+  withSound(level, (ctx, volume) => {
+    tone(ctx, { freq: 587.33, duration: 0.18, volume: volume * 0.8 });
+    tone(ctx, { freq: 440, delay: 0.16, duration: 0.28, volume: volume * 0.8 });
+  });
 }

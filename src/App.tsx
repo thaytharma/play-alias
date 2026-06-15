@@ -13,7 +13,7 @@ import { getInitialAppearance, getInitialTheme, saveAppearance, saveTheme } from
 import { getInitialSound, saveSound } from './helpers/preferences';
 import { Appearance, Theme } from './types/Theme';
 import { SoundLevel } from './helpers/sound';
-import { playTick, unlockAudio } from './helpers/sound';
+import { playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
 import { isTimeRunningOut } from './helpers/timer';
 import { TranslationProvider } from './i18n/useTranslation';
 
@@ -54,9 +54,15 @@ const App: React.FC = () => {
     saveSound(sound);
   }, [sound]);
 
-  // Tick on each of the final seconds (same threshold as the urgent counter).
+  // Tick on each of the final seconds, and chime when time is up (same
+  // threshold as the urgent counter).
   useEffect(() => {
-    if (started && sound !== 'off' && isTimeRunningOut(counter)) {
+    if (!started || sound === 'off') {
+      return;
+    }
+    if (counter === 0) {
+      playTimeUp(sound);
+    } else if (isTimeRunningOut(counter)) {
       playTick(sound);
     }
   }, [counter, started, sound]);
@@ -101,6 +107,7 @@ const App: React.FC = () => {
   };
 
   const handleWordChange = () => {
+    playWordChange(sound);
     // Mid-round a new word just swaps the word; once time is up, changing the
     // word also starts the next round's timer.
     if (counter === 0) {

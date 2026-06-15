@@ -1,14 +1,16 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach } from 'vitest';
 import App from './App';
 import { Language } from './types/Language';
 import { translations } from './i18n/translations';
 import { APP_NAME } from './constants';
-import { playTick, unlockAudio } from './helpers/sound';
+import { playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
 
 vi.mock('./helpers/sound', () => ({
   playTick: vi.fn(),
+  playTimeUp: vi.fn(),
+  playWordChange: vi.fn(),
   unlockAudio: vi.fn(),
 }));
 
@@ -73,24 +75,35 @@ test('unlocks audio when the round starts', () => {
   expect(unlockAudio).toHaveBeenCalled();
 });
 
-test('ticks during the last 10 seconds', async () => {
+test('ticks during the last 10 seconds and chimes at time up', async () => {
   localStorage.setItem('alias.duration', '30');
   vi.useFakeTimers();
   try {
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
 
-    // 30s round → advance past the 10s threshold; ticks fire at 10, 9, …
-    for (let second = 0; second < 21; second++) {
+    // Run the full 30s round to zero.
+    for (let second = 0; second < 30; second++) {
       await act(async () => {
         await vi.advanceTimersByTimeAsync(1000);
       });
     }
 
     expect(playTick).toHaveBeenCalledWith('low');
+    expect(playTimeUp).toHaveBeenCalledWith('low');
   } finally {
     vi.useRealTimers();
   }
+});
+
+test('plays a sound when the word changes', () => {
+  render(<App />);
+  fireEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
+
+  const wordButton = within(screen.getByRole('heading')).getByRole('button');
+  fireEvent.click(wordButton);
+
+  expect(playWordChange).toHaveBeenCalledWith('low');
 });
 
 test('Space starts the round from the splash', () => {  render(<App />);
