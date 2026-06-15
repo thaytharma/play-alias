@@ -21,6 +21,11 @@
   "rulesStep2": "Når det er din tur, forklar ordet på skjermen uten å si det eller deler av det.",
   "rulesStep3": "Laget ditt gjetter så mange ord som mulig før tiden er ute.",
   "rulesStep4": "Trykk på ordet for å hente det neste – ett poeng for hvert riktige svar.",
+  "tips": "Tips",
+  "tip1": "Start bredt: si kategorien først, og snevre så inn.",
+  "tip2": "Bruk motsetninger, synonymer og «høres ut som» for vanskelige ord.",
+  "tip3": "Spill på det laget deler – interne vitser og referanser treffer raskt.",
+  "tip4": "Ikke sett deg fast – hopp over et vanskelig ord og hold poengene gående.",
   "keyboardShortcuts": "Hurtigtaster",
   "shortcutSpace": "Start / neste ord",
   "shortcutEsc": "Stopp / lukk"

@@ -21,6 +21,11 @@
   "rulesStep2": "On your turn, describe the word on screen without saying it or any part of it.",
   "rulesStep3": "Your team guesses as many words as they can before the timer runs out.",
   "rulesStep4": "Tap the word to bring up the next one — score a point for each correct guess.",
+  "tips": "Tips",
+  "tip1": "Start broad: say the category first, then narrow in.",
+  "tip2": "Use opposites, synonyms and 'sounds like' for tricky words.",
+  "tip3": "Lean on what your team shares — references and inside jokes land fast.",
+  "tip4": "Don't get stuck — skip a hard word and keep the points flowing.",
   "keyboardShortcuts": "Keyboard shortcuts",
   "shortcutSpace": "Start / next word",
   "shortcutEsc": "Stop / close"

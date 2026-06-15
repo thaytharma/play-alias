@@ -5,6 +5,7 @@ import Modal from '../Modal/Modal';
 import styles from './RulesModal.module.scss';
 
 const STEP_KEYS: TranslationKey[] = ['rulesStep1', 'rulesStep2', 'rulesStep3', 'rulesStep4'];
+const TIP_KEYS: TranslationKey[] = ['tip1', 'tip2', 'tip3', 'tip4'];
 
 const helpIcon = (
   <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
@@ -25,6 +26,15 @@ const RulesModal: React.FC = () => {
               <li key={key}>{t(key)}</li>
             ))}
           </ol>
+        </section>
+
+        <section className={styles.section}>
+          <span className={styles.label}>{t('tips')}</span>
+          <ul className={styles.tips}>
+            {TIP_KEYS.map((key) => (
+              <li key={key}>{t(key)}</li>
+            ))}
+          </ul>
         </section>
 
         <section className={`${styles.section} ${styles.shortcuts}`}>

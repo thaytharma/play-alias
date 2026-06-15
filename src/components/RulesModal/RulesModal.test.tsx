@@ -24,6 +24,8 @@ describe('RulesModal', () => {
     expect(screen.getByText(translations[Language.EN].howToPlay)).toBeInTheDocument();
     expect(screen.getByText(translations[Language.EN].rulesStep1)).toBeInTheDocument();
     expect(screen.getByText(translations[Language.EN].rulesStep4)).toBeInTheDocument();
+    expect(screen.getByText(translations[Language.EN].tips)).toBeInTheDocument();
+    expect(screen.getByText(translations[Language.EN].tip1)).toBeInTheDocument();
   });
 
   it('includes the keyboard shortcuts section', async () => {

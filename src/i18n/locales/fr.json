@@ -21,6 +21,11 @@
   "rulesStep2": "À votre tour, faites deviner le mot affiché sans le dire ni en dire une partie.",
   "rulesStep3": "Votre équipe devine le plus de mots possible avant la fin du minuteur.",
   "rulesStep4": "Touchez le mot pour passer au suivant — un point par bonne réponse.",
+  "tips": "Astuces",
+  "tip1": "Commencez large : donnez d'abord la catégorie, puis précisez.",
+  "tip2": "Utilisez contraires, synonymes et « ça ressemble à » pour les mots difficiles.",
+  "tip3": "Appuyez-vous sur vos références communes — les blagues internes font mouche.",
+  "tip4": "Ne bloquez pas : passez un mot difficile et enchaînez les points.",
   "keyboardShortcuts": "Raccourcis clavier",
   "shortcutSpace": "Démarrer / mot suivant",
   "shortcutEsc": "Arrêter / fermer"
