@@ -64,6 +64,7 @@ describe('saveLanguage', () => {
 
 describe('parseDuration', () => {
   it('accepts known durations', () => {
+    expect(parseDuration('30')).toBe(30);
     expect(parseDuration('60')).toBe(60);
     expect(parseDuration('120')).toBe(120);
   });

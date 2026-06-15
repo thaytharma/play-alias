@@ -60,7 +60,7 @@ export function saveLanguage(language: Language): void {
 const DURATION_STORAGE_KEY = 'alias.duration';
 
 /** Selectable round lengths, in seconds. */
-export const DURATION_OPTIONS: readonly number[] = [60, 90, 120];
+export const DURATION_OPTIONS: readonly number[] = [30, 60, 90, 120];
 export const DEFAULT_DURATION = 60;
 
 /** Resolve a stored value to a known duration, or null. */
