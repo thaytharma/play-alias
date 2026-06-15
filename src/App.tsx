@@ -1,6 +1,6 @@
 import './App.scss';
-import React, { useEffect, useState } from 'react';
-import Word from './components/Word/Word';
+import React, { useEffect, useRef, useState } from 'react';
+import Word, { WordHandle } from './components/Word/Word';
 import Splash from './components/Splash/Splash';
 import StopButton from './components/StopButton/StopButton';
 import RulesModal from './components/RulesModal/RulesModal';
@@ -16,6 +16,7 @@ const App: React.FC = () => {
   const [duration, setDuration] = useState<number>(getInitialDuration);
   const [counter, setCounter] = React.useState<number>(duration);
   const [started, setStarted] = useState<boolean>(false);
+  const wordRef = useRef<WordHandle>(null);
 
   // Persist the language (covers both `?lang=` visits and manual changes).
   useEffect(() => {
@@ -67,13 +68,54 @@ const App: React.FC = () => {
     }
   };
 
+  // Keyboard controls (non-touch). Space/Enter is the primary action (start the
+  // round, then draw the next word); Escape backs out one level.
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const dialogOpen = !!document.querySelector('[role="dialog"]');
+      const focused = document.activeElement;
+      const focusedControl =
+        !!focused && ['BUTTON', 'INPUT', 'TEXTAREA', 'SELECT'].includes(focused.tagName);
+
+      if (event.key === 'Escape') {
+        // An open modal handles its own Escape; otherwise stop the round.
+        if (!dialogOpen && started) {
+          setStarted(false);
+        }
+        return;
+      }
+
+      if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
+        // Let an open dialog or a focused control handle the key natively.
+        if (dialogOpen || focusedControl || event.repeat) {
+          return;
+        }
+        event.preventDefault();
+        if (started) {
+          wordRef.current?.advance();
+        } else {
+          setCounter(duration);
+          setStarted(true);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [started, duration]);
+
   return (
     <TranslationProvider language={language}>
       <div className="app">
         <main>
           {started ? (
             <>
-              <Word language={language} isTimeUp={counter === 0} onWordChange={handleWordChange} />
+              <Word
+                ref={wordRef}
+                language={language}
+                isTimeUp={counter === 0}
+                onWordChange={handleWordChange}
+              />
               <Counter counter={counter} />
             </>
           ) : (

@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import styles from './Word.module.scss';
 import { isEnglish, isFrench } from '../../helpers/language';
 import { Language } from '../../types/Language';
 import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '../../helpers/words';
 import { APP_NAME } from '../../constants';
+
+export interface WordHandle {
+  /** Draw the next word (and, at time's up, restart the round). */
+  advance: () => void;
+}
 
 interface Props {
   language: Language;
@@ -11,7 +16,7 @@ interface Props {
   onWordChange: () => void;
 }
 
-const Word: React.FC<Props> = ({ language, isTimeUp, onWordChange }: Props) => {
+const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }: Props, ref) => {
   const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
@@ -52,6 +57,8 @@ const Word: React.FC<Props> = ({ language, isTimeUp, onWordChange }: Props) => {
     onWordChange();
   };
 
+  useImperativeHandle(ref, () => ({ advance: handleWordChange }));
+
   // While time is up, the word area shows the brand instead of the last word —
   // clicking it still draws the next word and restarts the round.
   const display = isTimeUp ? APP_NAME : word;
@@ -70,6 +77,8 @@ const Word: React.FC<Props> = ({ language, isTimeUp, onWordChange }: Props) => {
       </button>
     </h1>
   );
-};
+});
+
+Word.displayName = 'Word';
 
 export default Word;

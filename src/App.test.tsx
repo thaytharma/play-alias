@@ -48,6 +48,37 @@ test('stopping returns to the splash', async () => {
   expect(screen.queryByRole('button', { name: translations[Language.NO].stop })).not.toBeInTheDocument();
 });
 
+test('Space starts the round from the splash', () => {
+  render(<App />);
+
+  fireEvent.keyDown(document.body, { key: ' ' });
+
+  expect(screen.queryByText(translations[Language.NO].tapToStart)).not.toBeInTheDocument();
+  expect(screen.getByRole('heading')).toBeInTheDocument();
+});
+
+test('Escape returns to the splash during a round', async () => {
+  render(<App />);
+  await userEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
+
+  fireEvent.keyDown(document.body, { key: 'Escape' });
+
+  expect(screen.getByText(translations[Language.NO].tapToStart)).toBeInTheDocument();
+});
+
+test('Escape closes an open modal without leaving the round', async () => {
+  render(<App />);
+  await userEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
+  await userEvent.click(screen.getByRole('button', { name: translations[Language.NO].settings }));
+  expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+  fireEvent.keyDown(document.body, { key: 'Escape' });
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: translations[Language.NO].stop })).toBeInTheDocument();
+  expect(screen.queryByText(translations[Language.NO].tapToStart)).not.toBeInTheDocument();
+});
+
 test("at time's up, shows the brand and swaps the stop button for the rules button", async () => {
   vi.useFakeTimers();
   try {
@@ -68,6 +99,10 @@ test("at time's up, shows the brand and swaps the stop button for the rules butt
     expect(screen.getByRole('heading')).toHaveTextContent(APP_NAME);
     expect(screen.getByRole('button', { name: translations[Language.NO].rules })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: translations[Language.NO].stop })).not.toBeInTheDocument();
+
+    // Space restarts the round from the time's-up screen.
+    fireEvent.keyDown(document.body, { key: ' ' });
+    expect(screen.queryByText(translations[Language.NO].timesUp)).not.toBeInTheDocument();
   } finally {
     vi.useRealTimers();
   }

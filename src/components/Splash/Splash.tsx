@@ -13,7 +13,8 @@ const Splash: React.FC<Props> = ({ onStart }: Props) => {
   return (
     <button type="button" className={styles.splash} onClick={onStart}>
       <span className={styles.title}>{APP_NAME}</span>
-      <span className={styles.hint}>{t('tapToStart')}</span>
+      <span className={`${styles.hint} ${styles.touchHint}`}>{t('tapToStart')}</span>
+      <span className={`${styles.hint} ${styles.keyHint}`}>{t('pressSpaceToStart')}</span>
     </button>
   );
 };
