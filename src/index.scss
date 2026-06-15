@@ -72,6 +72,14 @@
   --color-on-primary: #2a0a1d;
 }
 
+/* Berry's dark background — a deep plum to match the pink accent. */
+[data-appearance='dark'][data-theme='berry'] {
+  --c-bg: 38, 16, 33;
+  --color-bg: #261021;
+  --color-bg-raised: #3f1f37;
+  --color-surface: #341a2d;
+}
+
 body {
   margin: 0;
   font-family: 'Luckiest Guy', cursive;
