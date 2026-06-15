@@ -7,5 +7,7 @@
   "languageNorwegian": "Norwegian",
   "languageFrench": "French",
   "settings": "Settings",
-  "close": "Close"
+  "close": "Close",
+  "tapToStart": "Tap to start",
+  "stop": "Stop"
 }

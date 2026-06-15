@@ -1,6 +1,8 @@
 import './App.scss';
 import React, { useEffect, useState } from 'react';
 import Word from './components/Word/Word';
+import Splash from './components/Splash/Splash';
+import StopButton from './components/StopButton/StopButton';
 import Footer from './components/Footer/Footer';
 import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
@@ -13,6 +15,7 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
   const [duration, setDuration] = useState<number>(getInitialDuration);
   const [counter, setCounter] = React.useState<number>(duration);
+  const [started, setStarted] = useState<boolean>(false);
 
   // Persist the language (covers both `?lang=` visits and manual changes).
   useEffect(() => {
@@ -35,15 +38,25 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    if (counter <= 0) {
+    // Hold the timer until the player starts from the splash.
+    if (!started || counter <= 0) {
       return;
     }
     const timer = setTimeout(() => setCounter(counter - 1), 1000);
     return () => clearTimeout(timer);
-  }, [counter]);
+  }, [counter, started]);
 
   const restartCounter = () => {
     setCounter(duration);
+  };
+
+  const handleStart = () => {
+    restartCounter();
+    setStarted(true);
+  };
+
+  const handleStop = () => {
+    setStarted(false);
   };
 
   const handleWordChange = () => {
@@ -58,10 +71,17 @@ const App: React.FC = () => {
     <TranslationProvider language={language}>
       <div className="app">
         <main>
-          <Word language={language} isTimeLow={isTimeRunningOut(counter)} onWordChange={handleWordChange} />
-          <Counter counter={counter} />
+          {started ? (
+            <>
+              <Word language={language} isTimeLow={isTimeRunningOut(counter)} onWordChange={handleWordChange} />
+              <Counter counter={counter} />
+            </>
+          ) : (
+            <Splash onStart={handleStart} />
+          )}
         </main>
         <Footer />
+        {started && <StopButton onStop={handleStop} />}
         <SettingsModal
           language={language}
           handleChangeLanguage={handleChangeLanguage}
