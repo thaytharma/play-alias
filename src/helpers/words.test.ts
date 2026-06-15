@@ -1,6 +1,7 @@
 import englishWords from '../data/englishWords';
 import frenchWords from '../data/frenchWords';
-import { generateEnglishWord, generateFrenchWord } from './words';
+import norwegianWords from '../data/norwegianWords';
+import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from './words';
 
 const decapitalize = (word: string): string => word.charAt(0).toLowerCase() + word.slice(1);
 
@@ -39,6 +40,8 @@ const describeList = (name: string, list: string[]) => {
 
 describeGenerator('generateEnglishWord', generateEnglishWord, englishWords);
 describeGenerator('generateFrenchWord', generateFrenchWord, frenchWords);
+describeGenerator('generateNorwegianWord', generateNorwegianWord, norwegianWords);
 
 describeList('curated English word list', englishWords);
 describeList('curated French word list', frenchWords);
+describeList('curated Norwegian word list', norwegianWords);
