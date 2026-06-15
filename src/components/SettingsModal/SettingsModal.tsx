@@ -21,6 +21,7 @@ interface Props {
   sound: SoundLevel;
   onChangeSound: (sound: SoundLevel) => void;
   soundSupported: boolean;
+  onClearWords: () => void;
 }
 
 const gearIcon = (
@@ -41,6 +42,7 @@ const SettingsModal: React.FC<Props> = ({
   sound,
   onChangeSound,
   soundSupported,
+  onClearWords,
 }: Props) => {
   const t = useTranslation();
 
@@ -76,6 +78,12 @@ const SettingsModal: React.FC<Props> = ({
           onChange={onChangeAppearance}
         />
         <OptionGroup label={t('theme')} options={themeOptions} value={theme} onChange={onChangeTheme} />
+        <div className={styles.action}>
+          <span className={styles.actionLabel}>{t('storedWords')}</span>
+          <button type="button" className={styles.clearButton} onClick={onClearWords}>
+            {t('clearStoredWords')}
+          </button>
+        </div>
       </div>
     </Modal>
   );

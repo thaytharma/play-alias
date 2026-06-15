@@ -3,11 +3,14 @@ import styles from './Word.module.scss';
 import { isEnglish, isFrench } from '../../helpers/language';
 import { Language } from '../../types/Language';
 import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '../../helpers/words';
+import { getStoredWords, saveStoredWords } from '../../helpers/preferences';
 import { APP_NAME } from '../../constants';
 
 export interface WordHandle {
   /** Draw the next word (and, at time's up, restart the round). */
   advance: () => void;
+  /** Forget the shown-words history (keeping the current word on screen). */
+  reset: () => void;
 }
 
 interface Props {
@@ -21,9 +24,13 @@ const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }
   const [usedWords, setUsedWords] = useState<string[]>([]);
 
   useEffect(() => {
-    const newWord = generateNewWord();
+    // Seed from previously-shown words so they keep being avoided across sessions.
+    const stored = getStoredWords(language);
+    const newWord = generateUnusedWord(stored);
+    const next = [...stored, newWord];
     setWord(newWord);
-    setUsedWords([newWord]);
+    setUsedWords(next);
+    saveStoredWords(language, next);
   }, [language]);
 
   const generateNewWord = (): string => {
@@ -40,10 +47,10 @@ const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }
 
   // Try a few times to surface a word that hasn't been shown yet, falling back to
   // whatever we drew last if the pool keeps repeating.
-  const generateUnusedWord = (): string => {
+  const generateUnusedWord = (used: string[]): string => {
     for (let attempt = 0; attempt < 10; attempt++) {
       const candidate = generateNewWord();
-      if (!usedWords.includes(candidate)) {
+      if (!used.includes(candidate)) {
         return candidate;
       }
     }
@@ -51,13 +58,22 @@ const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }
   };
 
   const handleWordChange = () => {
-    const nextWord = generateUnusedWord();
+    const nextWord = generateUnusedWord(usedWords);
+    const updated = [...usedWords, nextWord];
     setWord(nextWord);
-    setUsedWords([...usedWords, nextWord]);
+    setUsedWords(updated);
+    saveStoredWords(language, updated);
     onWordChange();
   };
 
-  useImperativeHandle(ref, () => ({ advance: handleWordChange }));
+  // Forget history but keep the current word on screen (and stored).
+  const reset = () => {
+    const kept = word ? [word] : [];
+    setUsedWords(kept);
+    saveStoredWords(language, kept);
+  };
+
+  useImperativeHandle(ref, () => ({ advance: handleWordChange, reset }));
 
   // While time is up, the word area shows the brand instead of the last word —
   // clicking it still draws the next word and restarts the round.

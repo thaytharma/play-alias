@@ -6,11 +6,13 @@ import {
   DEFAULT_LANGUAGE,
   DEFAULT_SOUND,
   DEFAULT_THEME,
+  clearStoredWords,
   getInitialAppearance,
   getInitialDuration,
   getInitialLanguage,
   getInitialSound,
   getInitialTheme,
+  getStoredWords,
   parseAppearance,
   parseDuration,
   parseLanguage,
@@ -20,6 +22,7 @@ import {
   saveDuration,
   saveLanguage,
   saveSound,
+  saveStoredWords,
   saveTheme,
 } from './preferences';
 
@@ -176,5 +179,34 @@ describe('sound storage', () => {
   it('round-trips through getInitialSound', () => {
     saveSound('high');
     expect(getInitialSound()).toBe('high');
+  });
+});
+
+describe('stored words', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('stores and reads words per language', () => {
+    saveStoredWords(Language.EN, ['Apple', 'Banana']);
+
+    expect(getStoredWords(Language.EN)).toEqual(['Apple', 'Banana']);
+    expect(getStoredWords(Language.FR)).toEqual([]);
+  });
+
+  it('clears stored words for every language', () => {
+    saveStoredWords(Language.EN, ['Apple']);
+    saveStoredWords(Language.FR, ['Pomme']);
+
+    clearStoredWords();
+
+    expect(getStoredWords(Language.EN)).toEqual([]);
+    expect(getStoredWords(Language.FR)).toEqual([]);
+  });
+
+  it('returns an empty list for malformed data', () => {
+    localStorage.setItem(`alias.usedWords.${Language.EN}`, 'not json');
+
+    expect(getStoredWords(Language.EN)).toEqual([]);
   });
 });

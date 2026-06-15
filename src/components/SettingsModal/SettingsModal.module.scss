@@ -1,5 +1,38 @@
+@use '../../styles/typography';
+
 .body {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.actionLabel {
+  @include typography.section-label;
+}
+
+.clearButton {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  background: none;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    background 150ms ease;
+
+  &:hover {
+    color: var(--color-text);
+    background: var(--color-fill);
+  }
 }

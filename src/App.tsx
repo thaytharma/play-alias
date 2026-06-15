@@ -11,6 +11,7 @@ import SettingsModal from './components/SettingsModal/SettingsModal';
 import { getInitialDuration, getInitialLanguage, saveDuration, saveLanguage } from './helpers/preferences';
 import { getInitialAppearance, getInitialTheme, saveAppearance, saveTheme } from './helpers/preferences';
 import { getInitialSound, saveSound } from './helpers/preferences';
+import { clearStoredWords } from './helpers/preferences';
 import { Appearance, Theme } from './types/Theme';
 import { SoundLevel } from './helpers/sound';
 import { isSoundSupported, playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
@@ -107,6 +108,12 @@ const App: React.FC = () => {
     setSound(nextSound);
   };
 
+  const handleClearWords = () => {
+    clearStoredWords();
+    // Refresh the in-progress word's history if a round is running.
+    wordRef.current?.reset();
+  };
+
   const handleWordChange = () => {
     playWordChange(sound);
     // Mid-round a new word just swaps the word; once time is up, changing the
@@ -185,6 +192,7 @@ const App: React.FC = () => {
           sound={sound}
           onChangeSound={handleChangeSound}
           soundSupported={soundSupported}
+          onClearWords={handleClearWords}
         />
       </div>
     </TranslationProvider>

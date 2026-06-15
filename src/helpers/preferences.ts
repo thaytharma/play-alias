@@ -40,6 +40,14 @@ function writeStorage(key: string, value: string): void {
   }
 }
 
+function removeStorage(key: string): void {
+  try {
+    window.localStorage.removeItem(key);
+  } catch {
+    // Ignore storage errors (e.g. Safari private mode).
+  }
+}
+
 /** Initial language: `?lang=` query param wins, then localStorage, then the default. */
 export function getInitialLanguage(search: string = window.location.search): Language {
   const fromQuery = parseLanguage(new URLSearchParams(search).get(LANGUAGE_QUERY_KEY));
@@ -134,4 +142,29 @@ export function getInitialSound(): SoundLevel {
 
 export function saveSound(sound: SoundLevel): void {
   writeStorage(SOUND_STORAGE_KEY, sound);
+}
+
+const USED_WORDS_KEY_PREFIX = 'alias.usedWords.';
+
+/** Words already shown for a language, persisted so they don't repeat across sessions. */
+export function getStoredWords(language: Language): string[] {
+  const raw = readStorage(USED_WORDS_KEY_PREFIX + language);
+  if (!raw) {
+    return [];
+  }
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((word): word is string => typeof word === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveStoredWords(language: Language, words: string[]): void {
+  writeStorage(USED_WORDS_KEY_PREFIX + language, JSON.stringify(words));
+}
+
+/** Forget the shown-words history for every language. */
+export function clearStoredWords(): void {
+  Object.values(Language).forEach((language) => removeStorage(USED_WORDS_KEY_PREFIX + language));
 }

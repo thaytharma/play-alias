@@ -23,6 +23,7 @@ const renderModal = (overrides = {}) =>
         sound="low"
         onChangeSound={vi.fn()}
         soundSupported
+        onClearWords={vi.fn()}
         {...overrides}
       />
     </TranslationProvider>,
@@ -88,6 +89,16 @@ describe('SettingsModal', () => {
     expect(screen.queryByRole('button', { name: en.soundHigh })).not.toBeInTheDocument();
     // other settings still render
     expect(screen.getByRole('button', { name: '120s' })).toBeInTheDocument();
+  });
+
+  it('clears stored words from the modal', async () => {
+    const onClearWords = vi.fn();
+    renderModal({ onClearWords });
+    await userEvent.click(screen.getByRole('button', { name: en.settings }));
+
+    await userEvent.click(screen.getByRole('button', { name: en.clearStoredWords }));
+
+    expect(onClearWords).toHaveBeenCalled();
   });
 
   it('closes the dialog via the close button', async () => {
