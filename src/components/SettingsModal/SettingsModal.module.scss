@@ -47,6 +47,25 @@
   margin-bottom: 1rem;
 }
 
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.groupLabel {
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.7rem;
+}
+
 .title {
   margin: 0;
   color: white;

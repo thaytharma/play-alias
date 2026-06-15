@@ -1,7 +1,6 @@
 import './App.scss';
 import React, { useEffect, useState } from 'react';
 import Word from './components/Word/Word';
-import LanguageButtons from './components/LanguageButtons/LanguageButtons';
 import Footer from './components/Footer/Footer';
 import { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
@@ -60,13 +59,15 @@ const App: React.FC = () => {
       <div className="app">
         <main>
           <Word language={language} isTimeLow={isTimeRunningOut(counter)} onWordChange={handleWordChange} />
-          <div className="language-button-wrapper">
-            <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
-          </div>
           <Counter counter={counter} />
         </main>
         <Footer />
-        <SettingsModal duration={duration} onChangeDuration={handleChangeDuration} />
+        <SettingsModal
+          language={language}
+          handleChangeLanguage={handleChangeLanguage}
+          duration={duration}
+          onChangeDuration={handleChangeDuration}
+        />
       </div>
     </TranslationProvider>
   );

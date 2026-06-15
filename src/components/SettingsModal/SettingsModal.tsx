@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { Language } from '../../types/Language';
 import { useTranslation } from '../../i18n/useTranslation';
+import LanguageButtons from '../LanguageButtons/LanguageButtons';
 import Settings from '../Settings/Settings';
 import styles from './SettingsModal.module.scss';
 
 interface Props {
+  language: Language;
+  handleChangeLanguage: (language: Language) => void;
   duration: number;
   onChangeDuration: (duration: number) => void;
 }
 
-const SettingsModal: React.FC<Props> = ({ duration, onChangeDuration }: Props) => {
+const SettingsModal: React.FC<Props> = ({ language, handleChangeLanguage, duration, onChangeDuration }: Props) => {
   const t = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -54,7 +58,13 @@ const SettingsModal: React.FC<Props> = ({ duration, onChangeDuration }: Props) =
                 ×
               </button>
             </div>
-            <Settings duration={duration} onChangeDuration={onChangeDuration} />
+            <div className={styles.body}>
+              <div className={styles.group}>
+                <span className={styles.groupLabel}>{t('language')}</span>
+                <LanguageButtons language={language} handleChangeLanguage={handleChangeLanguage} />
+              </div>
+              <Settings duration={duration} onChangeDuration={onChangeDuration} />
+            </div>
           </div>
         </div>
       )}

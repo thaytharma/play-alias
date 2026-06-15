@@ -8,12 +8,8 @@ beforeEach(() => {
   localStorage.clear();
 });
 
-test('renders a language button for every supported language', () => {
+test('renders the settings button (default language Norwegian)', () => {
   render(<App />);
 
-  // Default language is Norwegian, so the buttons show the Norwegian names.
-  const messages = translations[Language.NO];
-  expect(screen.getByTitle(messages.languageNorwegian)).toBeInTheDocument();
-  expect(screen.getByTitle(messages.languageEnglish)).toBeInTheDocument();
-  expect(screen.getByTitle(messages.languageFrench)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: translations[Language.NO].settings })).toBeInTheDocument();
 });
