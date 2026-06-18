@@ -20,7 +20,9 @@
 .clearButton {
   width: 100%;
   box-sizing: border-box;
-  padding: 0.55rem 0.9rem;
+  // Top-heavy pad recentres the Luckiest Guy label, which sits high otherwise.
+  line-height: 1;
+  padding: 0.62rem 0.9rem 0.48rem;
   font-size: 0.9rem;
   color: var(--color-text-muted);
   background: none;
