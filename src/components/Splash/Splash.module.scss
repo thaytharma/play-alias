@@ -43,7 +43,6 @@
 .hint {
   color: var(--color-text);
   font-size: clamp(1rem, 3vw, 1.75rem);
-  animation: pulse 1.6s ease-in-out infinite;
 }
 
 // Default (touch / coarse pointer): show the tap hint, hide the keyboard hint.
@@ -71,16 +70,6 @@
   }
   100% {
     transform: scale(1);
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 0.95;
   }
 }
 
