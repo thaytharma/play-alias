@@ -84,17 +84,19 @@ const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }
 
   return (
     <h1 ref={tiltRef} className={styles.word}>
-      <button
-        key={display}
-        type="button"
-        tabIndex={0}
-        className={styles.wordButton}
-        onClick={() => {
-          handleWordChange();
-        }}
-      >
-        {display}
-      </button>
+      <span className={styles.tilt}>
+        <button
+          key={display}
+          type="button"
+          tabIndex={0}
+          className={styles.wordButton}
+          onClick={() => {
+            handleWordChange();
+          }}
+        >
+          {display}
+        </button>
+      </span>
     </h1>
   );
 });
