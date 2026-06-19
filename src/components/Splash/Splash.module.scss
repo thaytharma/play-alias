@@ -9,6 +9,20 @@
   padding: 0 1rem;
 }
 
+// Stays put so it can listen for pointer movement; the inner `.tilt` does the
+// rotating (a transform here would trip pointerleave and cancel the tilt).
+.titleTilt {
+  display: inline-block;
+}
+
+.tilt {
+  display: inline-block;
+  transform: perspective(700px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 150ms ease-out;
+}
+
 .title {
   text-transform: uppercase;
   letter-spacing: 2.5px;
