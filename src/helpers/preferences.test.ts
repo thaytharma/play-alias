@@ -4,23 +4,31 @@ import {
   DEFAULT_APPEARANCE,
   DEFAULT_DURATION,
   DEFAULT_LANGUAGE,
+  DEFAULT_LEVEL,
+  DEFAULT_MODE,
   DEFAULT_SOUND,
   DEFAULT_THEME,
   clearStoredWords,
   getInitialAppearance,
   getInitialDuration,
   getInitialLanguage,
+  getInitialLevel,
+  getInitialMode,
   getInitialSound,
   getInitialTheme,
   getStoredWords,
   parseAppearance,
   parseDuration,
   parseLanguage,
+  parseLevel,
+  parseMode,
   parseSound,
   parseTheme,
   saveAppearance,
   saveDuration,
   saveLanguage,
+  saveLevel,
+  saveMode,
   saveSound,
   saveStoredWords,
   saveTheme,
@@ -179,6 +187,42 @@ describe('sound storage', () => {
   it('round-trips through getInitialSound', () => {
     saveSound('high');
     expect(getInitialSound()).toBe('high');
+  });
+});
+
+describe('mode storage', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('defaults when nothing is stored', () => {
+    expect(getInitialMode()).toBe(DEFAULT_MODE);
+  });
+
+  it('round-trips known and rejects unknown values', () => {
+    expect(parseMode('party')).toBe('party');
+    expect(parseMode('default')).toBe('default');
+    expect(parseMode('wild')).toBeNull();
+    saveMode('party');
+    expect(getInitialMode()).toBe('party');
+  });
+});
+
+describe('level storage', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('defaults when nothing is stored', () => {
+    expect(getInitialLevel()).toBe(DEFAULT_LEVEL);
+  });
+
+  it('round-trips known and rejects unknown values', () => {
+    expect(parseLevel('easy')).toBe('easy');
+    expect(parseLevel('hard')).toBe('hard');
+    expect(parseLevel('expert')).toBeNull();
+    saveLevel('hard');
+    expect(getInitialLevel()).toBe('hard');
   });
 });
 

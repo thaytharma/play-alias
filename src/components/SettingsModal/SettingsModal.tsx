@@ -1,9 +1,17 @@
 import type React from 'react';
 import type { Language } from '../../types/Language';
 import { type Appearance, type Theme, THEME_LABELS } from '../../types/Theme';
+import type { DifficultyLevel, PlayMode } from '../../types/Word';
 import type { SoundLevel } from '../../helpers/sound';
 import { useTranslation } from '../../i18n/useTranslation';
-import { APPEARANCE_OPTIONS, DURATION_OPTIONS, SOUND_OPTIONS, THEME_OPTIONS } from '../../helpers/preferences';
+import {
+  APPEARANCE_OPTIONS,
+  DURATION_OPTIONS,
+  LEVEL_OPTIONS,
+  MODE_OPTIONS,
+  SOUND_OPTIONS,
+  THEME_OPTIONS,
+} from '../../helpers/preferences';
 import { LANGUAGE_ENDONYMS, LANGUAGE_ORDER } from '../../helpers/language';
 import OptionGroup from '../OptionGroup/OptionGroup';
 import Modal from '../Modal/Modal';
@@ -14,6 +22,10 @@ interface Props {
   handleChangeLanguage: (language: Language) => void;
   duration: number;
   onChangeDuration: (duration: number) => void;
+  mode: PlayMode;
+  onChangeMode: (mode: PlayMode) => void;
+  level: DifficultyLevel;
+  onChangeLevel: (level: DifficultyLevel) => void;
   appearance: Appearance;
   onChangeAppearance: (appearance: Appearance) => void;
   theme: Theme;
@@ -35,6 +47,10 @@ const SettingsModal: React.FC<Props> = ({
   handleChangeLanguage,
   duration,
   onChangeDuration,
+  mode,
+  onChangeMode,
+  level,
+  onChangeLevel,
   appearance,
   onChangeAppearance,
   theme,
@@ -48,6 +64,14 @@ const SettingsModal: React.FC<Props> = ({
 
   const languageOptions = LANGUAGE_ORDER.map((lang) => ({ value: lang, label: LANGUAGE_ENDONYMS[lang] }));
   const durationOptions = DURATION_OPTIONS.map((seconds) => ({ value: seconds, label: `${seconds}s` }));
+  const modeOptions = MODE_OPTIONS.map((value) => ({
+    value,
+    label: value === 'default' ? t('modeDefault') : t('modeParty'),
+  }));
+  const levelOptions = LEVEL_OPTIONS.map((value) => ({
+    value,
+    label: value === 'easy' ? t('levelEasy') : value === 'medium' ? t('levelMedium') : t('levelHard'),
+  }));
   const appearanceOptions = APPEARANCE_OPTIONS.map((value) => ({
     value,
     label: value === 'dark' ? t('appearanceDark') : t('appearanceLight'),
@@ -62,6 +86,8 @@ const SettingsModal: React.FC<Props> = ({
     <Modal label={t('settings')} side="right" icon={gearIcon}>
       <div className={styles.body}>
         <OptionGroup label={t('language')} options={languageOptions} value={language} onChange={handleChangeLanguage} />
+        <OptionGroup label={t('mode')} options={modeOptions} value={mode} onChange={onChangeMode} />
+        <OptionGroup label={t('level')} options={levelOptions} value={level} onChange={onChangeLevel} />
         <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
         {soundSupported && (
           <OptionGroup label={t('sound')} options={soundOptions} value={sound} onChange={onChangeSound} />

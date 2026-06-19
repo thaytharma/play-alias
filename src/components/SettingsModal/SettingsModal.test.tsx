@@ -16,6 +16,10 @@ const renderModal = (overrides = {}) =>
         handleChangeLanguage={vi.fn()}
         duration={60}
         onChangeDuration={vi.fn()}
+        mode="default"
+        onChangeMode={vi.fn()}
+        level="medium"
+        onChangeLevel={vi.fn()}
         appearance="dark"
         onChangeAppearance={vi.fn()}
         theme="sunset"
@@ -70,6 +74,19 @@ describe('SettingsModal', () => {
 
     expect(onChangeAppearance).toHaveBeenCalledWith('light');
     expect(onChangeTheme).toHaveBeenCalledWith('berry');
+  });
+
+  it('changes the play mode and difficulty level from the modal', async () => {
+    const onChangeMode = vi.fn();
+    const onChangeLevel = vi.fn();
+    renderModal({ onChangeMode, onChangeLevel });
+    await userEvent.click(screen.getByRole('button', { name: en.settings }));
+
+    await userEvent.click(screen.getByRole('button', { name: en.modeParty }));
+    await userEvent.click(screen.getByRole('button', { name: en.levelHard }));
+
+    expect(onChangeMode).toHaveBeenCalledWith('party');
+    expect(onChangeLevel).toHaveBeenCalledWith('hard');
   });
 
   it('changes the sound level from the modal', async () => {

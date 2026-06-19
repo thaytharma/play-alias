@@ -1,5 +1,6 @@
 import { Language } from '../types/Language';
 import type { Appearance, Theme } from '../types/Theme';
+import type { DifficultyLevel, PlayMode } from '../types/Word';
 import type { SoundLevel } from './sound';
 
 const LANGUAGE_STORAGE_KEY = 'alias.language';
@@ -142,6 +143,42 @@ export function getInitialSound(): SoundLevel {
 
 export function saveSound(sound: SoundLevel): void {
   writeStorage(SOUND_STORAGE_KEY, sound);
+}
+
+const MODE_STORAGE_KEY = 'alias.mode';
+
+export const MODE_OPTIONS: readonly PlayMode[] = ['default', 'party'];
+export const DEFAULT_MODE: PlayMode = 'default';
+
+/** Resolve a stored value to a known play mode, or null. */
+export function parseMode(value: string | null | undefined): PlayMode | null {
+  return MODE_OPTIONS.includes(value as PlayMode) ? (value as PlayMode) : null;
+}
+
+export function getInitialMode(): PlayMode {
+  return parseMode(readStorage(MODE_STORAGE_KEY)) ?? DEFAULT_MODE;
+}
+
+export function saveMode(mode: PlayMode): void {
+  writeStorage(MODE_STORAGE_KEY, mode);
+}
+
+const LEVEL_STORAGE_KEY = 'alias.level';
+
+export const LEVEL_OPTIONS: readonly DifficultyLevel[] = ['easy', 'medium', 'hard'];
+export const DEFAULT_LEVEL: DifficultyLevel = 'medium';
+
+/** Resolve a stored value to a known difficulty level, or null. */
+export function parseLevel(value: string | null | undefined): DifficultyLevel | null {
+  return LEVEL_OPTIONS.includes(value as DifficultyLevel) ? (value as DifficultyLevel) : null;
+}
+
+export function getInitialLevel(): DifficultyLevel {
+  return parseLevel(readStorage(LEVEL_STORAGE_KEY)) ?? DEFAULT_LEVEL;
+}
+
+export function saveLevel(level: DifficultyLevel): void {
+  writeStorage(LEVEL_STORAGE_KEY, level);
 }
 
 const USED_WORDS_KEY_PREFIX = 'alias.usedWords.';

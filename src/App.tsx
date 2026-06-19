@@ -16,8 +16,22 @@ import { usePreferences } from './hooks/usePreferences';
 import { TranslationProvider } from './i18n/useTranslation';
 
 const App: React.FC = () => {
-  const { language, setLanguage, duration, setDuration, appearance, setAppearance, theme, setTheme, sound, setSound } =
-    usePreferences();
+  const {
+    language,
+    setLanguage,
+    duration,
+    setDuration,
+    mode,
+    setMode,
+    level,
+    setLevel,
+    appearance,
+    setAppearance,
+    theme,
+    setTheme,
+    sound,
+    setSound,
+  } = usePreferences();
   const [soundSupported] = useState(() => isSoundSupported());
   const [counter, setCounter] = useState<number>(duration);
   const [started, setStarted] = useState<boolean>(false);
@@ -132,7 +146,14 @@ const App: React.FC = () => {
         <main>
           {started ? (
             <>
-              <Word ref={wordRef} language={language} isTimeUp={counter === 0} onWordChange={handleWordChange} />
+              <Word
+                ref={wordRef}
+                language={language}
+                mode={mode}
+                level={level}
+                isTimeUp={counter === 0}
+                onWordChange={handleWordChange}
+              />
               <Counter counter={counter} />
             </>
           ) : (
@@ -146,6 +167,10 @@ const App: React.FC = () => {
           handleChangeLanguage={handleChangeLanguage}
           duration={duration}
           onChangeDuration={handleChangeDuration}
+          mode={mode}
+          onChangeMode={setMode}
+          level={level}
+          onChangeLevel={setLevel}
           appearance={appearance}
           onChangeAppearance={setAppearance}
           theme={theme}

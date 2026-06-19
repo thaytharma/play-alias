@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import styles from './Word.module.scss';
 import { isEnglish, isFrench } from '../../helpers/language';
 import type { Language } from '../../types/Language';
+import type { DifficultyLevel, PlayMode } from '../../types/Word';
 import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '../../helpers/words';
 import { getStoredWords, saveStoredWords } from '../../helpers/preferences';
 import { useTilt } from '../../hooks/useTilt';
@@ -16,11 +17,13 @@ export interface WordHandle {
 
 interface Props {
   language: Language;
+  mode: PlayMode;
+  level: DifficultyLevel;
   isTimeUp: boolean;
   onWordChange: () => void;
 }
 
-const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }: Props, ref) => {
+const Word = forwardRef<WordHandle, Props>(({ language, mode, level, isTimeUp, onWordChange }: Props, ref) => {
   const [word, setWord] = useState<string>('');
   const [usedWords, setUsedWords] = useState<string[]>([]);
   const tiltRef = useTilt<HTMLHeadingElement>();
@@ -38,14 +41,14 @@ const Word = forwardRef<WordHandle, Props>(({ language, isTimeUp, onWordChange }
 
   const generateNewWord = (): string => {
     if (isEnglish(language)) {
-      return generateEnglishWord();
+      return generateEnglishWord(level, mode);
     }
 
     if (isFrench(language)) {
-      return generateFrenchWord();
+      return generateFrenchWord(level, mode);
     }
 
-    return generateNorwegianWord();
+    return generateNorwegianWord(level, mode);
   };
 
   // Try a few times to surface a word that hasn't been shown yet, falling back to
