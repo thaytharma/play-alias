@@ -16,15 +16,70 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileColor" content="#041c32" />
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#041c32" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Play Alias — a word guessing game." />
-    <title>Play Alias</title>
+
+    <!-- Primary SEO -->
+    <title>Alias by Thayanan Tharmapalan — Word Guessing Party Game</title>
+    <meta
+      name="description"
+      content="Alias by Thayanan Tharmapalan — a free, no-install word guessing party game. Describe the word on screen without saying it and beat the timer. Play in English, Norwegian or French."
+    />
+    <meta
+      name="keywords"
+      content="Alias, word game, guessing game, party game, charades, family game, word guessing, Thayanan Tharmapalan, free online game"
+    />
+    <meta name="author" content="Thayanan Tharmapalan" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.tharmapalan.com/alias/" />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Alias by Thayanan Tharmapalan" />
+    <meta property="og:title" content="Alias by Thayanan Tharmapalan — Word Guessing Party Game" />
+    <meta
+      property="og:description"
+      content="A free, no-install word guessing party game. Describe the word without saying it and beat the timer. Play in English, Norwegian or French."
+    />
+    <meta property="og:url" content="https://www.tharmapalan.com/alias/" />
+    <meta property="og:image" content="https://www.tharmapalan.com/alias/android-chrome-512x512.png" />
+    <meta property="og:locale" content="en" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Alias by Thayanan Tharmapalan — Word Guessing Party Game" />
+    <meta
+      name="twitter:description"
+      content="A free, no-install word guessing party game. Describe the word without saying it and beat the timer."
+    />
+    <meta name="twitter:image" content="https://www.tharmapalan.com/alias/android-chrome-512x512.png" />
+
+    <!-- Structured data: helps search engines attribute the game to its author -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Alias",
+        "alternateName": "Play Alias",
+        "url": "https://www.tharmapalan.com/alias/",
+        "description": "A free word guessing party game: describe the word on screen without saying it and beat the timer. Play in English, Norwegian or French.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript.",
+        "inLanguage": ["en", "no", "fr"],
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Thayanan Tharmapalan" },
+        "creator": { "@type": "Person", "name": "Thayanan Tharmapalan" }
+      }
+    </script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      Alias by Thayanan Tharmapalan — a free word guessing party game. Please enable JavaScript to play.
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/index.tsx"></script>
   </body>

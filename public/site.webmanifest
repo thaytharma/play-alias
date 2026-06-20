@@ -1,6 +1,8 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Alias by Thayanan Tharmapalan",
+    "short_name": "Alias",
+    "description": "A free word guessing party game. Describe the word without saying it and beat the timer.",
+    "start_url": ".",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +15,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "#041c32",
+    "background_color": "#041c32",
     "display": "standalone"
 }
