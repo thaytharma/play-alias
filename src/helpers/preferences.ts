@@ -181,6 +181,29 @@ export function saveLevel(level: DifficultyLevel): void {
   writeStorage(LEVEL_STORAGE_KEY, level);
 }
 
+const SCORING_STORAGE_KEY = 'alias.scoring';
+
+export const DEFAULT_SCORING = false;
+
+/** Resolve a stored value to a boolean, or null when unrecognised. */
+export function parseScoring(value: string | null | undefined): boolean | null {
+  if (value === 'true') {
+    return true;
+  }
+  if (value === 'false') {
+    return false;
+  }
+  return null;
+}
+
+export function getInitialScoring(): boolean {
+  return parseScoring(readStorage(SCORING_STORAGE_KEY)) ?? DEFAULT_SCORING;
+}
+
+export function saveScoring(scoring: boolean): void {
+  writeStorage(SCORING_STORAGE_KEY, String(scoring));
+}
+
 const USED_WORDS_KEY_PREFIX = 'alias.usedWords.';
 
 /** Words already shown for a language, persisted so they don't repeat across sessions. */

@@ -26,6 +26,8 @@ interface Props {
   onChangeMode: (mode: PlayMode) => void;
   level: DifficultyLevel;
   onChangeLevel: (level: DifficultyLevel) => void;
+  scoring: boolean;
+  onChangeScoring: (scoring: boolean) => void;
   appearance: Appearance;
   onChangeAppearance: (appearance: Appearance) => void;
   theme: Theme;
@@ -51,6 +53,8 @@ const SettingsModal: React.FC<Props> = ({
   onChangeMode,
   level,
   onChangeLevel,
+  scoring,
+  onChangeScoring,
   appearance,
   onChangeAppearance,
   theme,
@@ -72,6 +76,10 @@ const SettingsModal: React.FC<Props> = ({
     value,
     label: value === 'easy' ? t('levelEasy') : value === 'medium' ? t('levelMedium') : t('levelHard'),
   }));
+  const scoringOptions = [
+    { value: 'off', label: t('scoreOff') },
+    { value: 'on', label: t('scoreOn') },
+  ];
   const appearanceOptions = APPEARANCE_OPTIONS.map((value) => ({
     value,
     label: value === 'dark' ? t('appearanceDark') : t('appearanceLight'),
@@ -91,6 +99,12 @@ const SettingsModal: React.FC<Props> = ({
           {mode === 'party' && <p className={styles.hint}>{t('partyHint')}</p>}
         </div>
         <OptionGroup label={t('level')} options={levelOptions} value={level} onChange={onChangeLevel} />
+        <OptionGroup
+          label={t('keepScore')}
+          options={scoringOptions}
+          value={scoring ? 'on' : 'off'}
+          onChange={(value) => onChangeScoring(value === 'on')}
+        />
         <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
         {soundSupported && (
           <OptionGroup label={t('sound')} options={soundOptions} value={sound} onChange={onChangeSound} />

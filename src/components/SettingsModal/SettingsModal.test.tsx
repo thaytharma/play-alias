@@ -20,6 +20,8 @@ const renderModal = (overrides = {}) =>
         onChangeMode={vi.fn()}
         level="medium"
         onChangeLevel={vi.fn()}
+        scoring={false}
+        onChangeScoring={vi.fn()}
         appearance="dark"
         onChangeAppearance={vi.fn()}
         theme="sunset"
@@ -106,6 +108,8 @@ describe('SettingsModal', () => {
           onChangeMode={vi.fn()}
           level="medium"
           onChangeLevel={vi.fn()}
+          scoring={false}
+          onChangeScoring={vi.fn()}
           appearance="dark"
           onChangeAppearance={vi.fn()}
           theme="sunset"
@@ -119,6 +123,16 @@ describe('SettingsModal', () => {
     );
 
     expect(screen.getByText(en.partyHint)).toBeInTheDocument();
+  });
+
+  it('toggles scoring from the modal', async () => {
+    const onChangeScoring = vi.fn();
+    renderModal({ onChangeScoring });
+    await userEvent.click(screen.getByRole('button', { name: en.settings }));
+
+    await userEvent.click(screen.getByRole('button', { name: en.scoreOn }));
+
+    expect(onChangeScoring).toHaveBeenCalledWith(true);
   });
 
   it('changes the sound level from the modal', async () => {

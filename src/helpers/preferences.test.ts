@@ -6,6 +6,7 @@ import {
   DEFAULT_LANGUAGE,
   DEFAULT_LEVEL,
   DEFAULT_MODE,
+  DEFAULT_SCORING,
   DEFAULT_SOUND,
   DEFAULT_THEME,
   clearStoredWords,
@@ -14,6 +15,7 @@ import {
   getInitialLanguage,
   getInitialLevel,
   getInitialMode,
+  getInitialScoring,
   getInitialSound,
   getInitialTheme,
   getStoredWords,
@@ -22,6 +24,7 @@ import {
   parseLanguage,
   parseLevel,
   parseMode,
+  parseScoring,
   parseSound,
   parseTheme,
   saveAppearance,
@@ -29,6 +32,7 @@ import {
   saveLanguage,
   saveLevel,
   saveMode,
+  saveScoring,
   saveSound,
   saveStoredWords,
   saveTheme,
@@ -223,6 +227,25 @@ describe('level storage', () => {
     expect(parseLevel('expert')).toBeNull();
     saveLevel('hard');
     expect(getInitialLevel()).toBe('hard');
+  });
+});
+
+describe('scoring storage', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('defaults to off when nothing is stored', () => {
+    expect(getInitialScoring()).toBe(DEFAULT_SCORING);
+  });
+
+  it('round-trips booleans and rejects unknown values', () => {
+    expect(parseScoring('true')).toBe(true);
+    expect(parseScoring('false')).toBe(false);
+    expect(parseScoring('yes')).toBeNull();
+    expect(parseScoring(null)).toBeNull();
+    saveScoring(true);
+    expect(getInitialScoring()).toBe(true);
   });
 });
 

@@ -107,6 +107,32 @@ test('plays a sound when the word changes', () => {
   expect(playWordChange).toHaveBeenCalledWith('low');
 });
 
+test('does not show scoring controls by default', async () => {
+  render(<App />);
+  await userEvent.click(screen.getByRole('button', { name: new RegExp(translations[Language.NO].tapToStart, 'i') }));
+
+  expect(
+    screen.queryByRole('button', { name: new RegExp(translations[Language.NO].correct, 'i') }),
+  ).not.toBeInTheDocument();
+});
+
+test('scoring mode tracks correct (+1) and skip (−1)', async () => {
+  localStorage.setItem('alias.scoring', 'true');
+  const no = translations[Language.NO];
+  render(<App />);
+  await userEvent.click(screen.getByRole('button', { name: new RegExp(no.tapToStart, 'i') }));
+
+  const correct = () => screen.getByRole('button', { name: new RegExp(no.correct, 'i') });
+  const skip = () => screen.getByRole('button', { name: new RegExp(no.skip, 'i') });
+
+  await userEvent.click(correct());
+  await userEvent.click(correct());
+  expect(screen.getByText('2')).toBeInTheDocument();
+
+  await userEvent.click(skip());
+  expect(screen.getByText('1')).toBeInTheDocument();
+});
+
 test('Space starts the round from the splash', () => {
   render(<App />);
 

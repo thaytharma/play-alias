@@ -8,6 +8,7 @@ import RulesModal from './components/RulesModal/RulesModal';
 import Footer from './components/Footer/Footer';
 import type { Language } from './types/Language';
 import Counter from './components/Counter/Counter';
+import ScorePanel from './components/ScorePanel/ScorePanel';
 import SettingsModal from './components/SettingsModal/SettingsModal';
 import { clearStoredWords } from './helpers/preferences';
 import { type SoundLevel, isSoundSupported, playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
@@ -25,6 +26,8 @@ const App: React.FC = () => {
     setMode,
     level,
     setLevel,
+    scoring,
+    setScoring,
     appearance,
     setAppearance,
     theme,
@@ -35,6 +38,7 @@ const App: React.FC = () => {
   const [soundSupported] = useState(() => isSoundSupported());
   const [counter, setCounter] = useState<number>(duration);
   const [started, setStarted] = useState<boolean>(false);
+  const [score, setScore] = useState<number>(0);
   const wordRef = useRef<WordHandle>(null);
 
   // Tick on each of the final seconds, and chime when time is up (same
@@ -59,8 +63,10 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, [counter, started]);
 
+  // Begin a fresh round: reset the clock and the score.
   const restartCounter = () => {
     setCounter(duration);
+    setScore(0);
   };
 
   const handleChangeLanguage = (nextLanguage: Language) => {
@@ -71,6 +77,7 @@ const App: React.FC = () => {
   const handleChangeDuration = (nextDuration: number) => {
     setDuration(nextDuration);
     setCounter(nextDuration);
+    setScore(0);
   };
 
   const handleStart = () => {
@@ -104,6 +111,18 @@ const App: React.FC = () => {
     }
   };
 
+  // Scoring mode: a correct guess scores a point, a skip costs one; both draw
+  // the next word (advance() runs handleWordChange for the sound/restart).
+  const handleCorrect = () => {
+    setScore((current) => current + 1);
+    wordRef.current?.advance();
+  };
+
+  const handleSkip = () => {
+    setScore((current) => current - 1);
+    wordRef.current?.advance();
+  };
+
   // Keyboard controls (non-touch). Space/Enter is the primary action (start the
   // round, then draw the next word); Escape backs out one level.
   useEffect(() => {
@@ -120,6 +139,16 @@ const App: React.FC = () => {
         return;
       }
 
+      // Scoring mode: ← skips the current word (−1) during a live round.
+      if (event.key === 'ArrowLeft') {
+        if (!dialogOpen && started && scoring && counter > 0 && !event.repeat) {
+          event.preventDefault();
+          setScore((current) => current - 1);
+          wordRef.current?.advance();
+        }
+        return;
+      }
+
       if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
         // Let an open dialog or a focused control handle the key natively.
         if (dialogOpen || focusedControl || event.repeat) {
@@ -127,6 +156,11 @@ const App: React.FC = () => {
         }
         event.preventDefault();
         if (started) {
+          // In scoring mode Space marks the word correct (+1); otherwise it just
+          // draws the next word.
+          if (scoring && counter > 0) {
+            setScore((current) => current + 1);
+          }
           wordRef.current?.advance();
         } else {
           unlockAudio();
@@ -138,7 +172,7 @@ const App: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [started, duration]);
+  }, [started, duration, scoring, counter]);
 
   return (
     <TranslationProvider language={language}>
@@ -152,9 +186,13 @@ const App: React.FC = () => {
                 mode={mode}
                 level={level}
                 isTimeUp={counter === 0}
+                disableTap={scoring && counter > 0}
                 onWordChange={handleWordChange}
               />
               <Counter counter={counter} />
+              {scoring && (
+                <ScorePanel score={score} isTimeUp={counter === 0} onCorrect={handleCorrect} onSkip={handleSkip} />
+              )}
             </>
           ) : (
             <Splash onStart={handleStart} />
@@ -171,6 +209,8 @@ const App: React.FC = () => {
           onChangeMode={setMode}
           level={level}
           onChangeLevel={setLevel}
+          scoring={scoring}
+          onChangeScoring={setScoring}
           appearance={appearance}
           onChangeAppearance={setAppearance}
           theme={theme}

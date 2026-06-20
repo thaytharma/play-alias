@@ -9,6 +9,7 @@ import {
   getInitialLanguage,
   getInitialLevel,
   getInitialMode,
+  getInitialScoring,
   getInitialSound,
   getInitialTheme,
   saveAppearance,
@@ -16,6 +17,7 @@ import {
   saveLanguage,
   saveLevel,
   saveMode,
+  saveScoring,
   saveSound,
   saveTheme,
 } from '../helpers/preferences';
@@ -29,6 +31,8 @@ export interface Preferences {
   setMode: (mode: PlayMode) => void;
   level: DifficultyLevel;
   setLevel: (level: DifficultyLevel) => void;
+  scoring: boolean;
+  setScoring: (scoring: boolean) => void;
   appearance: Appearance;
   setAppearance: (appearance: Appearance) => void;
   theme: Theme;
@@ -47,6 +51,7 @@ export function usePreferences(): Preferences {
   const [duration, setDuration] = useState<number>(getInitialDuration);
   const [mode, setMode] = useState<PlayMode>(getInitialMode);
   const [level, setLevel] = useState<DifficultyLevel>(getInitialLevel);
+  const [scoring, setScoring] = useState<boolean>(getInitialScoring);
   const [appearance, setAppearance] = useState<Appearance>(getInitialAppearance);
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [sound, setSound] = useState<SoundLevel>(getInitialSound);
@@ -66,6 +71,10 @@ export function usePreferences(): Preferences {
   useEffect(() => {
     saveLevel(level);
   }, [level]);
+
+  useEffect(() => {
+    saveScoring(scoring);
+  }, [scoring]);
 
   useEffect(() => {
     saveAppearance(appearance);
@@ -90,6 +99,8 @@ export function usePreferences(): Preferences {
     setMode,
     level,
     setLevel,
+    scoring,
+    setScoring,
     appearance,
     setAppearance,
     theme,
