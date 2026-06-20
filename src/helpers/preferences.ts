@@ -224,6 +224,11 @@ export function saveStoredWords(language: Language, words: string[]): void {
   writeStorage(USED_WORDS_KEY_PREFIX + language, JSON.stringify(words));
 }
 
+/** Whether any language has shown-words history stored (i.e. there's something to clear). */
+export function hasStoredWords(): boolean {
+  return Object.values(Language).some((language) => getStoredWords(language).length > 0);
+}
+
 /** Forget the shown-words history for every language. */
 export function clearStoredWords(): void {
   Object.values(Language).forEach((language) => {

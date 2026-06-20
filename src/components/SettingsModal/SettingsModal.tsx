@@ -1,4 +1,6 @@
+import classNames from 'classnames';
 import type React from 'react';
+import { useEffect, useState } from 'react';
 import type { Language } from '../../types/Language';
 import { type Appearance, type Theme, THEME_LABELS } from '../../types/Theme';
 import type { DifficultyLevel, PlayMode } from '../../types/Word';
@@ -11,6 +13,7 @@ import {
   MODE_OPTIONS,
   SOUND_OPTIONS,
   THEME_OPTIONS,
+  hasStoredWords,
 } from '../../helpers/preferences';
 import { LANGUAGE_ENDONYMS, LANGUAGE_ORDER } from '../../helpers/language';
 import OptionGroup from '../OptionGroup/OptionGroup';
@@ -65,6 +68,23 @@ const SettingsModal: React.FC<Props> = ({
   onClearWords,
 }: Props) => {
   const t = useTranslation();
+  // Brief confirmation after clearing; the button reads the live stored-words
+  // state so it disables itself once there's nothing left to clear.
+  const [justCleared, setJustCleared] = useState(false);
+  const wordsStored = hasStoredWords();
+
+  useEffect(() => {
+    if (!justCleared) {
+      return;
+    }
+    const id = setTimeout(() => setJustCleared(false), 1600);
+    return () => clearTimeout(id);
+  }, [justCleared]);
+
+  const handleClear = () => {
+    onClearWords();
+    setJustCleared(true);
+  };
 
   const languageOptions = LANGUAGE_ORDER.map((lang) => ({ value: lang, label: LANGUAGE_ENDONYMS[lang] }));
   const durationOptions = DURATION_OPTIONS.map((seconds) => ({ value: seconds, label: `${seconds}s` }));
@@ -120,8 +140,13 @@ const SettingsModal: React.FC<Props> = ({
         <OptionGroup label={t('theme')} options={themeOptions} value={theme} onChange={onChangeTheme} />
         <div className={styles.action}>
           <span className={styles.actionLabel}>{t('storedWords')}</span>
-          <button type="button" className={styles.clearButton} onClick={onClearWords}>
-            {t('clearStoredWords')}
+          <button
+            type="button"
+            className={classNames(styles.clearButton, { [styles.cleared]: justCleared })}
+            disabled={justCleared || !wordsStored}
+            onClick={handleClear}
+          >
+            {justCleared ? `✓ ${t('cleared')}` : t('clearStoredWords')}
           </button>
         </div>
       </div>

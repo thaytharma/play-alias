@@ -1,12 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Language } from '../../types/Language';
+import { saveStoredWords } from '../../helpers/preferences';
 import { translations } from '../../i18n/translations';
 import { TranslationProvider } from '../../i18n/useTranslation';
 import SettingsModal from './SettingsModal';
 
 const en = translations[Language.EN];
+
+beforeEach(() => {
+  localStorage.clear();
+});
 
 const renderModal = (overrides = {}) =>
   render(
@@ -154,14 +159,27 @@ describe('SettingsModal', () => {
     expect(screen.getByRole('button', { name: '120s' })).toBeInTheDocument();
   });
 
-  it('clears stored words from the modal', async () => {
+  it('clears stored words from the modal and confirms', async () => {
+    saveStoredWords(Language.EN, ['Apple', 'Banana']);
     const onClearWords = vi.fn();
     renderModal({ onClearWords });
     await userEvent.click(screen.getByRole('button', { name: en.settings }));
 
-    await userEvent.click(screen.getByRole('button', { name: en.clearStoredWords }));
+    const clearButton = screen.getByRole('button', { name: en.clearStoredWords });
+    expect(clearButton).toBeEnabled();
+    await userEvent.click(clearButton);
 
     expect(onClearWords).toHaveBeenCalled();
+    // Confirmation feedback, and the button is now disabled (nothing left to clear).
+    const cleared = screen.getByRole('button', { name: new RegExp(en.cleared, 'i') });
+    expect(cleared).toBeDisabled();
+  });
+
+  it('disables the clear button when no words are stored', async () => {
+    renderModal();
+    await userEvent.click(screen.getByRole('button', { name: en.settings }));
+
+    expect(screen.getByRole('button', { name: en.clearStoredWords })).toBeDisabled();
   });
 
   it('closes the dialog via the close button', async () => {
