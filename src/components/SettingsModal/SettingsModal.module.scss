@@ -6,6 +6,21 @@
   gap: 1.5rem;
 }
 
+// Groups an option row with its hint so the note hugs the options.
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: var(--color-text-muted);
+}
+
 .action {
   display: flex;
   flex-direction: column;

@@ -89,6 +89,38 @@ describe('SettingsModal', () => {
     expect(onChangeLevel).toHaveBeenCalledWith('hard');
   });
 
+  it('shows the 18+ hint only while party mode is selected', async () => {
+    const { rerender } = renderModal({ mode: 'default' });
+    await userEvent.click(screen.getByRole('button', { name: en.settings }));
+
+    expect(screen.queryByText(en.partyHint)).not.toBeInTheDocument();
+
+    rerender(
+      <TranslationProvider language={Language.EN}>
+        <SettingsModal
+          language={Language.EN}
+          handleChangeLanguage={vi.fn()}
+          duration={60}
+          onChangeDuration={vi.fn()}
+          mode="party"
+          onChangeMode={vi.fn()}
+          level="medium"
+          onChangeLevel={vi.fn()}
+          appearance="dark"
+          onChangeAppearance={vi.fn()}
+          theme="sunset"
+          onChangeTheme={vi.fn()}
+          sound="low"
+          onChangeSound={vi.fn()}
+          soundSupported
+          onClearWords={vi.fn()}
+        />
+      </TranslationProvider>,
+    );
+
+    expect(screen.getByText(en.partyHint)).toBeInTheDocument();
+  });
+
   it('changes the sound level from the modal', async () => {
     const onChangeSound = vi.fn();
     renderModal({ onChangeSound });

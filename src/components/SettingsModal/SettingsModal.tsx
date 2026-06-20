@@ -86,7 +86,10 @@ const SettingsModal: React.FC<Props> = ({
     <Modal label={t('settings')} side="right" icon={gearIcon}>
       <div className={styles.body}>
         <OptionGroup label={t('language')} options={languageOptions} value={language} onChange={handleChangeLanguage} />
-        <OptionGroup label={t('mode')} options={modeOptions} value={mode} onChange={onChangeMode} />
+        <div className={styles.field}>
+          <OptionGroup label={t('mode')} options={modeOptions} value={mode} onChange={onChangeMode} />
+          {mode === 'party' && <p className={styles.hint}>{t('partyHint')}</p>}
+        </div>
         <OptionGroup label={t('level')} options={levelOptions} value={level} onChange={onChangeLevel} />
         <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
         {soundSupported && (

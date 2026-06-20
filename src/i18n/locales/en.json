@@ -6,6 +6,7 @@
   "mode": "Mode",
   "modeDefault": "Default",
   "modeParty": "Party",
+  "partyHint": "Party mixes in cheeky 18+ words.",
   "level": "Level",
   "levelEasy": "Easy",
   "levelMedium": "Medium",

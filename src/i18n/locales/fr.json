@@ -6,6 +6,7 @@
   "mode": "Mode",
   "modeDefault": "Standard",
   "modeParty": "Soirée",
+  "partyHint": "Soirée ajoute des mots coquins (18+).",
   "level": "Niveau",
   "levelEasy": "Facile",
   "levelMedium": "Moyen",
