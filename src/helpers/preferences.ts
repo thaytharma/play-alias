@@ -91,95 +91,64 @@ export function saveDuration(duration: number): void {
   writeStorage(DURATION_STORAGE_KEY, String(duration));
 }
 
-const APPEARANCE_STORAGE_KEY = 'alias.appearance';
-
-export const APPEARANCE_OPTIONS: readonly Appearance[] = ['dark', 'light'];
-export const DEFAULT_APPEARANCE: Appearance = 'dark';
-
-/** Resolve a stored value to a known appearance, or null. */
-export function parseAppearance(value: string | null | undefined): Appearance | null {
-  return APPEARANCE_OPTIONS.includes(value as Appearance) ? (value as Appearance) : null;
+interface OptionPref<T extends string> {
+  options: readonly T[];
+  fallback: T;
+  parse: (value: string | null | undefined) => T | null;
+  getInitial: () => T;
+  save: (value: T) => void;
 }
 
-export function getInitialAppearance(): Appearance {
-  return parseAppearance(readStorage(APPEARANCE_STORAGE_KEY)) ?? DEFAULT_APPEARANCE;
+/**
+ * Build the standard accessors for a string-enum preference: a parser that
+ * only accepts known values, a loader that falls back to the default, and a
+ * saver. Keeps every such setting (appearance, theme, sound, …) consistent.
+ */
+function createOptionPref<T extends string>(key: string, options: readonly T[], fallback: T): OptionPref<T> {
+  const parse = (value: string | null | undefined): T | null => (options.includes(value as T) ? (value as T) : null);
+  return {
+    options,
+    fallback,
+    parse,
+    getInitial: () => parse(readStorage(key)) ?? fallback,
+    save: (value: T) => writeStorage(key, value),
+  };
 }
 
-export function saveAppearance(appearance: Appearance): void {
-  writeStorage(APPEARANCE_STORAGE_KEY, appearance);
-}
+const appearancePref = createOptionPref<Appearance>('alias.appearance', ['dark', 'light'], 'dark');
+export const APPEARANCE_OPTIONS = appearancePref.options;
+export const DEFAULT_APPEARANCE = appearancePref.fallback;
+export const parseAppearance = appearancePref.parse;
+export const getInitialAppearance = appearancePref.getInitial;
+export const saveAppearance = appearancePref.save;
 
-const THEME_STORAGE_KEY = 'alias.theme';
+const themePref = createOptionPref<Theme>('alias.theme', ['sunset', 'ocean', 'berry'], 'sunset');
+export const THEME_OPTIONS = themePref.options;
+export const DEFAULT_THEME = themePref.fallback;
+export const parseTheme = themePref.parse;
+export const getInitialTheme = themePref.getInitial;
+export const saveTheme = themePref.save;
 
-export const THEME_OPTIONS: readonly Theme[] = ['sunset', 'ocean', 'berry'];
-export const DEFAULT_THEME: Theme = 'sunset';
+const soundPref = createOptionPref<SoundLevel>('alias.sound', ['off', 'low', 'high'], 'low');
+export const SOUND_OPTIONS = soundPref.options;
+export const DEFAULT_SOUND = soundPref.fallback;
+export const parseSound = soundPref.parse;
+export const getInitialSound = soundPref.getInitial;
+export const saveSound = soundPref.save;
 
-/** Resolve a stored value to a known theme, or null. */
-export function parseTheme(value: string | null | undefined): Theme | null {
-  return THEME_OPTIONS.includes(value as Theme) ? (value as Theme) : null;
-}
+const modePref = createOptionPref<PlayMode>('alias.mode', ['default', 'party'], 'default');
+export const MODE_OPTIONS = modePref.options;
+export const DEFAULT_MODE = modePref.fallback;
+export const parseMode = modePref.parse;
+export const getInitialMode = modePref.getInitial;
+export const saveMode = modePref.save;
 
-export function getInitialTheme(): Theme {
-  return parseTheme(readStorage(THEME_STORAGE_KEY)) ?? DEFAULT_THEME;
-}
-
-export function saveTheme(theme: Theme): void {
-  writeStorage(THEME_STORAGE_KEY, theme);
-}
-
-const SOUND_STORAGE_KEY = 'alias.sound';
-
-export const SOUND_OPTIONS: readonly SoundLevel[] = ['off', 'low', 'high'];
-export const DEFAULT_SOUND: SoundLevel = 'low';
-
-/** Resolve a stored value to a known sound level, or null. */
-export function parseSound(value: string | null | undefined): SoundLevel | null {
-  return SOUND_OPTIONS.includes(value as SoundLevel) ? (value as SoundLevel) : null;
-}
-
-export function getInitialSound(): SoundLevel {
-  return parseSound(readStorage(SOUND_STORAGE_KEY)) ?? DEFAULT_SOUND;
-}
-
-export function saveSound(sound: SoundLevel): void {
-  writeStorage(SOUND_STORAGE_KEY, sound);
-}
-
-const MODE_STORAGE_KEY = 'alias.mode';
-
-export const MODE_OPTIONS: readonly PlayMode[] = ['default', 'party'];
-export const DEFAULT_MODE: PlayMode = 'default';
-
-/** Resolve a stored value to a known play mode, or null. */
-export function parseMode(value: string | null | undefined): PlayMode | null {
-  return MODE_OPTIONS.includes(value as PlayMode) ? (value as PlayMode) : null;
-}
-
-export function getInitialMode(): PlayMode {
-  return parseMode(readStorage(MODE_STORAGE_KEY)) ?? DEFAULT_MODE;
-}
-
-export function saveMode(mode: PlayMode): void {
-  writeStorage(MODE_STORAGE_KEY, mode);
-}
-
-const LEVEL_STORAGE_KEY = 'alias.level';
-
-export const LEVEL_OPTIONS: readonly DifficultyLevel[] = ['easy', 'medium', 'hard'];
-export const DEFAULT_LEVEL: DifficultyLevel = 'medium';
-
-/** Resolve a stored value to a known difficulty level, or null. */
-export function parseLevel(value: string | null | undefined): DifficultyLevel | null {
-  return LEVEL_OPTIONS.includes(value as DifficultyLevel) ? (value as DifficultyLevel) : null;
-}
-
-export function getInitialLevel(): DifficultyLevel {
-  return parseLevel(readStorage(LEVEL_STORAGE_KEY)) ?? DEFAULT_LEVEL;
-}
-
-export function saveLevel(level: DifficultyLevel): void {
-  writeStorage(LEVEL_STORAGE_KEY, level);
-}
+const levelPref = createOptionPref<DifficultyLevel>('alias.level', ['easy', 'medium', 'hard'], 'medium');
+export const LEVEL_OPTIONS = levelPref.options;
+export const DEFAULT_LEVEL = levelPref.fallback;
+export const parseLevel = levelPref.parse;
+export const getInitialLevel = levelPref.getInitial;
+export const saveLevel = levelPref.save;
 
 const SCORING_STORAGE_KEY = 'alias.scoring';
 

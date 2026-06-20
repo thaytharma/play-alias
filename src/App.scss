@@ -5,6 +5,7 @@ body {
 
 body {
   touch-action: manipulation;
+  -webkit-user-select: none;
   user-select: none;
   overflow: hidden;
   background-color: var(--color-bg);
