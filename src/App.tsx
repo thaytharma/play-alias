@@ -13,6 +13,7 @@ import SettingsModal from './components/SettingsModal/SettingsModal';
 import { clearStoredWords } from './helpers/preferences';
 import { type SoundLevel, isSoundSupported, playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
 import { isTimeRunningOut } from './helpers/timer';
+import { useKeyboardControls } from './hooks/useKeyboardControls';
 import { usePreferences } from './hooks/usePreferences';
 import { TranslationProvider } from './i18n/useTranslation';
 
@@ -123,56 +124,17 @@ const App: React.FC = () => {
     wordRef.current?.advance();
   };
 
-  // Keyboard controls (non-touch). Space/Enter is the primary action (start the
-  // round, then draw the next word); Escape backs out one level.
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      const dialogOpen = !!document.querySelector('[role="dialog"]');
-      const focused = document.activeElement;
-      const focusedControl = !!focused && ['BUTTON', 'INPUT', 'TEXTAREA', 'SELECT'].includes(focused.tagName);
-
-      if (event.key === 'Escape') {
-        // An open modal handles its own Escape; otherwise stop the round.
-        if (!dialogOpen && started) {
-          setStarted(false);
-        }
-        return;
-      }
-
-      // Scoring mode: ← skips the current word (−1) during a live round.
-      if (event.key === 'ArrowLeft') {
-        if (!dialogOpen && started && scoring && counter > 0 && !event.repeat) {
-          event.preventDefault();
-          setScore((current) => current - 1);
-          wordRef.current?.advance();
-        }
-        return;
-      }
-
-      if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
-        // Let an open dialog or a focused control handle the key natively.
-        if (dialogOpen || focusedControl || event.repeat) {
-          return;
-        }
-        event.preventDefault();
-        if (started) {
-          // In scoring mode Space marks the word correct (+1); otherwise it just
-          // draws the next word.
-          if (scoring && counter > 0) {
-            setScore((current) => current + 1);
-          }
-          wordRef.current?.advance();
-        } else {
-          unlockAudio();
-          setCounter(duration);
-          setStarted(true);
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [started, duration, scoring, counter]);
+  // Keyboard controls (non-touch); see useKeyboardControls for the key map.
+  useKeyboardControls({
+    started,
+    scoring,
+    isTimeUp: counter === 0,
+    onStart: handleStart,
+    onStop: handleStop,
+    onAdvance: () => wordRef.current?.advance(),
+    onCorrect: handleCorrect,
+    onSkip: handleSkip,
+  });
 
   return (
     <TranslationProvider language={language}>
