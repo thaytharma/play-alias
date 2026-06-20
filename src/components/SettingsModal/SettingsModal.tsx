@@ -93,19 +93,21 @@ const SettingsModal: React.FC<Props> = ({
   return (
     <Modal label={t('settings')} side="right" icon={gearIcon}>
       <div className={styles.body}>
+        {/* Ordered most-used first: language, then round setup (timer, score),
+            then content tuning (mode, level), then presentation, then upkeep. */}
         <OptionGroup label={t('language')} options={languageOptions} value={language} onChange={handleChangeLanguage} />
-        <div className={styles.field}>
-          <OptionGroup label={t('mode')} options={modeOptions} value={mode} onChange={onChangeMode} />
-          {mode === 'party' && <p className={styles.hint}>{t('partyHint')}</p>}
-        </div>
-        <OptionGroup label={t('level')} options={levelOptions} value={level} onChange={onChangeLevel} />
+        <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
         <OptionGroup
           label={t('keepScore')}
           options={scoringOptions}
           value={scoring ? 'on' : 'off'}
           onChange={(value) => onChangeScoring(value === 'on')}
         />
-        <OptionGroup label={t('timer')} options={durationOptions} value={duration} onChange={onChangeDuration} />
+        <div className={styles.field}>
+          <OptionGroup label={t('mode')} options={modeOptions} value={mode} onChange={onChangeMode} />
+          {mode === 'party' && <p className={styles.hint}>{t('partyHint')}</p>}
+        </div>
+        <OptionGroup label={t('level')} options={levelOptions} value={level} onChange={onChangeLevel} />
         {soundSupported && (
           <OptionGroup label={t('sound')} options={soundOptions} value={sound} onChange={onChangeSound} />
         )}
