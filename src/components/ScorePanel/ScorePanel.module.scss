@@ -42,6 +42,7 @@
   padding: 0.7rem 1.4rem 0.55rem;
   font-size: 1rem;
   cursor: pointer;
+  color: var(--color-text-muted);
   border: 1px solid var(--color-border-strong);
   border-radius: 8px;
   background: none;
@@ -51,22 +52,13 @@
     border-color 150ms ease;
 }
 
-.correct {
-  color: var(--color-on-primary);
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-
-  &:hover {
-    background: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
-  }
+// Both buttons are neutral at rest; only the hover colour sets them apart.
+.correct:hover {
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
-.skip {
-  color: var(--color-text-muted);
-
-  &:hover {
-    color: var(--color-danger);
-    border-color: var(--color-danger);
-  }
+.skip:hover {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
 }
