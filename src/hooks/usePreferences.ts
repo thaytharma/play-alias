@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import type { Language } from '../types/Language';
 import type { Appearance, Theme } from '../types/Theme';
 import type { DifficultyLevel, PlayMode } from '../types/Word';
@@ -21,6 +21,7 @@ import {
   saveSound,
   saveTheme,
 } from '../helpers/preferences';
+import { usePersistedState } from './usePersistedState';
 
 export interface Preferences {
   language: Language;
@@ -47,48 +48,23 @@ export interface Preferences {
  * the document element so the token overrides in index.scss apply.
  */
 export function usePreferences(): Preferences {
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
-  const [duration, setDuration] = useState<number>(getInitialDuration);
-  const [mode, setMode] = useState<PlayMode>(getInitialMode);
-  const [level, setLevel] = useState<DifficultyLevel>(getInitialLevel);
-  const [scoring, setScoring] = useState<boolean>(getInitialScoring);
-  const [appearance, setAppearance] = useState<Appearance>(getInitialAppearance);
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
-  const [sound, setSound] = useState<SoundLevel>(getInitialSound);
+  const [language, setLanguage] = usePersistedState(getInitialLanguage, saveLanguage);
+  const [duration, setDuration] = usePersistedState(getInitialDuration, saveDuration);
+  const [mode, setMode] = usePersistedState(getInitialMode, saveMode);
+  const [level, setLevel] = usePersistedState(getInitialLevel, saveLevel);
+  const [scoring, setScoring] = usePersistedState(getInitialScoring, saveScoring);
+  const [appearance, setAppearance] = usePersistedState(getInitialAppearance, saveAppearance);
+  const [theme, setTheme] = usePersistedState(getInitialTheme, saveTheme);
+  const [sound, setSound] = usePersistedState(getInitialSound, saveSound);
 
+  // Reflect appearance/theme onto <html> so the token overrides in index.scss apply.
   useEffect(() => {
-    saveLanguage(language);
-  }, [language]);
-
-  useEffect(() => {
-    saveDuration(duration);
-  }, [duration]);
-
-  useEffect(() => {
-    saveMode(mode);
-  }, [mode]);
-
-  useEffect(() => {
-    saveLevel(level);
-  }, [level]);
-
-  useEffect(() => {
-    saveScoring(scoring);
-  }, [scoring]);
-
-  useEffect(() => {
-    saveAppearance(appearance);
     document.documentElement.dataset.appearance = appearance;
   }, [appearance]);
 
   useEffect(() => {
-    saveTheme(theme);
     document.documentElement.dataset.theme = theme;
   }, [theme]);
-
-  useEffect(() => {
-    saveSound(sound);
-  }, [sound]);
 
   return {
     language,
