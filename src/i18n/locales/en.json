@@ -44,5 +44,7 @@
   "shortcutSpace": "Start / next word",
   "shortcutEsc": "Stop / close",
   "support": "Support",
-  "buyMeCoffee": "Buy me a coffee"
+  "buyMeCoffee": "Buy me a coffee",
+  "feedback": "Feedback",
+  "requestFeature": "Request a feature"
 }

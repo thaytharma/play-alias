@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
 import type { TranslationKey } from '../../i18n/translations';
+import { FEEDBACK_MAILTO } from '../../constants';
 import Modal from '../Modal/Modal';
 import styles from './RulesModal.module.scss';
 
@@ -61,6 +62,14 @@ const RulesModal: React.FC = () => {
           >
             <span aria-hidden="true">☕</span>
             {t('buyMeCoffee')}
+          </a>
+        </section>
+
+        <section className={styles.section}>
+          <span className={styles.label}>{t('feedback')}</span>
+          <a className={styles.feedback} href={FEEDBACK_MAILTO}>
+            <span aria-hidden="true">✉️</span>
+            {t('requestFeature')}
           </a>
         </section>
       </div>

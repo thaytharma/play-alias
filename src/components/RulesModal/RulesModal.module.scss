@@ -93,3 +93,27 @@
     background: var(--color-primary-hover);
   }
 }
+
+// Secondary, outlined link — sits below the primary support button.
+.feedback {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.5rem;
+  line-height: 1;
+  padding: 0.57rem 0.9rem 0.43rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  background: none;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 6px;
+  transition:
+    color 150ms ease,
+    background 150ms ease;
+
+  &:hover {
+    color: var(--color-text);
+    background: var(--color-fill);
+  }
+}

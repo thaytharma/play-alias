@@ -49,6 +49,15 @@ describe('RulesModal', () => {
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
+  it('offers a feature request mailto link', async () => {
+    renderRulesModal();
+
+    await userEvent.click(screen.getByRole('button', { name: translations[Language.EN].rules }));
+
+    const link = screen.getByRole('link', { name: new RegExp(translations[Language.EN].requestFeature, 'i') });
+    expect(link).toHaveAttribute('href', 'mailto:thayanan@tharmapalan.com?subject=Feature%20request%3A%20Alias');
+  });
+
   it('closes the dialog with the close button', async () => {
     renderRulesModal();
     await userEvent.click(screen.getByRole('button', { name: translations[Language.EN].rules }));
