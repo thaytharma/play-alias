@@ -6,6 +6,7 @@ import { type Appearance, type Theme, THEME_LABELS } from '../../types/Theme';
 import type { DifficultyLevel, PlayMode } from '../../types/Word';
 import type { SoundLevel } from '../../helpers/sound';
 import { useTranslation } from '../../i18n/useTranslation';
+import type { TranslationKey } from '../../i18n/translations';
 import {
   APPEARANCE_OPTIONS,
   DURATION_OPTIONS,
@@ -47,6 +48,16 @@ const gearIcon = (
   </svg>
 );
 
+// Settings whose labels come from the translation catalogue, keyed by the
+// stored value so adding an option is a one-line map entry.
+const MODE_LABEL_KEYS: Record<PlayMode, TranslationKey> = { default: 'modeDefault', party: 'modeParty' };
+const LEVEL_LABEL_KEYS: Record<DifficultyLevel, TranslationKey> = {
+  easy: 'levelEasy',
+  medium: 'levelMedium',
+  hard: 'levelHard',
+};
+const APPEARANCE_LABEL_KEYS: Record<Appearance, TranslationKey> = { dark: 'appearanceDark', light: 'appearanceLight' };
+const SOUND_LABEL_KEYS: Record<SoundLevel, TranslationKey> = { off: 'soundOff', low: 'soundLow', high: 'soundHigh' };
 const SettingsModal: React.FC<Props> = ({
   language,
   handleChangeLanguage,
@@ -88,27 +99,15 @@ const SettingsModal: React.FC<Props> = ({
 
   const languageOptions = LANGUAGE_ORDER.map((lang) => ({ value: lang, label: LANGUAGE_ENDONYMS[lang] }));
   const durationOptions = DURATION_OPTIONS.map((seconds) => ({ value: seconds, label: `${seconds}s` }));
-  const modeOptions = MODE_OPTIONS.map((value) => ({
-    value,
-    label: value === 'default' ? t('modeDefault') : t('modeParty'),
-  }));
-  const levelOptions = LEVEL_OPTIONS.map((value) => ({
-    value,
-    label: value === 'easy' ? t('levelEasy') : value === 'medium' ? t('levelMedium') : t('levelHard'),
-  }));
+  const modeOptions = MODE_OPTIONS.map((value) => ({ value, label: t(MODE_LABEL_KEYS[value]) }));
+  const levelOptions = LEVEL_OPTIONS.map((value) => ({ value, label: t(LEVEL_LABEL_KEYS[value]) }));
   const scoringOptions = [
     { value: 'off', label: t('scoreOff') },
     { value: 'on', label: t('scoreOn') },
   ];
-  const appearanceOptions = APPEARANCE_OPTIONS.map((value) => ({
-    value,
-    label: value === 'dark' ? t('appearanceDark') : t('appearanceLight'),
-  }));
+  const appearanceOptions = APPEARANCE_OPTIONS.map((value) => ({ value, label: t(APPEARANCE_LABEL_KEYS[value]) }));
   const themeOptions = THEME_OPTIONS.map((value) => ({ value, label: THEME_LABELS[value] }));
-  const soundOptions = SOUND_OPTIONS.map((value) => ({
-    value,
-    label: value === 'off' ? t('soundOff') : value === 'low' ? t('soundLow') : t('soundHigh'),
-  }));
+  const soundOptions = SOUND_OPTIONS.map((value) => ({ value, label: t(SOUND_LABEL_KEYS[value]) }));
 
   return (
     <Modal label={t('settings')} side="right" icon={gearIcon}>

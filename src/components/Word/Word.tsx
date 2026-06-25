@@ -1,9 +1,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import styles from './Word.module.scss';
-import { isEnglish, isFrench } from '../../helpers/language';
 import type { Language } from '../../types/Language';
 import type { DifficultyLevel, PlayMode } from '../../types/Word';
-import { generateEnglishWord, generateFrenchWord, generateNorwegianWord } from '../../helpers/words';
+import { generateWord } from '../../helpers/words';
 import { getStoredWords, saveStoredWords } from '../../helpers/preferences';
 import { useTilt } from '../../hooks/useTilt';
 import { APP_NAME } from '../../constants';
@@ -42,17 +41,7 @@ const Word = forwardRef<WordHandle, Props>(
       saveStoredWords(language, next);
     }, [language]);
 
-    const generateNewWord = (): string => {
-      if (isEnglish(language)) {
-        return generateEnglishWord(level, mode);
-      }
-
-      if (isFrench(language)) {
-        return generateFrenchWord(level, mode);
-      }
-
-      return generateNorwegianWord(level, mode);
-    };
+    const generateNewWord = (): string => generateWord(language, level, mode);
 
     // Try a few times to surface a word that hasn't been shown yet, falling back to
     // whatever we drew last if the pool keeps repeating.

@@ -10,15 +10,3 @@ export const LANGUAGE_ENDONYMS: Record<Language, string> = {
   [Language.EN]: 'English',
   [Language.FR]: 'Français',
 };
-
-export function isEnglish(language: Language): boolean {
-  return language === Language.EN;
-}
-
-export function isNorwegian(language: Language): boolean {
-  return language === Language.NO;
-}
-
-export function isFrench(language: Language): boolean {
-  return language === Language.FR;
-}

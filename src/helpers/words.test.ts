@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest';
 import englishWords from '../data/englishWords';
 import frenchWords from '../data/frenchWords';
 import norwegianWords from '../data/norwegianWords';
+import { Language } from '../types/Language';
 import type { DifficultyLevel, LanguageWords, PlayMode, WordPool } from '../types/Word';
-import { buildPool, generateEnglishWord, generateFrenchWord, generateNorwegianWord } from './words';
+import { buildPool, generateWord } from './words';
 
 const decapitalize = (word: string): string => word.charAt(0).toLowerCase() + word.slice(1);
 
@@ -61,9 +62,9 @@ const describeList = (name: string, words: LanguageWords) => {
   });
 };
 
-describeGenerator('generateEnglishWord', generateEnglishWord, englishWords);
-describeGenerator('generateFrenchWord', generateFrenchWord, frenchWords);
-describeGenerator('generateNorwegianWord', generateNorwegianWord, norwegianWords);
+describeGenerator('generateWord (English)', (level, mode) => generateWord(Language.EN, level, mode), englishWords);
+describeGenerator('generateWord (French)', (level, mode) => generateWord(Language.FR, level, mode), frenchWords);
+describeGenerator('generateWord (Norwegian)', (level, mode) => generateWord(Language.NO, level, mode), norwegianWords);
 
 describeList('curated English word list', englishWords);
 describeList('curated French word list', frenchWords);

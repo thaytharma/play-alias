@@ -1,6 +1,7 @@
 import englishWords from '../data/englishWords';
 import frenchWords from '../data/frenchWords';
 import norwegianWords from '../data/norwegianWords';
+import { Language } from '../types/Language';
 import { type DifficultyLevel, type LanguageWords, LEVEL_TIERS, type PlayMode } from '../types/Word';
 import { capitalizeFirstLetter } from './strings';
 
@@ -22,15 +23,13 @@ export const buildPool = (words: LanguageWords, level: DifficultyLevel, mode: Pl
 const randomFrom = (words: readonly string[]): string =>
   capitalizeFirstLetter(words[Math.floor(Math.random() * words.length)]);
 
-const generate = (words: LanguageWords, level: DifficultyLevel, mode: PlayMode): string =>
-  randomFrom(buildPool(words, level, mode));
-
 // Hand-picked lists of common, describable words (see ../data).
-export const generateEnglishWord = (level: DifficultyLevel, mode: PlayMode): string =>
-  generate(englishWords, level, mode);
+const LANGUAGE_WORDS: Record<Language, LanguageWords> = {
+  [Language.EN]: englishWords,
+  [Language.NO]: norwegianWords,
+  [Language.FR]: frenchWords,
+};
 
-export const generateNorwegianWord = (level: DifficultyLevel, mode: PlayMode): string =>
-  generate(norwegianWords, level, mode);
-
-export const generateFrenchWord = (level: DifficultyLevel, mode: PlayMode): string =>
-  generate(frenchWords, level, mode);
+/** Draw a random word for a language at the given level and mode, capitalised for display. */
+export const generateWord = (language: Language, level: DifficultyLevel, mode: PlayMode): string =>
+  randomFrom(buildPool(LANGUAGE_WORDS[language], level, mode));
