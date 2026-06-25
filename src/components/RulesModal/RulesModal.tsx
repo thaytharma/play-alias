@@ -5,7 +5,7 @@ import { FEEDBACK_MAILTO } from '../../constants';
 import Modal from '../Modal/Modal';
 import styles from './RulesModal.module.scss';
 
-const STEP_KEYS: TranslationKey[] = ['rulesStep1', 'rulesStep2', 'rulesStep3', 'rulesStep4'];
+const STEP_KEYS: TranslationKey[] = ['rulesStep1', 'rulesStep2', 'rulesStep3', 'rulesStep4', 'rulesStep5'];
 const TIP_KEYS: TranslationKey[] = ['tip1', 'tip2', 'tip3', 'tip4'];
 
 const helpIcon = (

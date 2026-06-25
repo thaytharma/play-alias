@@ -23,7 +23,8 @@ describe('RulesModal', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText(translations[Language.EN].howToPlay)).toBeInTheDocument();
     expect(screen.getByText(translations[Language.EN].rulesStep1)).toBeInTheDocument();
-    expect(screen.getByText(translations[Language.EN].rulesStep4)).toBeInTheDocument();
+    expect(screen.getByText(translations[Language.EN].rulesStep2)).toBeInTheDocument();
+    expect(screen.getByText(translations[Language.EN].rulesStep5)).toBeInTheDocument();
     expect(screen.getByText(translations[Language.EN].tips)).toBeInTheDocument();
     expect(screen.getByText(translations[Language.EN].tip1)).toBeInTheDocument();
   });
