@@ -1,5 +1,6 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
+import { trackEvent } from '../../helpers/analytics';
 import { useTranslation } from '../../i18n/useTranslation';
 import IconButton from '../IconButton/IconButton';
 import styles from './Modal.module.scss';
@@ -29,9 +30,14 @@ const Modal: React.FC<Props> = ({ label, icon, side, children }: Props) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
+  const handleOpen = () => {
+    trackEvent('open_dialog', { dialog: label });
+    setIsOpen(true);
+  };
+
   return (
     <>
-      <IconButton label={label} side={side} hasPopup onClick={() => setIsOpen(true)}>
+      <IconButton label={label} side={side} hasPopup onClick={handleOpen}>
         {icon}
       </IconButton>
 

@@ -7,9 +7,12 @@ import StopButton from './components/StopButton/StopButton';
 import RulesModal from './components/RulesModal/RulesModal';
 import Footer from './components/Footer/Footer';
 import type { Language } from './types/Language';
+import type { Appearance, Theme } from './types/Theme';
+import type { DifficultyLevel, PlayMode } from './types/Word';
 import Counter from './components/Counter/Counter';
 import ScorePanel from './components/ScorePanel/ScorePanel';
 import SettingsModal from './components/SettingsModal/SettingsModal';
+import { trackEvent } from './helpers/analytics';
 import { clearStoredWords } from './helpers/preferences';
 import { type SoundLevel, isSoundSupported, playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
 import { isTimeRunningOut } from './helpers/timer';
@@ -64,6 +67,18 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, [counter, started]);
 
+  // Report each round ending once, when the clock reaches zero.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: fire on the counter→0 transition, not when the score changes mid-round
+  useEffect(() => {
+    if (started && counter === 0) {
+      trackEvent('time_up', { scoring, score: scoring ? score : undefined });
+    }
+  }, [started, counter]);
+
+  const trackSetting = (setting: string, value: unknown) => {
+    trackEvent('setting_changed', { setting, value });
+  };
+
   // Begin a fresh round: reset the clock and the score.
   const restartCounter = () => {
     setCounter(duration);
@@ -71,33 +86,64 @@ const App: React.FC = () => {
   };
 
   const handleChangeLanguage = (nextLanguage: Language) => {
+    trackSetting('language', nextLanguage);
     setLanguage(nextLanguage);
     restartCounter();
   };
 
   const handleChangeDuration = (nextDuration: number) => {
+    trackSetting('timer', nextDuration);
     setDuration(nextDuration);
     setCounter(nextDuration);
     setScore(0);
   };
 
+  const handleChangeMode = (nextMode: PlayMode) => {
+    trackSetting('mode', nextMode);
+    setMode(nextMode);
+  };
+
+  const handleChangeLevel = (nextLevel: DifficultyLevel) => {
+    trackSetting('level', nextLevel);
+    setLevel(nextLevel);
+  };
+
+  const handleChangeScoring = (nextScoring: boolean) => {
+    trackSetting('scoring', nextScoring);
+    setScoring(nextScoring);
+  };
+
+  const handleChangeAppearance = (nextAppearance: Appearance) => {
+    trackSetting('appearance', nextAppearance);
+    setAppearance(nextAppearance);
+  };
+
+  const handleChangeTheme = (nextTheme: Theme) => {
+    trackSetting('theme', nextTheme);
+    setTheme(nextTheme);
+  };
+
   const handleStart = () => {
     // Unlock audio within the start gesture so ticks can play on mobile.
     unlockAudio();
+    trackEvent('start_game', { language, duration, mode, level, scoring });
     restartCounter();
     setStarted(true);
   };
 
   const handleStop = () => {
+    trackEvent('stop_game');
     setStarted(false);
   };
 
   const handleChangeSound = (nextSound: SoundLevel) => {
     unlockAudio();
+    trackSetting('sound', nextSound);
     setSound(nextSound);
   };
 
   const handleClearWords = () => {
+    trackEvent('clear_words');
     clearStoredWords();
     // Refresh the in-progress word's history if a round is running.
     wordRef.current?.reset();
@@ -115,11 +161,13 @@ const App: React.FC = () => {
   // Scoring mode: a correct guess scores a point, a skip costs one; both draw
   // the next word (advance() runs handleWordChange for the sound/restart).
   const handleCorrect = () => {
+    trackEvent('word_scored', { result: 'correct' });
     setScore((current) => current + 1);
     wordRef.current?.advance();
   };
 
   const handleSkip = () => {
+    trackEvent('word_scored', { result: 'skip' });
     setScore((current) => current - 1);
     wordRef.current?.advance();
   };
@@ -168,15 +216,15 @@ const App: React.FC = () => {
           duration={duration}
           onChangeDuration={handleChangeDuration}
           mode={mode}
-          onChangeMode={setMode}
+          onChangeMode={handleChangeMode}
           level={level}
-          onChangeLevel={setLevel}
+          onChangeLevel={handleChangeLevel}
           scoring={scoring}
-          onChangeScoring={setScoring}
+          onChangeScoring={handleChangeScoring}
           appearance={appearance}
-          onChangeAppearance={setAppearance}
+          onChangeAppearance={handleChangeAppearance}
           theme={theme}
-          onChangeTheme={setTheme}
+          onChangeTheme={handleChangeTheme}
           sound={sound}
           onChangeSound={handleChangeSound}
           soundSupported={soundSupported}
