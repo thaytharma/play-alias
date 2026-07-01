@@ -14,10 +14,42 @@
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
   padding: 1.75rem;
-  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 1rem;
   box-shadow: 0 1.25rem 3.75rem var(--color-shadow);
+
+  // Scroll affordance: a fade + shadow at whichever edge has more content.
+  // Pure CSS — the "cover" layers scroll with the content (background-attachment:
+  // local) and mask the shadow layers at the very top/bottom, so the shadow only
+  // shows while there's more to scroll to.
+  background-color: var(--color-surface);
+  background-image:
+    linear-gradient(var(--color-surface) 30%, transparent), linear-gradient(transparent, var(--color-surface) 70%),
+    radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.55), transparent),
+    radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.55), transparent);
+  background-repeat: no-repeat;
+  background-position: top, bottom, top, bottom;
+  background-size:
+    100% 2.5rem,
+    100% 2.5rem,
+    100% 1rem,
+    100% 1rem;
+  background-attachment: local, local, scroll, scroll;
+
+  // A more visible scrollbar where the platform draws one (desktop / Android).
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-border-strong);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+    border-radius: 6px;
+  }
 }
 
 .header {
