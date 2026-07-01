@@ -1,5 +1,9 @@
 .counter {
   color: var(--color-text);
+  // Give the digit a proper box and an isolated layer: a bare inline span the
+  // urgent animation transforms leaves a hairline seam beside it on iOS WebKit.
+  display: inline-block;
+  backface-visibility: hidden;
 
   &.urgent {
     color: var(--color-danger);
@@ -22,15 +26,17 @@
   letter-spacing: 1px;
 }
 
+// Horizontal-only shake. A subpixel `rotate` here left a stray hairline
+// ("dash") beside the digit on iOS WebKit, so the urgency cue stays on one axis.
 @keyframes shake {
   0%,
   100% {
-    transform: translateX(0) rotate(0);
+    transform: translateX(0);
   }
   25% {
-    transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px);
   }
   75% {
-    transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px);
   }
 }

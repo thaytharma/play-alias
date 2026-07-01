@@ -4,6 +4,7 @@
   cursor: pointer;
   color: var(--color-primary);
   transition: color 350ms ease-in-out;
+  width: 100%;
 
   &:hover {
     text-shadow: none;
@@ -14,7 +15,7 @@
   // for pointer movement stays put — otherwise rotating it under the cursor
   // would trip pointerleave and cancel the tilt in a flicker loop.
   .tilt {
-    display: inline-block;
+    display: block;
     transform: perspective(700px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
     transform-style: preserve-3d;
     will-change: transform;
@@ -22,11 +23,15 @@
   }
 
   .wordButton {
+    display: block;
+    width: 100%;
     text-transform: uppercase;
     letter-spacing: 2.5px;
     text-shadow: 0px 5px var(--color-text-shadow);
     animation: bop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards alternate;
-    padding: clamp(1rem, 5vw, 2.5rem);
+    // A large tap target: the full width and a tall band advance the word, so
+    // it's easy to hit on mobile even when the word is short.
+    padding: clamp(2rem, 9vw, 4rem) 1rem;
   }
 }
 
