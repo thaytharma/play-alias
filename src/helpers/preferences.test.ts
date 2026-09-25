@@ -9,6 +9,7 @@ import {
   DEFAULT_SCORING,
   DEFAULT_SOUND,
   DEFAULT_THEME,
+  NO_TIMER,
   clearStoredWords,
   getInitialAppearance,
   getInitialDuration,
@@ -96,6 +97,10 @@ describe('parseDuration', () => {
     expect(parseDuration('120')).toBe(120);
   });
 
+  it('accepts the no-timer option', () => {
+    expect(parseDuration(String(NO_TIMER))).toBe(NO_TIMER);
+  });
+
   it('rejects unknown or invalid durations', () => {
     expect(parseDuration('45')).toBeNull();
     expect(parseDuration('abc')).toBeNull();
@@ -115,6 +120,11 @@ describe('duration storage', () => {
   it('round-trips through getInitialDuration', () => {
     saveDuration(120);
     expect(getInitialDuration()).toBe(120);
+  });
+
+  it('round-trips the no-timer option', () => {
+    saveDuration(NO_TIMER);
+    expect(getInitialDuration()).toBe(NO_TIMER);
   });
 
   it('ignores a stored value that is no longer a valid option', () => {

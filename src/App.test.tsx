@@ -192,3 +192,47 @@ test("at time's up, shows the brand and swaps the stop button for the rules butt
     vi.useRealTimers();
   }
 });
+
+test('with the timer off, the round never runs out and ends only when stopped', async () => {
+  localStorage.setItem('alias.duration', '0');
+  const no = translations[Language.NO];
+  vi.useFakeTimers();
+  try {
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: new RegExp(no.tapToStart, 'i') }));
+
+    // Well past the longest timed round.
+    for (let second = 0; second < 150; second++) {
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(1000);
+      });
+    }
+
+    expect(screen.queryByText(no.timesUp)).not.toBeInTheDocument();
+    expect(playTick).not.toHaveBeenCalled();
+    expect(playTimeUp).not.toHaveBeenCalled();
+    expect(screen.getByRole('heading')).not.toHaveTextContent(APP_NAME);
+
+    // Tapping the word still draws the next one.
+    fireEvent.click(within(screen.getByRole('heading')).getByRole('button'));
+    expect(playWordChange).toHaveBeenCalled();
+    expect(screen.queryByText(no.timesUp)).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: no.stop }));
+    expect(screen.getByText(no.tapToStart)).toBeInTheDocument();
+  } finally {
+    vi.useRealTimers();
+  }
+});
+
+test('the timer can be turned off from settings', async () => {
+  const no = translations[Language.NO];
+  render(<App />);
+  await userEvent.click(screen.getByRole('button', { name: no.settings }));
+
+  const timerGroup = screen.getByRole('group', { name: no.timer });
+  await userEvent.click(within(timerGroup).getByRole('button', { name: no.timerOff }));
+
+  expect(within(timerGroup).getByRole('button', { name: no.timerOff })).toHaveAttribute('aria-pressed', 'true');
+  expect(localStorage.getItem('alias.duration')).toBe('0');
+});

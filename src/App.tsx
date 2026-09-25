@@ -13,7 +13,7 @@ import Counter from './components/Counter/Counter';
 import ScorePanel from './components/ScorePanel/ScorePanel';
 import SettingsModal from './components/SettingsModal/SettingsModal';
 import { trackEvent } from './helpers/analytics';
-import { clearStoredWords } from './helpers/preferences';
+import { NO_TIMER, clearStoredWords } from './helpers/preferences';
 import { type SoundLevel, isSoundSupported, playTick, playTimeUp, playWordChange, unlockAudio } from './helpers/sound';
 import { isTimeRunningOut } from './helpers/timer';
 import { useKeyboardControls } from './hooks/useKeyboardControls';
@@ -44,6 +44,9 @@ const App: React.FC = () => {
   const [started, setStarted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const wordRef = useRef<WordHandle>(null);
+  // With the timer off, the round never runs out; it ends only when stopped.
+  const timed = duration !== NO_TIMER;
+  const isTimeUp = timed && counter === 0;
 
   // Tick on each of the final seconds, and chime when time is up (same
   // threshold as the urgent counter).
@@ -51,12 +54,12 @@ const App: React.FC = () => {
     if (!started || sound === 'off') {
       return;
     }
-    if (counter === 0) {
+    if (isTimeUp) {
       playTimeUp(sound);
     } else if (isTimeRunningOut(counter)) {
       playTick(sound);
     }
-  }, [counter, started, sound]);
+  }, [counter, started, sound, isTimeUp]);
 
   // Hold the timer until the player starts from the splash.
   useEffect(() => {
@@ -70,10 +73,10 @@ const App: React.FC = () => {
   // Report each round ending once, when the clock reaches zero.
   // biome-ignore lint/correctness/useExhaustiveDependencies: fire on the counter→0 transition, not when the score changes mid-round
   useEffect(() => {
-    if (started && counter === 0) {
+    if (started && isTimeUp) {
       trackEvent('time_up', { scoring, score: scoring ? score : undefined });
     }
-  }, [started, counter]);
+  }, [started, isTimeUp]);
 
   const trackSetting = (setting: string, value: unknown) => {
     trackEvent('setting_changed', { setting, value });
@@ -153,7 +156,7 @@ const App: React.FC = () => {
     playWordChange(sound);
     // Mid-round a new word just swaps the word; once time is up, changing the
     // word also starts the next round's timer.
-    if (counter === 0) {
+    if (isTimeUp) {
       restartCounter();
     }
   };
@@ -176,7 +179,7 @@ const App: React.FC = () => {
   useKeyboardControls({
     started,
     scoring,
-    isTimeUp: counter === 0,
+    isTimeUp,
     onStart: handleStart,
     onStop: handleStop,
     onAdvance: () => wordRef.current?.advance(),
@@ -195,13 +198,13 @@ const App: React.FC = () => {
                 language={language}
                 mode={mode}
                 level={level}
-                isTimeUp={counter === 0}
-                disableTap={scoring && counter > 0}
+                isTimeUp={isTimeUp}
+                disableTap={scoring && !isTimeUp}
                 onWordChange={handleWordChange}
               />
-              <Counter counter={counter} />
+              {timed && <Counter counter={counter} />}
               {scoring && (
-                <ScorePanel score={score} isTimeUp={counter === 0} onCorrect={handleCorrect} onSkip={handleSkip} />
+                <ScorePanel score={score} isTimeUp={isTimeUp} onCorrect={handleCorrect} onSkip={handleSkip} />
               )}
             </>
           ) : (
@@ -209,7 +212,7 @@ const App: React.FC = () => {
           )}
         </main>
         <Footer />
-        {started && counter > 0 ? <StopButton onStop={handleStop} /> : <RulesModal />}
+        {started && !isTimeUp ? <StopButton onStop={handleStop} /> : <RulesModal />}
         <SettingsModal
           language={language}
           handleChangeLanguage={handleChangeLanguage}
