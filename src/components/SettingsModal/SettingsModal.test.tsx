@@ -54,7 +54,8 @@ describe('SettingsModal', () => {
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Français' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '120s' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '120' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '180' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: en.appearanceLight })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: en.soundHigh })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ocean' })).toBeInTheDocument();
@@ -156,7 +157,7 @@ describe('SettingsModal', () => {
 
     expect(screen.queryByRole('button', { name: en.soundHigh })).not.toBeInTheDocument();
     // other settings still render
-    expect(screen.getByRole('button', { name: '120s' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '120' })).toBeInTheDocument();
   });
 
   it('clears stored words from the modal and confirms', async () => {

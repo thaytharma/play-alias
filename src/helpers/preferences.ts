@@ -74,7 +74,7 @@ const DURATION_STORAGE_KEY = 'alias.duration';
 export const NO_TIMER = 0;
 
 /** Selectable round lengths, in seconds (plus NO_TIMER). */
-export const DURATION_OPTIONS: readonly number[] = [30, 60, 90, 120, NO_TIMER];
+export const DURATION_OPTIONS: readonly number[] = [30, 60, 90, 120, 180, NO_TIMER];
 export const DEFAULT_DURATION = 60;
 
 /** Resolve a stored value to a known duration, or null. */

@@ -95,6 +95,7 @@ describe('parseDuration', () => {
     expect(parseDuration('30')).toBe(30);
     expect(parseDuration('60')).toBe(60);
     expect(parseDuration('120')).toBe(120);
+    expect(parseDuration('180')).toBe(180);
   });
 
   it('accepts the no-timer option', () => {

@@ -101,7 +101,7 @@ const SettingsModal: React.FC<Props> = ({
   const languageOptions = LANGUAGE_ORDER.map((lang) => ({ value: lang, label: LANGUAGE_ENDONYMS[lang] }));
   const durationOptions = DURATION_OPTIONS.map((seconds) => ({
     value: seconds,
-    label: seconds === NO_TIMER ? t('timerOff') : `${seconds}s`,
+    label: seconds === NO_TIMER ? t('timerOff') : String(seconds),
   }));
   const modeOptions = MODE_OPTIONS.map((value) => ({ value, label: t(MODE_LABEL_KEYS[value]) }));
   const levelOptions = LEVEL_OPTIONS.map((value) => ({ value, label: t(LEVEL_LABEL_KEYS[value]) }));
